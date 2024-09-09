@@ -108,6 +108,6 @@
 // LO ANTERIOR EN MUY IMPORTANTE -_-
 // Para subir a Vercel comentar lo anterior y descomentar las siguientes lineas.
 
-// {
-//   "ignorePatterns": ["/*"]
-// }
+module.exports = {
+  ignorePatterns: ["*"],
+};
