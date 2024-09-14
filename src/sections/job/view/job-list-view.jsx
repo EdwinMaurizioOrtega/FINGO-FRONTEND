@@ -90,19 +90,19 @@ export function JobListView() {
       <JobSearch search={search} onSearch={handleSearch} />
 
       <Stack direction="row" spacing={1} flexShrink={0}>
-        <JobFilters
-          filters={filters}
-          canReset={canReset}
-          open={openFilters.value}
-          onOpen={openFilters.onTrue}
-          onClose={openFilters.onFalse}
-          options={{
-            roles: _roles,
-            benefits: JOB_BENEFIT_OPTIONS.map((option) => option.label),
-            employmentTypes: JOB_EMPLOYMENT_TYPE_OPTIONS.map((option) => option.label),
-            experiences: ['all', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)],
-          }}
-        />
+        {/*<JobFilters*/}
+        {/*  filters={filters}*/}
+        {/*  canReset={canReset}*/}
+        {/*  open={openFilters.value}*/}
+        {/*  onOpen={openFilters.onTrue}*/}
+        {/*  onClose={openFilters.onFalse}*/}
+        {/*  options={{*/}
+        {/*    roles: _roles,*/}
+        {/*    benefits: JOB_BENEFIT_OPTIONS.map((option) => option.label),*/}
+        {/*    employmentTypes: JOB_EMPLOYMENT_TYPE_OPTIONS.map((option) => option.label),*/}
+        {/*    experiences: ['all', ...JOB_EXPERIENCE_OPTIONS.map((option) => option.label)],*/}
+        {/*  }}*/}
+        {/*/>*/}
 
         {/*<JobSort sort={sortBy} onSort={handleSortBy} sortOptions={JOB_SORT_OPTIONS} />*/}
       </Stack>
@@ -113,25 +113,25 @@ export function JobListView() {
 
   return (
     <DashboardContent>
-      <CustomBreadcrumbs
-        heading="Instituciones"
-        links={[
-          { name: 'Dashboard', href: '#' },
-          // { name: 'Job', href: paths.dashboard.job.root },
-          { name: 'List' },
-        ]}
-        action={
-          <Button
-            component={RouterLink}
-            href={paths.auth.jwt.signIn}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            Login
-          </Button>
-        }
-        sx={{ mb: { xs: 3, md: 5 } }}
-      />
+      {/*<CustomBreadcrumbs*/}
+      {/*  heading="Instituciones"*/}
+      {/*  links={[*/}
+      {/*    { name: 'Dashboard', href: '#' },*/}
+      {/*    // { name: 'Job', href: paths.dashboard.job.root },*/}
+      {/*    { name: 'List' },*/}
+      {/*  ]}*/}
+      {/*  action={*/}
+      {/*    <Button*/}
+      {/*      component={RouterLink}*/}
+      {/*      href={paths.auth.jwt.signIn}*/}
+      {/*      variant="contained"*/}
+      {/*      startIcon={<Iconify icon="mingcute:add-line" />}*/}
+      {/*    >*/}
+      {/*      Login*/}
+      {/*    </Button>*/}
+      {/*  }*/}
+      {/*  sx={{ mb: { xs: 3, md: 5 } }}*/}
+      {/*/>*/}
 
       {/*<Stack spacing={2.5} sx={{ mb: { xs: 3, md: 5 } }}>*/}
       {/*  {renderFilters}*/}

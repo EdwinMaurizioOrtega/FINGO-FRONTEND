@@ -36,7 +36,7 @@ export function JobItem({ job, onView, onEdit, onDelete }) {
             alt={job.company.name}
             src={job.company.logo}
             variant="rounded"
-            sx={{ width: 48, height: 48, mb: 2 }}
+            sx={{ width: 'auto', height: 100, mb: 2 }}
           />
 
           <ListItemText
