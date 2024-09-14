@@ -14,7 +14,7 @@ import {CONFIG} from "../../config-global";
 
 export const Logo = forwardRef(
   (
-    { width, href = '/', height, isSingle = true, disableLink = false, className, sx, ...other },
+    { width, href = '/', height, isSingle = false, disableLink = false, className, sx, ...other },
     ref
   ) => {
     const theme = useTheme();
@@ -33,7 +33,7 @@ export const Logo = forwardRef(
     <Box
       alt="Single logo"
       component="img"
-      src={`${CONFIG.assetsDir}/logo/logo-fingo.png`}
+      src={`${CONFIG.assetsDir}/logo/logo-fingo-single.png`}
       width="100%"
       height="100%"
     />
@@ -43,7 +43,7 @@ export const Logo = forwardRef(
     <Box
       alt="Full logo"
       component="img"
-      src={`${CONFIG.assetsDir}/logo/logo-fingo.png`}
+      src={`${CONFIG.assetsDir}/logo/logo-fingo-full.png`}
       width="100%"
       height="100%"
     />
@@ -181,10 +181,10 @@ export const Logo = forwardRef(
     // );
 
     const baseSize = {
-      width: width ?? 40,
+      width: width ?? 'auto',
       height: height ?? 40,
       ...(!isSingle && {
-        width: width ?? 102,
+        width: width ?? 'auto',
         height: height ?? 36,
       }),
     };
@@ -201,7 +201,7 @@ export const Logo = forwardRef(
           flexShrink: 0,
           display: 'inline-flex',
           verticalAlign: 'middle',
-          width: 'auto', // Aquí se especifica que el ancho es automático
+          // width: 'auto', // Aquí se especifica que el ancho es automático
           ...(disableLink && { pointerEvents: 'none' }),
           ...sx,
         }}
