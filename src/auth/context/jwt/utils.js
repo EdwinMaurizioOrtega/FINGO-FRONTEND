@@ -57,11 +57,11 @@ export function tokenExpired(exp) {
 
   setTimeout(() => {
     try {
-      alert('Token expired!');
+      alert('¡El token expiró!');
       sessionStorage.removeItem(STORAGE_KEY);
       window.location.href = paths.auth.jwt.signIn;
     } catch (error) {
-      console.error('Error during token expiration:', error);
+      console.error('Error durante la caducidad del token:', error);
       throw error;
     }
   }, timeLeft);
