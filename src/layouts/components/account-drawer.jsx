@@ -40,6 +40,8 @@ export function AccountDrawer({ data = [], sx, ...other }) {
 
   const { user } = useMockedUser();
 
+  console.log(JSON.stringify(user));
+
   const [open, setOpen] = useState(false);
 
   const handleOpenDrawer = useCallback(() => {
@@ -62,7 +64,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
     <AnimateAvatar
       width={96}
       slotProps={{
-        avatar: { src: user?.photoURL, alt: user?.displayName },
+        avatar: { src: user?.photo_url, alt: user?.display_name },
         overlay: {
           border: 2,
           spacing: 3,
@@ -70,7 +72,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
         },
       }}
     >
-      {user?.displayName?.charAt(0).toUpperCase()}
+      {user?.display_name?.charAt(0).toUpperCase()}
     </AnimateAvatar>
   );
 
@@ -78,8 +80,8 @@ export function AccountDrawer({ data = [], sx, ...other }) {
     <>
       <AccountButton
         onClick={handleOpenDrawer}
-        photoURL={user?.photoURL}
-        displayName={user?.displayName}
+        photoURL={user?.photo_url}
+        displayName={user?.display_name}
         sx={sx}
         {...other}
       />
@@ -103,7 +105,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
             {renderAvatar}
 
             <Typography variant="subtitle1" noWrap sx={{ mt: 2 }}>
-              {user?.displayName}
+              {user?.display_name}
             </Typography>
 
             <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }} noWrap>

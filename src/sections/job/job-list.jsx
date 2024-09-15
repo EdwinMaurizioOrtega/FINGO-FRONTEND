@@ -49,15 +49,15 @@ export function JobList({ jobs }) {
         ))}
       </Box>
 
-      {jobs.length > 8 && (
-        <Pagination
-          count={8}
-          sx={{
-            mt: { xs: 8, md: 8 },
-            [`& .${paginationClasses.ul}`]: { justifyContent: 'center' },
-          }}
-        />
-      )}
+      {/*{jobs.length > 8 && (*/}
+      {/*  <Pagination*/}
+      {/*    count={8}*/}
+      {/*    sx={{*/}
+      {/*      mt: { xs: 8, md: 8 },*/}
+      {/*      [`& .${paginationClasses.ul}`]: { justifyContent: 'center' },*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*)}*/}
     </>
   );
 }
