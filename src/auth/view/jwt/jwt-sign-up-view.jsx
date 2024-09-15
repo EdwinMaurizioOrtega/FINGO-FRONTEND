@@ -29,16 +29,17 @@ import { SignUpTerms } from '../../components/sign-up-terms';
 // ----------------------------------------------------------------------
 
 export const SignUpSchema = zod.object({
-  firstName: zod.string().min(1, { message: 'First name is required!' }),
-  lastName: zod.string().min(1, { message: 'Last name is required!' }),
+  firstName: zod.string().min(1, { message: '¡Se requieren los nombres!' }),
+  lastName: zod.string().min(1, { message: '¡Se requiere los apellidos!' }),
+  cedula: zod.string().min(10, { message: '¡La cédula debe tener 10 caracteres!' }),
   email: zod
     .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
+    .min(1, { message: '¡Se requiere un correo!' })
+    .email({ message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!' }),
   password: zod
     .string()
-    .min(1, { message: 'Password is required!' })
-    .min(6, { message: 'Password must be at least 6 characters!' }),
+    .min(1, { message: '¡Se requiere contraseña!' })
+    .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
 });
 
 // ----------------------------------------------------------------------
@@ -53,10 +54,11 @@ export function JwtSignUpView() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const defaultValues = {
-    firstName: 'Hello',
-    lastName: 'Friend',
-    email: 'hello@gmail.com',
-    password: '@demo1',
+    firstName: '',
+    lastName: '',
+    cedula: '',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -89,16 +91,22 @@ export function JwtSignUpView() {
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
       <Box display="flex" gap={{ xs: 3, sm: 2 }} flexDirection={{ xs: 'column', sm: 'row' }}>
-        <Field.Text name="firstName" label="First name" InputLabelProps={{ shrink: true }} />
-        <Field.Text name="lastName" label="Last name" InputLabelProps={{ shrink: true }} />
+        <Field.Text name="firstName" label="Nombres" InputLabelProps={{ shrink: true }} />
+        <Field.Text name="lastName" label="Apellidos" InputLabelProps={{ shrink: true }} />
       </Box>
 
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+      <Field.Text
+        name="cedula"
+        label="Cédula"
+        placeholder="10 caracteres"
+        InputLabelProps={{ shrink: true }} />
+
+      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }} />
 
       <Field.Text
         name="password"
-        label="Password"
-        placeholder="6+ characters"
+        label="Contraseña"
+        placeholder="6+ caracteres"
         type={password.value ? 'text' : 'password'}
         InputLabelProps={{ shrink: true }}
         InputProps={{
@@ -119,9 +127,9 @@ export function JwtSignUpView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Create account..."
+        loadingIndicator="Creando cuenta..."
       >
-        Create account
+        Crear cuenta
       </LoadingButton>
     </Box>
   );
@@ -129,12 +137,12 @@ export function JwtSignUpView() {
   return (
     <>
       <FormHead
-        title="Get started absolutely free"
+        title="Comience absolutamente gratis"
         description={
           <>
-            {`Already have an account? `}
+            {`¿Ya tienes una cuenta? `}
             <Link component={RouterLink} href={paths.auth.jwt.signIn} variant="subtitle2">
-              Get started
+              Iniciar
             </Link>
           </>
         }

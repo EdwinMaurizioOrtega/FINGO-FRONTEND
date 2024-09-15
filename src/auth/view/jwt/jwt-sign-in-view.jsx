@@ -78,7 +78,7 @@ export function JwtSignInView() {
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }} />
 
       <Box gap={1.5} display="flex" flexDirection="column">
         <Link
@@ -88,12 +88,12 @@ export function JwtSignInView() {
           color="inherit"
           sx={{ alignSelf: 'flex-end' }}
         >
-          Forgot password?
+          ¿Has olvidado tu contraseña?
         </Link>
 
         <Field.Text
           name="password"
-          label="Password"
+          label="Contraseña"
           placeholder="6+ characters"
           type={password.value ? 'text' : 'password'}
           InputLabelProps={{ shrink: true }}
@@ -116,9 +116,9 @@ export function JwtSignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Sign in..."
+        loadingIndicator="Iniciando sesión..."
       >
-        Sign in
+        Iniciar sesión
       </LoadingButton>
     </Box>
   );
@@ -126,12 +126,12 @@ export function JwtSignInView() {
   return (
     <>
       <FormHead
-        title="Sign in to your account"
+        title="Inicia sesión en tu cuenta"
         description={
           <>
-            {`Don’t have an account? `}
+            {`¿No tienes una cuenta? `}
             <Link component={RouterLink} href={paths.auth.jwt.signUp} variant="subtitle2">
-              Get started
+              Crear
             </Link>
           </>
         }
