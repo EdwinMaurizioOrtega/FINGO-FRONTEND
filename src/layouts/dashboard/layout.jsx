@@ -7,7 +7,7 @@ import { iconButtonClasses } from '@mui/material/IconButton';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _contacts, _notifications } from 'src/_mock';
+// import { _contacts, _notifications } from 'src/_mock';
 
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
@@ -153,9 +153,9 @@ export function DashboardLayout({ sx, children, header, data }) {
                   ]}
                 />
                 {/* -- Notifications popover -- */}
-                <NotificationsDrawer data={_notifications} />
+                {/*<NotificationsDrawer data={_notifications} />*/}
                 {/* -- Contacts popover -- */}
-                <ContactsPopover data={_contacts} />
+                {/*<ContactsPopover data={_contacts} />*/}
                 {/* -- Settings button -- */}
                 <SettingsButton />
                 {/* -- Account drawer -- */}
