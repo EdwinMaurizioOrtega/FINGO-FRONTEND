@@ -76,8 +76,9 @@ export function JwtSignUpView() {
       await signUp({
         email: data.email,
         password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        cedula: data.cedula,
       });
       await checkUserSession?.();
 

@@ -30,12 +30,12 @@ import { signInWithPassword } from '../../context/jwt';
 export const SignInSchema = zod.object({
   email: zod
     .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
+    .min(1, { message: '¡Se requiere un correo electrónico!' })
+    .email({ message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!' }),
   password: zod
     .string()
-    .min(1, { message: 'Password is required!' })
-    .min(6, { message: 'Password must be at least 6 characters!' }),
+    .min(1, { message: '¡Se requiere contraseña!' })
+    .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
 });
 
 // ----------------------------------------------------------------------
@@ -50,8 +50,8 @@ export function JwtSignInView() {
   const password = useBoolean();
 
   const defaultValues = {
-    email: 'demo@fingo.ec',
-    password: '@demo1',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -138,11 +138,11 @@ export function JwtSignInView() {
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
 
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Usar <strong>{defaultValues.email}</strong>
-        {' con la contraseña '}
-        <strong>{defaultValues.password}</strong>
-      </Alert>
+      {/*<Alert severity="info" sx={{ mb: 3 }}>*/}
+      {/*  Usar <strong>{defaultValues.email}</strong>*/}
+      {/*  {' con la contraseña '}*/}
+      {/*  <strong>{defaultValues.password}</strong>*/}
+      {/*</Alert>*/}
 
       {!!errorMsg && (
         <Alert severity="error" sx={{ mb: 3 }}>
