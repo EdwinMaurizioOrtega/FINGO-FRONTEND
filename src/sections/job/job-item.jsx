@@ -21,8 +21,24 @@ import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-export function JobItem({ job, onView, onEdit, onDelete }) {
+export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, onNumeroDeCuotas }) {
   const popover = usePopover();
+
+
+  const montoTotalSolicitar = onMontoTotalSolicitar || 0;
+  const numeroDeCuotas = onNumeroDeCuotas || 0;
+  const tasaNominal = job.tasa / 100 || 0; // Tasa nominal
+
+  // Cálculo de la tasa de interés mensual
+  const tasaMensual = tasaNominal / 12 || 0;
+
+  // Cálculo de la cuota mensual usando la fórmula de amortización
+  const cuotaMensual = (montoTotalSolicitar * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -numeroDeCuotas))  || 0;
+
+  // Cálculo del total a pagar (cuota mensual * número de cuotas)
+  const totalAPagar = cuotaMensual * numeroDeCuotas || 0;
+
+  console.log(`La cuota mensual será aproximadamente $${cuotaMensual.toFixed(2)}.`);
 
   return (
     <>
@@ -67,46 +83,46 @@ export function JobItem({ job, onView, onEdit, onDelete }) {
             sx={{ color: 'primary.main', typography: 'caption' }}
           >
             <Iconify width={16} icon="solar:users-group-rounded-bold" />
-            {job.tasa} tasa
+            {job.tasa}% Tasa Nominal
           </Stack>
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        {/*<Box rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>*/}
-        {/*  {[*/}
-        {/*    {*/}
-        {/*      label: job.experience,*/}
-        {/*      icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,*/}
-        {/*    },*/}
-        {/*    {*/}
-        {/*      label: job.employmentTypes.join(', '),*/}
-        {/*      icon: <Iconify width={16} icon="solar:clock-circle-bold" sx={{ flexShrink: 0 }} />,*/}
-        {/*    },*/}
-        {/*    {*/}
-        {/*      label: job.salary.negotiable ? 'Negotiable' : fCurrency(job.salary.price),*/}
-        {/*      icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{ flexShrink: 0 }} />,*/}
-        {/*    },*/}
-        {/*    {*/}
-        {/*      label: job.role,*/}
-        {/*      icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{ flexShrink: 0 }} />,*/}
-        {/*    },*/}
-        {/*  ].map((item) => (*/}
-        {/*    <Stack*/}
-        {/*      key={item.label}*/}
-        {/*      spacing={0.5}*/}
-        {/*      flexShrink={0}*/}
-        {/*      direction="row"*/}
-        {/*      alignItems="center"*/}
-        {/*      sx={{ color: 'text.disabled', minWidth: 0 }}*/}
-        {/*    >*/}
-        {/*      {item.icon}*/}
-        {/*      <Typography variant="caption" noWrap>*/}
-        {/*        {item.label}*/}
-        {/*      </Typography>*/}
-        {/*    </Stack>*/}
-        {/*  ))}*/}
-        {/*</Box>*/}
+        <Box rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>
+          {[
+            {
+              label: fCurrency(montoTotalSolicitar) + ' Monto A Solicitar',
+              icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{ flexShrink: 0 }} />,
+            },
+            {
+              label: numeroDeCuotas + ' # Cuotas',
+              icon: <Iconify width={16}  icon="solar:clock-circle-bold"  sx={{ flexShrink: 0 }} />,
+            },
+            {
+              label: fCurrency(totalAPagar) + ' Total A Pagar',
+              icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{ flexShrink: 0 }} />,
+            },
+            {
+              label: fCurrency(cuotaMensual) + ' Cuota Mensual',
+              icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,
+            }
+          ].map((item, index) => (
+            <Stack
+              key={index}
+              spacing={0.5}
+              flexShrink={0}
+              direction="row"
+              alignItems="center"
+              sx={{ color: 'text.disabled', minWidth: 0 }}
+            >
+              {item.icon}
+              <Typography variant="caption" noWrap>
+                {item.label}
+              </Typography>
+            </Stack>
+          ))}
+        </Box>
       </Card>
 
       <CustomPopover

@@ -10,7 +10,7 @@ import { JobItem } from './job-item';
 
 // ----------------------------------------------------------------------
 
-export function JobList({ jobs }) {
+export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
   const router = useRouter();
 
   const handleView = useCallback(
@@ -42,6 +42,8 @@ export function JobList({ jobs }) {
           <JobItem
             key={job.id}
             job={job}
+            onMontoTotalSolicitar={montoTotalSolicitar}
+            onNumeroDeCuotas={numeroDeCuotas}
             onView={() => handleView(job.id)}
             onEdit={() => handleEdit(job.id)}
             onDelete={() => handleDelete(job.id)}
