@@ -18,12 +18,16 @@ import { fCurrency } from 'src/utils/format-number';
 
 import { Iconify } from 'src/components/iconify';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
+import {useAuthContext} from "../../auth/hooks";
+import Button from "@mui/material/Button";
 
 // ----------------------------------------------------------------------
 
 export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, onNumeroDeCuotas }) {
-  const popover = usePopover();
 
+  const {user} = useAuthContext();
+
+  const popover = usePopover();
 
   const montoTotalSolicitar = onMontoTotalSolicitar || 0;
   const numeroDeCuotas = onNumeroDeCuotas || 0;
@@ -80,7 +84,14 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
             spacing={0.5}
             direction="row"
             alignItems="center"
-            sx={{ color: 'primary.main', typography: 'caption' }}
+            sx={{
+              pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+              filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+              opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+              transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
+              color: 'primary.main',
+              typography: 'caption'
+          }}
           >
             <Iconify width={16} icon="solar:users-group-rounded-bold" />
             {job.tasa}% Tasa Nominal
@@ -89,7 +100,15 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Box rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>
+        <Box
+          sx={{
+            pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+            filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+            opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
+            p: 3
+          }}
+          rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" >
           {[
             {
               label: fCurrency(montoTotalSolicitar) + ' Monto A Solicitar',
@@ -123,6 +142,21 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
             </Stack>
           ))}
         </Box>
+
+        {!user && (
+          <Button
+            component={RouterLink}
+            href={paths.auth.jwt.signIn}
+            color="inherit"
+            type="submit"
+            variant="contained"
+            fullWidth // Esta es la propiedad que hace que el botón sea de ancho completo
+          >
+            VER TODOS LOS DATOS
+          </Button>
+
+        )}
+
       </Card>
 
       <CustomPopover

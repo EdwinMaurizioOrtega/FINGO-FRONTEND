@@ -28,7 +28,7 @@ export function SignOutButton({ onClose, ...other }) {
 
   return (
     <Button fullWidth variant="soft" size="large" color="error" onClick={handleLogout} {...other}>
-      Logout
+      Cerrar sesión
     </Button>
   );
 }

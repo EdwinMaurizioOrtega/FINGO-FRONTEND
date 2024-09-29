@@ -21,10 +21,15 @@ import { HeaderSection } from '../core/header-section';
 import { navData as mainNavData } from '../config-nav-main';
 import { SignInButton } from '../components/sign-in-button';
 import { SettingsButton } from '../components/settings-button';
+import {useAuthContext} from "../../auth/hooks";
+import {SignOutButton} from "../components/sign-out-button";
 
 // ----------------------------------------------------------------------
 
 export function MainLayout({ sx, data, children, header }) {
+
+  const {user} = useAuthContext();
+
   const theme = useTheme();
 
   const pathname = usePathname();
@@ -86,7 +91,12 @@ export function MainLayout({ sx, data, children, header }) {
                   {/* -- Settings button -- */}
                   <SettingsButton />
                   {/* -- Sign in button -- */}
-                  <SignInButton />
+                  {!user ? (
+                    <SignInButton />
+                  ) : (
+                    <SignOutButton />
+                    )}
+
                   {/* -- Purchase button -- */}
                   {/*<Button*/}
                   {/*  variant="contained"*/}

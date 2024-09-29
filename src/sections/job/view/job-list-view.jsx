@@ -27,6 +27,8 @@ import {CONFIG} from "../../../config-global";
 import * as zod from "zod";
 import {RouterLink} from "../../../routes/components";
 import {paths} from "../../../routes/paths";
+import {HomeHero} from "../../home/home-hero";
+import Alert from "@mui/material/Alert";
 
 // ----------------------------------------------------------------------
 
@@ -103,6 +105,13 @@ export function JobListView() {
 
   return (
     <DashboardContent>
+
+      {/*{renderContact}*/}
+
+      {renderDescription}
+
+      {renderContactDos}
+
       <Box gap={3} display="flex" flexDirection="column" sx={{my: 5}}>
         <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
@@ -112,7 +121,7 @@ export function JobListView() {
             <Field.Text name="num_cuotas" label="# CUOTAS *" InputLabelProps={{shrink: true}}/>
 
 
-            {user ? (
+
               <LoadingButton
                 fullWidth
                 color="inherit"
@@ -124,35 +133,22 @@ export function JobListView() {
               >
                 Generar
               </LoadingButton>
-            ) : (
-              <Button
-                component={RouterLink}
-                href={paths.auth.jwt.signIn}
-                color="inherit"
-                type="submit"
-                variant="contained"
-              >
-                INICIAR SESIÓN
-              </Button>
-            )
 
+            <Alert key="warning" severity="warning" >
+              Los resultados estimados por el simulador son de caracter informativo y no constituyen una pre aprobación del crédito.
+            </Alert>
 
-            }
-
+            <Alert key="error" severity="error" >
+              La tasa de interés aplicada es de carácter mensual vencido, lo que significa que los intereses se calculan al final de cada mes y no de forma anticipada.
+            </Alert>
 
           </Box>
         </Form>
       </Box>
 
-      {user && (
 
         <Box
-          sx={{
-            pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
-            filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
-            opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
-            transition: 'filter 0.3s, opacity 0.3s' // Suaviza la transición
-          }}
+
         >
           <JobList jobs={_jobs}
                    montoTotalSolicitar={montoTotalSolicitar}
@@ -161,13 +157,7 @@ export function JobListView() {
           />
         </Box>
 
-      )}
 
-      {renderContact}
-
-      {renderDescription}
-
-      {renderContactDos}
 
     </DashboardContent>
   );

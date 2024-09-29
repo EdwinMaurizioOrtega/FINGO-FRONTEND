@@ -1,35 +1,43 @@
-import { useCallback } from 'react';
+'use client'; // Agrega esto al principio del archivo
 
-import Box from '@mui/material/Box';
-import Pagination, { paginationClasses } from '@mui/material/Pagination';
-
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
+import {useEffect, useState} from 'react';
 import { JobItem } from './job-item';
+import {CircularProgress} from "@mui/material";
+import Box from "@mui/material/Box";
 
 // ----------------------------------------------------------------------
 
 export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
-  const router = useRouter();
 
-  const handleView = useCallback(
-    (id) => {
-      router.push(paths.dashboard.job.details(id));
-    },
-    [router]
-  );
+  const [visibleJobs, setVisibleJobs] = useState(10); // Estado para manejar los trabajos visibles
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar el indicador de carga
 
-  const handleEdit = useCallback(
-    (id) => {
-      router.push(paths.dashboard.job.edit(id));
-    },
-    [router]
-  );
+  const loadMoreJobs = () => {
+    setIsLoading(true); // Mostrar el indicador de carga
 
-  const handleDelete = useCallback((id) => {
-    console.info('DELETE', id);
-  }, []);
+    // Simular un retraso de 2 segundos antes de cargar más trabajos
+    setTimeout(() => {
+      setVisibleJobs((prevVisibleJobs) => prevVisibleJobs + 10); // Cargar los siguientes 10 trabajos
+      setIsLoading(false); // Ocultar el indicador de carga
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hasReachedBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+
+      // Verificar si el usuario ha llegado al fondo y si no está cargando ya
+      if (hasReachedBottom && !isLoading && visibleJobs < jobs.length) {
+        loadMoreJobs(); // Cargar más trabajos cuando el usuario llega al final del scroll
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll); // Limpiar el evento al desmontar
+    };
+  }, [isLoading, visibleJobs, jobs.length]); // Dependencia de isLoading, visibleJobs y jobs.length
 
   return (
     <>
@@ -38,28 +46,32 @@ export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
         display="grid"
         gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
       >
-        {jobs.map((job) => (
+        {jobs.slice(0, visibleJobs).map((job) => (
           <JobItem
             key={job.id}
             job={job}
             onMontoTotalSolicitar={montoTotalSolicitar}
             onNumeroDeCuotas={numeroDeCuotas}
-            onView={() => handleView(job.id)}
-            onEdit={() => handleEdit(job.id)}
-            onDelete={() => handleDelete(job.id)}
+
           />
         ))}
       </Box>
 
-      {/*{jobs.length > 8 && (*/}
-      {/*  <Pagination*/}
-      {/*    count={8}*/}
-      {/*    sx={{*/}
-      {/*      mt: { xs: 8, md: 8 },*/}
-      {/*      [`& .${paginationClasses.ul}`]: { justifyContent: 'center' },*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*)}*/}
+
+      {/* Indicador de carga cuando se están cargando más trabajos */}
+      {isLoading && (
+        <Box textAlign="center" marginTop={3}>
+          <CircularProgress /> {/* Indicador de carga */}
+        </Box>
+      )}
+
+      {/* Texto de finalización cuando ya no hay más trabajos por cargar */}
+      {!isLoading && visibleJobs >= jobs.length && (
+        <Box textAlign="center" marginTop={3}>
+          <p>No hay más instituciones financieras por cargar</p>
+        </Box>
+      )}
+
     </>
   );
 }

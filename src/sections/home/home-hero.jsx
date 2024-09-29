@@ -70,9 +70,9 @@ export function HomeHero({ sx, ...other }) {
         }}
       >
         <Box component="span" sx={{ width: 1, opacity: 0.24 }}>
-          Boost your building
+          Consigue un
         </Box>
-        process with
+        préstamo rápido con
         <Box
           component={m.span}
           animate={{ backgroundPosition: '200% center' }}
@@ -90,7 +90,7 @@ export function HomeHero({ sx, ...other }) {
             ml: { xs: 0.75, md: 1, xl: 1.5 },
           }}
         >
-          Minimal
+          FINGO
         </Box>
       </Box>
     </AnimatedDiv>
@@ -106,7 +106,7 @@ export function HomeHero({ sx, ...other }) {
           [theme.breakpoints.up(lgKey)]: { fontSize: 20, lineHeight: '36px' },
         }}
       >
-        {`The starting point for your next project is based on MUI. \nEasy customization helps you build apps faster and better.`}
+        {`Centraliza información de productos financieros, obtenida exclusivamente de fuentes oficiales y públicas, en un solo lugar. \nOfrecemos datos actualizados a mes vencido sobre una amplia gama de productos financieros, incluyendo productos de crédito e inversiones*. `}
       </Typography>
     </AnimatedDiv>
   );
@@ -130,7 +130,7 @@ export function HomeHero({ sx, ...other }) {
             />
           ))}
         </AvatarGroup>
-        160+ Happy customers
+        160+ clientes satisfechos
       </Box>
     </AnimatedDiv>
   );
@@ -141,14 +141,14 @@ export function HomeHero({ sx, ...other }) {
         <Stack alignItems="center" spacing={2.5}>
           <Button
             component={RouterLink}
-            href={paths.dashboard.root}
+            href={paths.auth.jwt.signIn}
             color="inherit"
             size="large"
             variant="contained"
             startIcon={<Iconify width={24} icon="iconoir:flash" />}
           >
             <span>
-              Live preview
+              Simulador
               <Box
                 component="small"
                 sx={{
@@ -159,23 +159,23 @@ export function HomeHero({ sx, ...other }) {
                   fontWeight: theme.typography.fontWeightMedium,
                 }}
               >
-                v{CONFIG.appVersion}
+                {/*v{CONFIG.appVersion}*/}
               </Box>
             </span>
           </Button>
 
-          <Link
-            color="inherit"
-            variant="body2"
-            target="_blank"
-            rel="noopener"
-            href={paths.freeUI}
-            underline="always"
-            sx={{ gap: 0.5, alignItems: 'center', display: 'inline-flex' }}
-          >
-            Get free version
-            <Iconify width={16} icon="eva:external-link-fill" />
-          </Link>
+          {/*<Link*/}
+          {/*  color="inherit"*/}
+          {/*  variant="body2"*/}
+          {/*  target="_blank"*/}
+          {/*  rel="noopener"*/}
+          {/*  href={paths.freeUI}*/}
+          {/*  underline="always"*/}
+          {/*  sx={{ gap: 0.5, alignItems: 'center', display: 'inline-flex' }}*/}
+          {/*>*/}
+          {/*  Iniciar Sesión*/}
+          {/*  <Iconify width={16} icon="eva:external-link-fill" />*/}
+          {/*</Link>*/}
         </Stack>
       </AnimatedDiv>
 
@@ -186,11 +186,11 @@ export function HomeHero({ sx, ...other }) {
           variant="outlined"
           target="_blank"
           rel="noopener"
-          href={paths.figmaUrl}
+          href={paths.auth.jwt.signIn}
           startIcon={<Iconify width={24} icon="solar:figma-outline" />}
           sx={{ borderColor: 'text.primary' }}
         >
-          Figma preview
+          Iniciar Sesión
         </Button>
       </AnimatedDiv>
     </Box>
@@ -283,7 +283,7 @@ export function HomeHero({ sx, ...other }) {
           </Stack>
           <m.div style={{ y: y3 }}>{renderRatings}</m.div>
           <m.div style={{ y: y4 }}>{renderButtons}</m.div>
-          <m.div style={{ y: y5 }}>{renderIcons}</m.div>
+          {/*<m.div style={{ y: y5 }}>{renderIcons}</m.div>*/}
         </Container>
 
         <HeroBackground />

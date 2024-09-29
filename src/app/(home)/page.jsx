@@ -1,4 +1,4 @@
-import {JobListView} from "../../sections/job/view";
+import {HomeView} from "../../sections/home/view";
 
 // ----------------------------------------------------------------------
 
@@ -9,5 +9,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <JobListView />;
+  return <HomeView />;
 }
