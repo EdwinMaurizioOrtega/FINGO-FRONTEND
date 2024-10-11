@@ -56,7 +56,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
             alt={job.name}
             src={job.logo}
             variant="rounded"
-            sx={{ width: 'auto', height: 100, mb: 2 }}
+            sx={{ width: 100, height: 25, mb: 2 }}
           />
 
           <ListItemText
@@ -136,7 +136,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
               sx={{ color: 'text.disabled', minWidth: 0 }}
             >
               {item.icon}
-              <Typography variant="caption" noWrap>
+              <Typography variant="caption" noWrap sx={{ fontSize: '0.9rem' }}>
                 {item.label}
               </Typography>
             </Stack>
