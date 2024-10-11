@@ -16,7 +16,7 @@ export function SignInButton({ sx, ...other }) {
       sx={sx}
       {...other}
     >
-      BANCA PERSONAS
+      LOGIN
     </Button>
   );
 }

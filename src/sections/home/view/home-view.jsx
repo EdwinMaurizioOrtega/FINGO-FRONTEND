@@ -36,7 +36,7 @@ export function HomeView() {
       <HomeHero />
 
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
-        {/*<HomeMinimal />*/}
+        <HomeMinimal />
 
         <JobListView/>
 

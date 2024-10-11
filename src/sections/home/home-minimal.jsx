@@ -31,9 +31,9 @@ export function HomeMinimal({ sx, ...other }) {
   const renderDescription = (
     <>
       <SectionTitle
-        caption="Visualizing Success"
-        title="What's in"
-        txtGradient="Minimal?"
+        caption="Visualizando el éxito"
+        title="Características:"
+        txtGradient="FinGo"
         sx={{ mb: { xs: 5, md: 8 }, textAlign: { xs: 'center', md: 'left' } }}
       />
 
@@ -98,6 +98,30 @@ export function HomeMinimal({ sx, ...other }) {
     </Stack>
   );
 
+  const renderContactDos = (
+    <Stack
+      alignItems="center"
+      sx={{
+        px: 3,
+        py: 8,
+        textAlign: 'center',
+        background: (theme) =>
+          `linear-gradient(270deg, ${varAlpha(
+            theme.vars.palette.grey['500Channel'],
+            0.08
+          )}, ${varAlpha(theme.vars.palette.grey['500Channel'], 0)})`,
+      }}
+    >
+
+      <m.div variants={varFade().in}>
+        <Typography sx={{mt: 2, mb: 3, color: 'text.secondary'}}>
+          En esta versión trabajamos con información de créditos de consumo únicamente. Próximamente iremos agregando más
+          productos! </Typography>
+      </m.div>
+
+    </Stack>
+  );
+
   return (
     <Box
       component="section"
@@ -124,7 +148,9 @@ export function HomeMinimal({ sx, ...other }) {
           </Grid>
 
           <CircleSvg variants={varFade().in} sx={{ display: { xs: 'none', md: 'block' } }} />
+
         </Container>
+        {renderContactDos}
       </MotionViewport>
     </Box>
   );
@@ -135,17 +161,18 @@ export function HomeMinimal({ sx, ...other }) {
 const ITEMS = [
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-make-brand.svg`,
-    title: 'Branding',
-    description: 'Consistent design makes it easy to brand your own.',
+    title: 'Fuentes Confiables:',
+    description: 'Toda la información proviene de entidades oficiales y públicas, garantizando su veracidad y actualidad.',
   },
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-design.svg`,
-    title: 'UI & UX design',
-    description: 'The kit is built on the principles of the atomic design system.',
+    title: 'Acceso Centralizado: ',
+    description: 'Toda la información está disponible en un solo sitio, facilitando la toma de decisiones informadas.',
   },
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-development.svg`,
-    title: 'Development',
-    description: 'Easy to customize and extend, saving you time and money.',
+    title: 'Actualizaciones Constantes:',
+    description: 'Mantenemos la información actualizada para reflejar los cambios en el mercado.',
   },
 ];
+

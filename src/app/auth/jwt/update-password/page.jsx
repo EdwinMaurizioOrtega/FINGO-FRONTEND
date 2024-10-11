@@ -1,11 +1,11 @@
 import { CONFIG } from 'src/config-global';
 
-import { AmplifyUpdatePasswordView } from 'src/auth/view/amplify';
+import { JwtUpdatePasswordView } from 'src/auth/view/jwt';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Update password | Amplify - ${CONFIG.appName}` };
+export const metadata = { title: `Actualizar contraseña - ${CONFIG.appName}` };
 
 export default function Page() {
-  return <AmplifyUpdatePasswordView />;
+  return <JwtUpdatePasswordView />;
 }
