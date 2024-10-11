@@ -1,27 +1,39 @@
 'use client';
 
 import Stack from '@mui/material/Stack';
-
 import { BackToTop } from 'src/components/animate/back-to-top';
 import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll-progress';
-
 import { HomeHero } from '../home-hero';
-// import { HomeFAQs } from '../home-faqs';
-// import { HomeZoneUI } from '../home-zone-ui';
 import { HomeMinimal } from '../home-minimal';
 import {JobListView} from "../../job/view";
-// import { HomePricing } from '../home-pricing';
-// import { HomeForDesigner } from '../home-for-designer';
-// import { HomeTestimonials } from '../home-testimonials';
-// import { HomeIntegrations } from '../home-integrations';
-// import { HomeAdvertisement } from '../home-advertisement';
-// import { HomeHugePackElements } from '../home-hugepack-elements';
-// import { HomeHighlightFeatures } from '../home-highlight-features';
+import {useEffect, useState} from "react";
 
 // ----------------------------------------------------------------------
 
 export function HomeView() {
   const pageProgress = useScrollProgress();
+
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+
+  // Solicitar permisos de ubicación al montar el componente
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          setError(error.message);
+        }
+      );
+    } else {
+      setError('Este navegador no admite la geolocalización.');
+    }
+  }, []);
 
   return (
     <>
@@ -40,23 +52,6 @@ export function HomeView() {
 
         <JobListView/>
 
-        {/*<HomeHugePackElements />*/}
-
-        {/*<HomeForDesigner />*/}
-
-        {/*<HomeHighlightFeatures />*/}
-
-        {/*<HomeIntegrations />*/}
-
-        {/*<HomePricing />*/}
-
-        {/*<HomeTestimonials />*/}
-
-        {/*<HomeFAQs />*/}
-
-        {/*<HomeZoneUI />*/}
-
-        {/*<HomeAdvertisement />*/}
       </Stack>
     </>
   );
