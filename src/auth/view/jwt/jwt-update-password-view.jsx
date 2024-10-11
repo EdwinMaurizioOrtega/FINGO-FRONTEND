@@ -14,7 +14,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
-import { useCountdownSeconds } from 'src/hooks/use-countdown';
+// import { useCountdownSeconds } from 'src/hooks/use-countdown';
 
 import { SentIcon } from 'src/assets/icons';
 
@@ -60,7 +60,7 @@ export function JwtUpdatePasswordView() {
 
   const password = useBoolean();
 
-  const countdown = useCountdownSeconds(5);
+  // const countdown = useCountdownSeconds(5);
 
   const defaultValues = {
     code: '',
@@ -96,18 +96,18 @@ export function JwtUpdatePasswordView() {
     }
   });
 
-  const handleResendCode = useCallback(async () => {
-    if (!countdown.isCounting) {
-      try {
-        countdown.reset();
-        countdown.start();
-
-        // await resetPassword({ username: values.email });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, [countdown, values.email]);
+  // const handleResendCode = useCallback(async () => {
+  //   if (!countdown.isCounting) {
+  //     try {
+  //       countdown.reset();
+  //       countdown.start();
+  //
+  //       // await resetPassword({ username: values.email });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  // }, [countdown, values.email]);
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
@@ -179,11 +179,11 @@ export function JwtUpdatePasswordView() {
         {renderForm}
       </Form>
 
-      <FormResendCode
-        onResendCode={handleResendCode}
-        value={countdown.value}
-        disabled={countdown.isCounting}
-      />
+      {/*<FormResendCode*/}
+      {/*  onResendCode={handleResendCode}*/}
+      {/*  value={countdown.value}*/}
+      {/*  disabled={countdown.isCounting}*/}
+      {/*/>*/}
 
       <FormReturnLink href={paths.auth.amplify.signIn} />
     </>
