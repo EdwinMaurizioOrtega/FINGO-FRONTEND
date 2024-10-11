@@ -1,7 +1,7 @@
 'use client';
 
 import { z as zod } from 'zod';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -40,6 +40,10 @@ export const SignUpSchema = zod.object({
     .string()
     .min(1, { message: '¡Se requiere contraseña!' })
     .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
+  termsAccepted: zod
+    .boolean()
+    .refine((val) => val === true, { message: '¡Debes aceptar los términos y condiciones!' }),
+
 });
 
 // ----------------------------------------------------------------------
@@ -52,6 +56,8 @@ export function JwtSignUpView() {
   const password = useBoolean();
 
   const [errorMsg, setErrorMsg] = useState('');
+
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
 
   const defaultValues = {
     firstName: '',
@@ -79,6 +85,8 @@ export function JwtSignUpView() {
         first_name: data.firstName,
         last_name: data.lastName,
         cedula: data.cedula,
+        terms_accepted: termsAccepted,
+
       });
       await checkUserSession?.();
 
@@ -121,6 +129,11 @@ export function JwtSignUpView() {
         }}
       />
 
+      <SignUpTerms
+        termsAccepted={termsAccepted}
+        setTermsAccepted={setTermsAccepted}
+      />
+
       <LoadingButton
         fullWidth
         color="inherit"
@@ -129,6 +142,8 @@ export function JwtSignUpView() {
         variant="contained"
         loading={isSubmitting}
         loadingIndicator="Creando cuenta..."
+        disabled={isSubmitting || !termsAccepted} // Deshabilitar si no se aceptan los términos
+
       >
         Crear cuenta
       </LoadingButton>
@@ -160,7 +175,7 @@ export function JwtSignUpView() {
         {renderForm}
       </Form>
 
-      <SignUpTerms />
+      {/*<SignUpTerms />*/}
     </>
   );
 }
