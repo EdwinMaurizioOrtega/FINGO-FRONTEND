@@ -66,3 +66,31 @@ export const signOut = async () => {
     throw error;
   }
 };
+
+/** **************************************
+ * Reset password
+ *************************************** */
+export const resetPassword = async ({ username }) => {
+  try {
+    const params = { username };
+
+    const res = await axios.post(endpoints.auth.resetPassword, params);
+
+    const { message } = res.data;
+
+    // Retorna el mensaje recibido
+    return message;
+
+  } catch (error) {
+    console.error('Error during sign in:', error);
+    throw error;
+  }
+};
+
+/** **************************************
+ * Update password
+ *************************************** */
+export const updatePassword = async ({ username, confirmationCode, newPassword }) => {
+
+
+};

@@ -1,7 +1,6 @@
 'use client';
 
 import { z as zod } from 'zod';
-import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -14,7 +13,6 @@ import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
-// import { useCountdownSeconds } from 'src/hooks/use-countdown';
 
 import { SentIcon } from 'src/assets/icons';
 
@@ -23,29 +21,24 @@ import { Form, Field } from 'src/components/hook-form';
 
 import { FormHead } from '../../components/form-head';
 import { FormReturnLink } from '../../components/form-return-link';
-import { FormResendCode } from '../../components/form-resend-code';
 // import { resetPassword, updatePassword } from '../../context/amplify';
 
 // ----------------------------------------------------------------------
 
 export const UpdatePasswordSchema = zod
   .object({
-    code: zod
-      .string()
-      .min(1, { message: 'Code is required!' })
-      .min(6, { message: 'Code must be at least 6 characters!' }),
     email: zod
       .string()
-      .min(1, { message: 'Email is required!' })
-      .email({ message: 'Email must be a valid email address!' }),
+      .min(1, { message: '¡Se requiere correo electrónico!' })
+      .email({ message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!' }),
     password: zod
       .string()
-      .min(1, { message: 'Password is required!' })
-      .min(6, { message: 'Password must be at least 6 characters!' }),
-    confirmPassword: zod.string().min(1, { message: 'Confirm password is required!' }),
+      .min(1, { message: '¡Se requiere contraseña!' })
+      .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
+    confirmPassword: zod.string().min(1, { message: '¡Se requiere confirmar la contraseña!' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match!',
+    message: '¡Las contraseñas no coinciden!',
     path: ['confirmPassword'],
   });
 
@@ -59,8 +52,6 @@ export function JwtUpdatePasswordView() {
   const email = searchParams.get('email');
 
   const password = useBoolean();
-
-  // const countdown = useCountdownSeconds(5);
 
   const defaultValues = {
     code: '',
@@ -90,41 +81,26 @@ export function JwtUpdatePasswordView() {
       //   newPassword: data.password,
       // });
 
-      router.push(paths.auth.amplify.signIn);
+      router.push(paths.auth.jwt.signIn);
     } catch (error) {
       console.error(error);
     }
   });
 
-  // const handleResendCode = useCallback(async () => {
-  //   if (!countdown.isCounting) {
-  //     try {
-  //       countdown.reset();
-  //       countdown.start();
-  //
-  //       // await resetPassword({ username: values.email });
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  // }, [countdown, values.email]);
-
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
       <Field.Text
         name="email"
-        label="Email address"
+        label="Correo electrónico"
         placeholder="example@gmail.com"
         InputLabelProps={{ shrink: true }}
         disabled
       />
 
-      <Field.Code name="code" />
-
       <Field.Text
         name="password"
-        label="Password"
-        placeholder="6+ characters"
+        label="Contraseña"
+        placeholder="6+ caracteres"
         type={password.value ? 'text' : 'password'}
         InputLabelProps={{ shrink: true }}
         InputProps={{
@@ -140,7 +116,7 @@ export function JwtUpdatePasswordView() {
 
       <Field.Text
         name="confirmPassword"
-        label="Confirm new password"
+        label="Confirmar nueva contraseña"
         type={password.value ? 'text' : 'password'}
         InputLabelProps={{ shrink: true }}
         InputProps={{
@@ -160,9 +136,9 @@ export function JwtUpdatePasswordView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Update password..."
+        loadingIndicator="Actualizando contraseña..."
       >
-        Update password
+        Actualizar contraseña
       </LoadingButton>
     </Box>
   );
@@ -171,21 +147,15 @@ export function JwtUpdatePasswordView() {
     <>
       <FormHead
         icon={<SentIcon />}
-        title="Request sent successfully!"
-        description={`We've sent a 6-digit confirmation email to your email. \nPlease enter the code in below box to verify your email.`}
+        title="¡Solicitud de actualización de contraseña!"
+        // description={`We've sent a 6-digit confirmation email to your email. \nPlease enter the code in below box to verify your email.`}
       />
 
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </Form>
 
-      {/*<FormResendCode*/}
-      {/*  onResendCode={handleResendCode}*/}
-      {/*  value={countdown.value}*/}
-      {/*  disabled={countdown.isCounting}*/}
-      {/*/>*/}
-
-      <FormReturnLink href={paths.auth.amplify.signIn} />
+      <FormReturnLink href={paths.auth.jwt.signIn} />
     </>
   );
 }

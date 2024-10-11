@@ -14,7 +14,7 @@ import { PasswordIcon } from 'src/assets/icons';
 
 import { Form, Field } from 'src/components/hook-form';
 
-// import { resetPassword } from '../../context/amplify';
+import { resetPassword } from '../../context/jwt';
 import { FormHead } from '../../components/form-head';
 import { FormReturnLink } from '../../components/form-return-link';
 
@@ -43,17 +43,21 @@ export function JwtResetPasswordView() {
 
   const {
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // await resetPassword({ username: data.email });
-      //
-      // const searchParams = new URLSearchParams({ email: data.email }).toString();
-      //
-      // const href = `${paths.auth.amplify.updatePassword}?${searchParams}`;
-      // router.push(href);
+      const message = await resetPassword({ username: data.email });
+      // Mostrar el mensaje devuelto por la función
+      alert(message);
+
+      reset();
+      //const searchParams = new URLSearchParams({ email: data.email }).toString();
+
+      //const href = `${paths.auth.jwt.updatePassword}?${searchParams}`;
+      //router.push(href);
     } catch (error) {
       console.error(error);
     }
@@ -75,7 +79,7 @@ export function JwtResetPasswordView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Send request..."
+        loadingIndicator="Enviando solicitud..."
       >
         Enviar solicitud
       </LoadingButton>
@@ -94,7 +98,7 @@ export function JwtResetPasswordView() {
         {renderForm}
       </Form>
 
-      <FormReturnLink href={paths.auth.amplify.signIn} />
+      <FormReturnLink href={paths.auth.jwt.signIn} />
     </>
   );
 }
