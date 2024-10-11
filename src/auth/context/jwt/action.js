@@ -90,7 +90,15 @@ export const resetPassword = async ({ username }) => {
 /** **************************************
  * Update password
  *************************************** */
-export const updatePassword = async ({ username, confirmationCode, newPassword }) => {
+export const updatePassword = async ({ username, new_password }) => {
+  try {
+    const params = { username, new_password };
 
+    await axios.post(endpoints.auth.updatePassword, params);
+
+  } catch (error) {
+    console.error('Error during sign in:', error);
+    throw error;
+  }
 
 };

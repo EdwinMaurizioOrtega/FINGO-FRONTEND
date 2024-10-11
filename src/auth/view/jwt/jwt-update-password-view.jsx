@@ -21,7 +21,7 @@ import { Form, Field } from 'src/components/hook-form';
 
 import { FormHead } from '../../components/form-head';
 import { FormReturnLink } from '../../components/form-return-link';
-// import { resetPassword, updatePassword } from '../../context/amplify';
+import { updatePassword } from '../../context/jwt';
 
 // ----------------------------------------------------------------------
 
@@ -75,11 +75,10 @@ export function JwtUpdatePasswordView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // await updatePassword({
-      //   username: data.email,
-      //   confirmationCode: data.code,
-      //   newPassword: data.password,
-      // });
+      await updatePassword({
+        username: data.email,
+        new_password: data.password,
+      });
 
       router.push(paths.auth.jwt.signIn);
     } catch (error) {
