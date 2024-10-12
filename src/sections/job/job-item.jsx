@@ -52,11 +52,17 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
         </IconButton>
 
         <Stack sx={{ p: 3, pb: 2 }}>
-          <Avatar
+          <Box
+            component="img"
             alt={job.name}
             src={job.logo}
-            variant="rounded"
-            sx={{ width: 100, height: 25, mb: 2 }}
+            sx={{
+              height: 50,
+              width: 'auto', // El ancho se ajustará automáticamente según el tamaño original de la imagen
+              mb: 2,
+              backgroundColor: job.backgroundColor,
+              objectFit: 'contain' // Evita la distorsión de la imagen
+            }}
           />
 
           <ListItemText
