@@ -23,27 +23,8 @@ import { SignUpTerms } from '../../components/sign-up-terms';
 
 // ----------------------------------------------------------------------
 
-// Función para calcular el dígito verificador de la cédula ecuatoriana
-function validarCedula(cedula) {
-  if (cedula.length !== 10) return false;
-
-  const provincia = parseInt(cedula.slice(0, 2), 10);
-  if (provincia < 1 || provincia > 24) return false;
-
-  const numeros = cedula.split('').map(Number);
-
-  // Algoritmo para calcular el dígito verificador
-  let suma = 0;
-  let multip = [2, 1, 2, 1, 2, 1, 2, 1, 2]; // Factor de multiplicación
-  for (let i = 0; i < 9; i++) {
-    suma += numeros[i] * multip[i];
-  }
-
-  const modulo = suma % 10;
-  const digitoVerificador = modulo === 0 ? 0 : 10 - modulo;
-
-  return digitoVerificador === numeros[9];
-}
+// Expresión regular corregida para el formato de la cédula ecuatoriana
+const cedulaRegex = /\b(0[1-9]|1[0-9]|2[0-4])\d{8}\b/;
 
 export const SignUpSchema = zod.object({
   firstName: zod.string().min(1, { message: '¡Se requieren los nombres!' }),
@@ -51,10 +32,8 @@ export const SignUpSchema = zod.object({
   cedula: zod
     .string()
     .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
-    .max(10, { message: '¡La cédula debe tener 10 caracteres!' }),
-    // .refine(val => validarCedula(val), {
-    //   message: '¡La cédula ingresada no es válida!',
-    // }),
+    .max(10, { message: '¡La cédula debe tener 10 caracteres!' })
+    .regex(cedulaRegex, { message: '¡El formato de la cédula es inválido!' }),
   email: zod
     .string()
     .min(1, { message: '¡Se requiere un correo!' })
