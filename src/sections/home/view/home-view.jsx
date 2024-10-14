@@ -5,7 +5,7 @@ import { BackToTop } from 'src/components/animate/back-to-top';
 import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll-progress';
 import { HomeHero } from '../home-hero';
 import { HomeMinimal } from '../home-minimal';
-import {JobListView} from "../../job/view";
+import { FormEntitiesView, JobListView } from '../../job/view';
 import {useEffect, useState} from "react";
 
 // ----------------------------------------------------------------------
@@ -15,6 +15,13 @@ export function HomeView() {
 
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
+
+  // Estado para manejar los datos de FormEntitiesView
+  const [montoTotalSolicitar, setMontoTotalSolicitar] = useState(0);
+  const [numeroDeCuotas, setNumeroDeCuotas] = useState(0);
+
+  // Estado para controlar la visibilidad de HomeHero
+  const [show, setShow] = useState(true);
 
   // Solicitar permisos de ubicación al montar el componente
   useEffect(() => {
@@ -35,6 +42,14 @@ export function HomeView() {
     }
   }, []);
 
+  // Función que actualizará el estado con los datos desde FormEntitiesView
+  const handleFormSubmit = (monto, cuotas) => {
+    setMontoTotalSolicitar(monto);
+    setNumeroDeCuotas(cuotas);
+    // Ocultar HomeHero cuando el formulario se envíe
+    setShow(false);
+  };
+
   return (
     <>
       <ScrollProgress
@@ -45,12 +60,20 @@ export function HomeView() {
 
       <BackToTop />
 
-      <HomeHero />
+      <FormEntitiesView
+        onSubmit={handleFormSubmit}
+      />
+
+      {/* Renderizar HomeHero solo si showHomeHero es true */}
+      {show && <HomeHero />}
 
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
-        <HomeMinimal />
+        {show && <HomeMinimal />}
 
-        <JobListView/>
+        <JobListView
+          montoTotalSolicitar={montoTotalSolicitar}
+          numeroDeCuotas={numeroDeCuotas}
+        />
 
       </Stack>
     </>
