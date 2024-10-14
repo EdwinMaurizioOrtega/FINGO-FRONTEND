@@ -4,23 +4,18 @@ import { z as zod } from 'zod';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
-
 import { useBoolean } from 'src/hooks/use-boolean';
-
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
-
 import { signUp } from '../../context/jwt';
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
@@ -28,10 +23,38 @@ import { SignUpTerms } from '../../components/sign-up-terms';
 
 // ----------------------------------------------------------------------
 
+// Función para calcular el dígito verificador de la cédula ecuatoriana
+function validarCedula(cedula) {
+  if (cedula.length !== 10) return false;
+
+  const provincia = parseInt(cedula.slice(0, 2), 10);
+  if (provincia < 1 || provincia > 24) return false;
+
+  const numeros = cedula.split('').map(Number);
+
+  // Algoritmo para calcular el dígito verificador
+  let suma = 0;
+  let multip = [2, 1, 2, 1, 2, 1, 2, 1, 2]; // Factor de multiplicación
+  for (let i = 0; i < 9; i++) {
+    suma += numeros[i] * multip[i];
+  }
+
+  const modulo = suma % 10;
+  const digitoVerificador = modulo === 0 ? 0 : 10 - modulo;
+
+  return digitoVerificador === numeros[9];
+}
+
 export const SignUpSchema = zod.object({
   firstName: zod.string().min(1, { message: '¡Se requieren los nombres!' }),
   lastName: zod.string().min(1, { message: '¡Se requiere los apellidos!' }),
-  cedula: zod.string().min(10, { message: '¡La cédula debe tener 10 caracteres!' }),
+  cedula: zod
+    .string()
+    .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
+    .max(10, { message: '¡La cédula debe tener 10 caracteres!' }),
+    // .refine(val => validarCedula(val), {
+    //   message: '¡La cédula ingresada no es válida!',
+    // }),
   email: zod
     .string()
     .min(1, { message: '¡Se requiere un correo!' })
@@ -40,10 +63,6 @@ export const SignUpSchema = zod.object({
     .string()
     .min(1, { message: '¡Se requiere contraseña!' })
     .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
-  termsAccepted: zod
-    .boolean()
-    .refine((val) => val === true, { message: '¡Debes aceptar los términos y condiciones!' }),
-
 });
 
 // ----------------------------------------------------------------------
@@ -175,7 +194,6 @@ export function JwtSignUpView() {
         {renderForm}
       </Form>
 
-      {/*<SignUpTerms />*/}
     </>
   );
 }
