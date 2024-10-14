@@ -95,6 +95,39 @@ export function JwtSignUpView() {
     }
   });
 
+  const validar = (cedula) => {
+    let total = 0;
+    const longitud = cedula.length;
+    const longcheck = longitud - 1;
+
+    // Validación inicial: La cédula no puede estar vacía y debe tener 10 dígitos
+    if (cedula !== "" && longitud === 10) {
+      for (let i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          let aux = cedula.charAt(i) * 2;  // Multiplica el dígito por 2
+          if (aux > 9) aux -= 9;  // Si el resultado es mayor que 9, le resta 9
+          total += aux;  // Acumula el valor en total
+        } else {
+          total += parseInt(cedula.charAt(i));  // Si no es un índice par, simplemente suma el valor del dígito
+        }
+      }
+
+      // Calcula el dígito verificador
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      // Verifica si el último dígito (dígito verificador) es correcto
+      if (cedula.charAt(longitud - 1) == total) {
+        setErrorMsg('Cédula válida');
+      } else {
+        setErrorMsg('Cédula inválida');
+      }
+    } else {
+      setErrorMsg('¡La cédula debe tener exactamente 10 dígitos!');
+    }
+  };
+
+
+
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
       <Box display="flex" gap={{ xs: 3, sm: 2 }} flexDirection={{ xs: 'column', sm: 'row' }}>
@@ -106,7 +139,9 @@ export function JwtSignUpView() {
         name="cedula"
         label="Cédula"
         placeholder="10 caracteres"
-        InputLabelProps={{ shrink: true }} />
+        InputLabelProps={{ shrink: true }}
+        onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
+      />
 
       <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }} />
 
