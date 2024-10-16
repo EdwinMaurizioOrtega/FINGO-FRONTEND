@@ -43,14 +43,17 @@ export function CarouselAnimation({ data }) {
 // ----------------------------------------------------------------------
 
 function CarouselItem({ item, index, selected }) {
+
+  const { title, image, description} = item;
+
   return (
     <Box sx={{ position: 'relative' }}>
       <IndexLabel index={index + 1} />
 
       <Box
         component="img"
-        alt={item.title}
-        src={item.image}
+        alt={title}
+        src={image}
         sx={{
           objectFit: 'cover',
           aspectRatio: { xs: '4/3', sm: '16/6' },
@@ -90,13 +93,13 @@ function CarouselItem({ item, index, selected }) {
               typography: { xs: 'subtitle1', md: 'h3' },
             }}
           >
-            {item.title}
+            {title}
           </Typography>
         </m.div>
 
         <m.div variants={varFade().inRight}>
           <Typography noWrap variant="body2">
-            {item.description}
+            {description}
           </Typography>
         </m.div>
 
