@@ -1,20 +1,16 @@
 'use client';
 
 import { DashboardContent } from 'src/layouts/dashboard';
-import { useAuthContext } from '../../../auth/hooks';
 import Box from '@mui/material/Box';
 import { Field, Form } from '../../../components/hook-form';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Unstable_Grid2';
-import { CardHeader } from '@mui/material';
 import Alert from '@mui/material/Alert';
 
 // ----------------------------------------------------------------------
 
-export function FormEntitiesView({ onSubmit }) {
-
-  const { user } = useAuthContext();
+export function FormEntitiesView({ onSubmit, ...props }) {
 
   const defaultValues = {
     monto_a_solicitar: '',
@@ -49,21 +45,21 @@ export function FormEntitiesView({ onSubmit }) {
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+              <Grid xs={12} md={4}>
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid xs={12} md={4}>
                 <Field.Text
                   name="num_cuotas"
                   label="# CUOTAS *"
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid xs={12} md={4}>
                 <LoadingButton
                   fullWidth
                   color="inherit"

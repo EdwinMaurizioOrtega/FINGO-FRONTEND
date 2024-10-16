@@ -6,6 +6,7 @@ import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll
 import { FormEntitiesView, JobListView } from '../../job/view';
 import { useEffect, useState } from 'react';
 import { CarouselAnimation } from '../../_examples/extra/carousel-view';
+import { HomeHero } from '../home-hero';
 
 // ----------------------------------------------------------------------
 
