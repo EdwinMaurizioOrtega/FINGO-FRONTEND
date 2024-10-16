@@ -7,6 +7,8 @@ import { Field, Form } from '../../../components/hook-form';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Unstable_Grid2';
+import { CardHeader } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +42,10 @@ export function FormEntitiesView({ onSubmit }) {
 
   return (
     <DashboardContent>
-      <Box sx={{ mt: 2, mb: 10 }}>
+      <Alert key="success" severity="success" sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+        Elije el créditoque más se ajuste a tus necesidades de entre decenas de opciones en el mercado!
+      </Alert>
+      <Box sx={{ mt: 2, mb: 5 }}>
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
@@ -68,7 +73,7 @@ export function FormEntitiesView({ onSubmit }) {
                   loading={isSubmitting}
                   loadingIndicator="Generando..."
                 >
-                  Generar
+                  BUSCAR
                 </LoadingButton>
               </Grid>
             </Grid>

@@ -62,19 +62,16 @@ export function HomeView() {
       />
 
       <BackToTop />
-
       <FormEntitiesView onSubmit={handleFormSubmit} />
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}
       {/*{show && <HomeHero />}*/}
-      <DashboardContent>
-        <Box>
-          <CardHeader title="Distribuidor Autorizado" subheader="Samsung, Infinix, Xiaomi y BLU" />
+      {show && <DashboardContent>
+        <Box sx={{ mb: 5 }}>
+          <CarouselAnimation data={_carouselSsectionOne} />
         </Box>
       </DashboardContent>
-
-      <CarouselAnimation data={_carouselSsectionOne} />
-
+      }
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
         {/*{show && <HomeMinimal />}*/}
 
@@ -87,37 +84,17 @@ export function HomeView() {
 const _carouselSsectionOne = [
   {
     id: 1,
-    title: 'SAMSUNG',
-    image: '/assets/images/home/section-one/dit-aut-samsung.jpg',
-    description: 'Distribuidor autorizado',
-    link: 'https://mecompras.ec/16-samsung',
+    title: 'Demo test ',
+    image: '/assets/images/home/section-one/uno.png',
+    description: 'Demo test ',
+    link: 'https://www.google.com/',
   },
   {
     id: 2,
-    title: 'INFINIX',
-    image: '/assets/images/home/section-one/dit-aut-infinix.jpg',
-    description: 'Distribuidor autorizado',
-    link: 'https://mecompras.ec/17-infinix',
+    title: 'Demo test ',
+    image: '/assets/images/home/section-one/dos.png',
+    description: 'Demo test ',
+    link: 'https://www.google.com/',
   },
-  {
-    id: 3,
-    title: 'XIAOMI',
-    image: '/assets/images/home/section-one/dit-aut-xiaomi.jpg',
-    description: 'Distribuidor autorizado',
-    link: 'https://mecompras.ec/',
-  },
-  {
-    id: 4,
-    title: 'BLU',
-    image: '/assets/images/home/section-one/banner-blu-aut.jpg',
-    description: 'Distribuidor autorizado',
-    link: 'https://mecompras.ec/',
-  },
-  {
-    id: 5,
-    title: 'GARANTIA',
-    image: '/assets/images/home/section-one/banner-garantia.jpg',
-    description: '1 año de garantia en todos nuestros productos.',
-    link: 'https://mecompras.ec/',
-  },
+
 ];

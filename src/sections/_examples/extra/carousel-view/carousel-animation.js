@@ -53,7 +53,7 @@ function CarouselItem({ item, index, selected }) {
         src={item.image}
         sx={{
           objectFit: 'cover',
-          aspectRatio: { xs: '4/3', sm: '16/10' },
+          aspectRatio: { xs: '4/3', sm: '16/6' },
         }}
       />
 
@@ -106,7 +106,7 @@ function CarouselItem({ item, index, selected }) {
             variant="contained"
             sx={{ mt: 3, display: { xs: 'none', sm: 'inline-flex' } }}
           >
-            View More
+            Demo Button
           </Button>
         </m.div>
       </Box>
