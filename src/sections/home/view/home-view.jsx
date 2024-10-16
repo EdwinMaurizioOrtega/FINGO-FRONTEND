@@ -3,13 +3,9 @@
 import Stack from '@mui/material/Stack';
 import { BackToTop } from 'src/components/animate/back-to-top';
 import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll-progress';
-import { HomeHero } from '../home-hero';
-import { HomeMinimal } from '../home-minimal';
 import { FormEntitiesView, JobListView } from '../../job/view';
 import { useEffect, useState } from 'react';
-import { Box, CardHeader } from '@mui/material';
-import { CarouselAnimation } from '../../_examples/extra/carousel-view/carousel-animation';
-import { DashboardContent } from '../../../layouts/dashboard';
+import { CarouselAnimation } from '../../_examples/extra/carousel-view';
 
 // ----------------------------------------------------------------------
 
@@ -66,11 +62,7 @@ export function HomeView() {
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}
       {/*{show && <HomeHero />}*/}
-      {show && <DashboardContent>
-        <Box sx={{ mb: 5 }}>
-          <CarouselAnimation data={_carouselSsectionOne} />
-        </Box>
-      </DashboardContent>
+      {show && <CarouselAnimation />
       }
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
         {/*{show && <HomeMinimal />}*/}
@@ -80,21 +72,3 @@ export function HomeView() {
     </>
   );
 }
-
-const _carouselSsectionOne = [
-  {
-    id: 1,
-    title: 'Demo test ',
-    image: '/assets/images/home/section-one/uno.png',
-    description: 'Demo test ',
-    link: 'https://www.google.com/',
-  },
-  {
-    id: 2,
-    title: 'Demo test ',
-    image: '/assets/images/home/section-one/dos.png',
-    description: 'Demo test ',
-    link: 'https://www.google.com/',
-  },
-
-];
