@@ -15,16 +15,16 @@ import { DashboardContent } from '../../../../layouts/dashboard';
 const data = [
   {
     id: 1,
-    title: 'Demo test ',
-    image: '/assets/images/home/section-one/uno.png',
-    description: 'Demo test ',
+    title: 'Demo test 1',
+    image: 'https://placehold.co/1280x480',
+    description: 'Demo test 1',
     link: 'https://www.google.com/',
   },
   {
     id: 2,
-    title: 'Demo test ',
-    image: '/assets/images/home/section-one/dos.png',
-    description: 'Demo test ',
+    title: 'Demo test 2',
+    image: 'https://placehold.co/1280x480',
+    description: 'Demo test 2',
     link: 'https://www.google.com/',
   },
 ];
@@ -75,7 +75,7 @@ function CarouselItem({ itemData, index, selected }) {
         src={itemData.image}
         sx={{
           objectFit: 'cover',
-          aspectRatio: { xs: '4/3', sm: '16/6' },
+          aspectRatio: { xs: '4/3', sm: '16/5' },
         }}
       />
 

@@ -7,6 +7,7 @@ import { FormEntitiesView, JobListView } from '../../job/view';
 import { useEffect, useState } from 'react';
 import { CarouselAnimation } from '../../_examples/extra/carousel-view';
 import { HomeHero } from '../home-hero';
+import {HomeMinimal} from "../home-minimal";
 
 // ----------------------------------------------------------------------
 
@@ -62,13 +63,13 @@ export function HomeView() {
       <FormEntitiesView onSubmit={handleFormSubmit} />
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}
-      {/*{show && <HomeHero />}*/}
-      {show && <CarouselAnimation />
-      }
-      <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
-        {/*{show && <HomeMinimal />}*/}
+      {show && <CarouselAnimation />}
+      {show && <HomeHero />}
 
-        <JobListView montoTotalSolicitar={montoTotalSolicitar} numeroDeCuotas={numeroDeCuotas} />
+      <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
+        {show && <HomeMinimal />}
+
+        {!show &&  <JobListView montoTotalSolicitar={montoTotalSolicitar} numeroDeCuotas={numeroDeCuotas} />}
       </Stack>
     </>
   );

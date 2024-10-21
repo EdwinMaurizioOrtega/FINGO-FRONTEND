@@ -49,8 +49,8 @@ export function HomeHero({ sx, ...other }) {
 
   const opacity = useTransform(
     scroll.scrollY,
-    [0, 1],
-    [1, mdUp ? Number((1 - scroll.percent / 100).toFixed(1)) : 1]
+    [0, 1], // Rango de scroll
+    [0, 1] // El elemento se desplaza hacia arriba a medida que se hace scroll
   );
 
   const renderHeading = (
@@ -239,7 +239,7 @@ export function HomeHero({ sx, ...other }) {
           maxHeight: 1440,
           display: 'block',
           willChange: 'opacity',
-          mt: 'calc(var(--layout-header-desktop-height) * -1)',
+          mt: 'calc(var(--layout-header-desktop-height) * 0)',
         },
         ...sx,
       }}
