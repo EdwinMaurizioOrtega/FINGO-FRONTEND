@@ -493,7 +493,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CRÉDITO HUANCAVILCA LTDA",
       "segmento": "2",
       "tasa": "16.74",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://cooperativahuancavilca.com/wp-content/uploads/2020/11/logoCOACNH-white.png",
       "backgroundColor": "white"
     },
     {
@@ -501,7 +501,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO 15 DE ABRIL LTDA",
       "segmento": "1",
       "tasa": "1",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.coop15abril.fin.ec/images/logo15.png",
       "backgroundColor": "white"
     },
     {
@@ -509,7 +509,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO 29 DE OCTUBRE LTDA",
       "segmento": "1",
       "tasa": "15.96",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/64.png",
       "backgroundColor": "white"
     },
     {
@@ -517,7 +517,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO 9 DE OCTUBRE LTDA",
       "segmento": "1",
       "tasa": "13.54",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/65.png",
       "backgroundColor": "white"
     },
     {
@@ -525,23 +525,23 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO AMBATO LTDA",
       "segmento": "1",
       "tasa": "15.4",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "/assets/entities/66.png",
+      "backgroundColor": "#415676"
     },
     {
       "id": "67",
       "name": "COOPERATIVA DE AHORRO Y CREDITO CALCETA LTDA",
       "segmento": "1",
       "tasa": "16.3",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "/assets/entities/67.png",
+      "backgroundColor": "#415676"
     },
     {
       "id": "68",
       "name": "COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DE AMBATO LTDA",
       "segmento": "1",
       "tasa": "1",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/68.png",
       "backgroundColor": "white"
     },
     {
@@ -549,7 +549,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO CHONE LTDA",
       "segmento": "1",
       "tasa": "15.96",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/69.png",
       "backgroundColor": "white"
     },
     {
@@ -557,7 +557,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO COMERCIO LTDA",
       "segmento": "1",
       "tasa": "16.06",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.coopcomer.fin.ec/images/logo-comercio-01.svg",
       "backgroundColor": "white"
     },
     {
@@ -565,7 +565,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA CACPE LOJA LTDA",
       "segmento": "1",
       "tasa": "15.57",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/71.png",
       "backgroundColor": "white"
     },
     {
@@ -573,7 +573,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA GUALAQUIZA",
       "segmento": "1",
       "tasa": "1",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://cacpeg.fin.ec/v3/wp-content/uploads/2023/10/LOGO_COOP.png",
       "backgroundColor": "white"
     },
     {
@@ -581,7 +581,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO EL SAGRARIO LTDA",
       "segmento": "1",
       "tasa": "16.58",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/73.png",
       "backgroundColor": "white"
     },
     {
@@ -589,7 +589,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO INDIGENA SAC LTDA",
       "segmento": "1",
       "tasa": "16.04",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/74.png",
       "backgroundColor": "white"
     },
     {
@@ -597,7 +597,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO LUZ DEL VALLE",
       "segmento": "1",
       "tasa": "1",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/75.png",
       "backgroundColor": "white"
     },
     {
@@ -605,7 +605,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO PADRE JULIAN LORENTE LTDA",
       "segmento": "1",
       "tasa": "16.6",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://lorente.fin.ec/wp-content/uploads/2021/06/logo_lorente_web.png",
       "backgroundColor": "white"
     },
     {
@@ -613,7 +613,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO RIOBAMBA LTDA",
       "segmento": "1",
       "tasa": "15.95",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cooprio.fin.ec/wp-content/uploads/2023/04/logo-2048x512.png",
       "backgroundColor": "white"
     },
     {
@@ -621,7 +621,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO SAN FRANCISCO LTDA",
       "segmento": "1",
       "tasa": "16.4",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://coac-sanfra.com/images/logoSF4.png",
       "backgroundColor": "white"
     },
     {
@@ -629,7 +629,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO VIRGEN DEL CISNE",
       "segmento": "1",
       "tasa": "16.03",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.virgendelcisne.fin.ec/images/logo@2x.png",
       "backgroundColor": "white"
     },
     {
@@ -637,7 +637,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO KULLKI WASI LTDA",
       "segmento": "1",
       "tasa": "16.38",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://kullkiwasi.com.ec/assets/images/kul.png",
       "backgroundColor": "white"
     },
     {
@@ -645,7 +645,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO MUSHUC RUNA LTDA",
       "segmento": "1",
       "tasa": "16.01",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://mushucruna.com/wp-content/uploads/Logo-H-Mushuc-Runa.png",
       "backgroundColor": "white"
     },
     {
@@ -653,7 +653,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA",
       "segmento": "1",
       "tasa": "16.26",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.caja.com.ec/wp-content/uploads/2023/03/logo-para-web.webp",
       "backgroundColor": "white"
     },
     {
@@ -661,7 +661,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO 23 DE JULIO LIMITADA",
       "segmento": "1",
       "tasa": "16",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://coop23dejulio.fin.ec/images/w_1280,f_webp/shared/logo-cooperativa-de-ahorro-y-credito-23-de-julio-en-ecuador-2.webp",
       "backgroundColor": "white"
     },
     {
@@ -669,7 +669,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ALIANZA DEL VALLE LIMITADA",
       "segmento": "1",
       "tasa": "16.04",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.alianzadelvalle.fin.ec/wp-content/uploads/2023/05/logotipo-adv.svg",
       "backgroundColor": "white"
     },
     {
@@ -677,7 +677,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ANDALUCIA LIMITADA",
       "segmento": "1",
       "tasa": "15.57",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://andalucia.fin.ec/img/logoandablue.png",
       "backgroundColor": "white"
     },
     {
@@ -685,7 +685,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ATUNTAQUI LIMITADA",
       "segmento": "1",
       "tasa": "15.57",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.atuntaqui.fin.ec/images/Logotipo-Cooperativa-Atuntaqui.png",
       "backgroundColor": "white"
     },
     {
@@ -693,7 +693,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO CHIBULEO LIMITADA",
       "segmento": "1",
       "tasa": "16.16",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.chibuleo.com/assets/logo/COAC.%20Chibuleo.png",
       "backgroundColor": "white"
     },
     {
@@ -701,7 +701,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO COOPROGRESO LIMITADA",
       "segmento": "1",
       "tasa": "16.19",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cooprogreso.fin.ec/Portals/0/Images/logo.png",
       "backgroundColor": "white"
     },
     {
@@ -709,7 +709,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO CREA LIMITADA",
       "segmento": "1",
       "tasa": "15.58",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/89.png",
       "backgroundColor": "white"
     },
     {
@@ -717,7 +717,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA BIBLIAN LIMITADA",
       "segmento": "1",
       "tasa": "16.16",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "/assets/entities/90.png",
       "backgroundColor": "white"
     },
     {
@@ -725,7 +725,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA DE COTOPAXI LIMITADA",
       "segmento": "1",
       "tasa": "16.19",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cacpeco.com/wp-content/uploads/2022/02/logo-menu-v1-retina.png",
       "backgroundColor": "white"
     },
     {
@@ -733,7 +733,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA DE PASTAZA LIMITADA",
       "segmento": "1",
       "tasa": "16.52",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cacpepas.fin.ec/assets/img/logo/cacpepastaza_logo.png",
       "backgroundColor": "white"
     },
     {
@@ -741,7 +741,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ERCO LIMITADA",
       "segmento": "1",
       "tasa": "16.43",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cooperco.fin.ec/imagenes/logo.png",
       "backgroundColor": "white"
     },
     {
@@ -749,7 +749,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO FERNANDO DAQUILEMA LIMITADA",
       "segmento": "1",
       "tasa": "16.06",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.coopdaquilema.com/wp-content/uploads/2020/08/logo.svg",
       "backgroundColor": "white"
     },
     {
@@ -757,7 +757,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO JARDIN AZUAYO LIMITADA",
       "segmento": "1",
       "tasa": "15.43",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.jardinazuayo.fin.ec/wp-content/uploads/2023/09/Frame-3.png",
       "backgroundColor": "white"
     },
     {
@@ -765,15 +765,15 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO JUVENTUD ECUATORIANA PROGRESISTA LIMITADA",
       "segmento": "1",
       "tasa": "16.76",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "https://www.jep.coop/JEP-theme/images/JEP/2020/logo-JEP.svg",
+      "backgroundColor": "black"
     },
     {
       "id": "97",
       "name": "COOPERATIVA DE AHORRO Y CREDITO LA MERCED LIMITADA",
       "segmento": "1",
       "tasa": "16.77",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.lamerced.fin.ec/wp-content/uploads/2023/03/LM-2024-Green-1536x454.png",
       "backgroundColor": "white"
     },
     {
@@ -781,7 +781,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO OSCUS LIMITADA",
       "segmento": "1",
       "tasa": "16.02",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://oscus.coop/assets/img/logo-home.png",
       "backgroundColor": "white"
     },
     {
@@ -789,7 +789,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO PABLO MUÑOZ VEGA LIMITADA",
       "segmento": "1",
       "tasa": "16.55",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cpmv.fin.ec/wp-content/uploads/2021/10/LOGO-ANIMADO-PARA-WEB-1.gif",
       "backgroundColor": "white"
     },
     {
@@ -797,15 +797,15 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO PILAHUIN TIO LIMITADA",
       "segmento": "1",
       "tasa": "16",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "https://pilahuintio.ec/wp-content/uploads/2020/07/logo-ptio-white-1.png",
+      "backgroundColor": "black"
     },
     {
       "id": "101",
       "name": "COOPERATIVA DE AHORRO Y CREDITO POLICIA NACIONAL LIMITADA",
       "segmento": "1",
       "tasa": "16.16",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://www.cpn.fin.ec/frontend/web/images/logo_cpn.svg",
       "backgroundColor": "white"
     },
     {
@@ -813,7 +813,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO SAN JOSE LIMITADA",
       "segmento": "1",
       "tasa": "16.14",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://coopsanjose.fin.ec/wp-content/uploads/2019/10/LOGOTIPO-COAC-SAN-JOSE-HORIZONTAL-SIN-ESLOGAN-scaled.jpg",
       "backgroundColor": "white"
     },
     {
@@ -821,7 +821,7 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO SANTA ROSA LIMITADA",
       "segmento": "1",
       "tasa": "15.33",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://static.wixstatic.com/media/df4180_6aa067f17cb64204aa859d5b324f79a8~mv2.png/v1/crop/x_2,y_0,w_388,h_224/fill/w_454,h_244,al_c,lg_1,q_85,enc_auto/plantillas-web-Coopacs.png",
       "backgroundColor": "white"
     },
     {
@@ -829,15 +829,15 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO TULCAN LIMITADA",
       "segmento": "1",
       "tasa": "15.67",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "https://www.cooptulcan.fin.ec/wp-content/uploads/2022/09/Recurso-1.svg",
+      "backgroundColor": "green"
     },
     {
       "id": "105",
       "name": "COOPERATIVA DE AHORRO Y CREDITO VICENTINA MANUEL ESTEBAN GODOY ORTEGA LIMITADA",
       "segmento": "1",
       "tasa": "14.77",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://coopmego.com/wp-content/uploads/2015/05/logo_marca_coopmego_index1.png",
       "backgroundColor": "white"
     },
     {
@@ -845,15 +845,15 @@ export const _jobs =
       "name": "COOPERATIVA DE AHORRO Y CREDITO ONCE DE JUNIO LTDA",
       "segmento": "1",
       "tasa": "16.48",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
-      "backgroundColor": "white"
+      "logo": "https://www.oncedejunio.fin.ec/oncedejunio/wp-content/uploads/2022/11/LOGO2023Blanco.png",
+      "backgroundColor": "green"
     },
     {
       "id": "107",
       "name": "COOPERATIVA DE AHORRO Y CREDITO DE LOS SERVIDORES PUBLICOS DEL MINISTERIO DE EDUCACION Y CULTURA",
       "segmento": "1",
       "tasa": "12.15",
-      "logo": "https://www.produbanco.com.ec/media/713976/web.png?format=webp",
+      "logo": "https://cacspmec.fin.ec/assets/cacspmec-w-logo.png",
       "backgroundColor": "white"
     }
   ]
