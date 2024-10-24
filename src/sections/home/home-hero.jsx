@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react';
 import { m, useScroll, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
-
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -10,20 +8,15 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar, { avatarClasses } from '@mui/material/Avatar';
-
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
 import { useResponsive } from 'src/hooks/use-responsive';
-
 import { _mock } from 'src/_mock';
 import { CONFIG } from 'src/config-global';
 import { textGradient } from 'src/theme/styles';
-
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { varFade, MotionContainer } from 'src/components/animate';
-
 import { HeroBackground } from './components/hero-background';
 
 // ----------------------------------------------------------------------
@@ -329,7 +322,7 @@ function useScrollPercent() {
       heroHeight = elementRef.current.offsetHeight;
     }
 
-    const scrollPercent = Math.floor((scrollHeight / heroHeight) * 100);
+    const scrollPercent = Math.floor((scrollHeight / heroHeight) * 280);
 
     if (scrollPercent >= 100) {
       setPercent(100);

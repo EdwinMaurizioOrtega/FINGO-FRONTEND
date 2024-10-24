@@ -38,10 +38,10 @@ export function FormEntitiesView({ onSubmit, ...props }) {
 
   return (
     <DashboardContent>
-      <Alert key="success" severity="success" sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-        Elije el créditoque más se ajuste a tus necesidades de entre decenas de opciones en el mercado!
-      </Alert>
-      <Box sx={{ mt: 2, mb: 5 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+        Elige el crédito que más se ajuste a tus necesidades de entre decenas de opciones en el mercado.
+      </div>
+      <Box sx={{ mt: 2, mb: 5, bgcolor: '#ff9999', p: 2, borderRadius: '16px'}}>
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
@@ -50,6 +50,7 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
                   InputLabelProps={{ shrink: true }}
+                  inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
                 />
               </Grid>
               <Grid xs={12} md={4}>
@@ -57,6 +58,7 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   name="num_cuotas"
                   label="# CUOTAS *"
                   InputLabelProps={{ shrink: true }}
+                  inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
                 />
               </Grid>
               <Grid xs={12} md={4}>
