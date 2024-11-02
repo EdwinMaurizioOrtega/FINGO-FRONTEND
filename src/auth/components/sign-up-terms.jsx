@@ -29,7 +29,7 @@ export function SignUpTerms({ termsAccepted, setTermsAccepted, sx, ...other }) {
         }
         label={
           <>
-      {'Al registrarme, acepto la '}
+      {'Al registrarme, entiendo y consiento que mis datos personales requieren ser transferidos a Instituciones Financieras para la evaluación de productos financieros. Acepto la '}
       {/*<Link underline="always" color="text.primary">*/}
       {/*  Términos de servicio*/}
       {/*</Link>*/}
