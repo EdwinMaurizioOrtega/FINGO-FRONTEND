@@ -44,14 +44,14 @@ export default function CookieBanner() {
           </Button>
         </Box>
       }
-      action={
-        <Button
-          color="inherit"
-          onClick={() => setIsVisible(false)}
-        >
-          Cerrar
-        </Button>
-      }
+      // action={
+      //   <Button
+      //     color="inherit"
+      //     onClick={() => setIsVisible(false)}
+      //   >
+      //     Cerrar
+      //   </Button>
+      // }
     />
   );
 }
