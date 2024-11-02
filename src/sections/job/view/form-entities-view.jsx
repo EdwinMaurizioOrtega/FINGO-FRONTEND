@@ -41,7 +41,7 @@ export function FormEntitiesView({ onSubmit, ...props }) {
       <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
         Elige el crédito que más se ajuste a tus necesidades de entre decenas de opciones en el mercado.
       </div>
-      <Box sx={{ mt: 2, mb: 5, bgcolor: '#ff9999', p: 2, borderRadius: '16px'}}>
+      <Box sx={{ mt: 2, mb: 5, bgcolor: '#FFE3D5', p: 2, borderRadius: '16px'}}>
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>

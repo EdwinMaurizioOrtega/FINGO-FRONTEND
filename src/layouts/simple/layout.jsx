@@ -40,12 +40,12 @@ export function SimpleLayout({ sx, children, header, content }) {
               <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }}>
                 {/* -- Help link -- */}
                 <Link
-                  href={paths.faqs}
+                  href="#"
                   component={RouterLink}
                   color="inherit"
                   sx={{ typography: 'subtitle2' }}
                 >
-                  Need help?
+                  ¿Necesitas ayuda?
                 </Link>
                 {/* -- Settings button -- */}
                 <SettingsButton />

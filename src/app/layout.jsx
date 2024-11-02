@@ -14,6 +14,7 @@ import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
+import CookieBanner from "../components/CookieBanner/CookieBanner";
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ export default async function RootLayout({ children }) {
                 <ProgressBar />
                 <SettingsDrawer />
                 {children}
+                <CookieBanner />
               </MotionLazy>
             </ThemeProvider>
           </SettingsProvider>

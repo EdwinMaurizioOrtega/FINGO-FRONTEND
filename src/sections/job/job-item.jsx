@@ -100,7 +100,9 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
           }}
           >
             <Iconify width={16} icon="solar:users-group-rounded-bold" />
-            {job.tasa}% Tasa Nominal
+            {
+              job.tasa !== '1' ? job.tasa + '% Tasa Nominal' : 'Sin % Tasa Nominal'
+            }
           </Stack>
         </Stack>
 
