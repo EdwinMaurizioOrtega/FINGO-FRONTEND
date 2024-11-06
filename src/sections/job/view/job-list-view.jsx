@@ -27,13 +27,14 @@ export function JobListView({ montoTotalSolicitar, numeroDeCuotas }) {
           <Box gap={3} display="flex" flexDirection="column">
             <Box gap={3} display="flex" flexDirection="column">
               <Alert key="warning" severity="warning">
-                Los resultados estimados por el simulador son de caracter informativo y no
-                constituyen una pre aprobación del crédito.
+                Los resultados estimados por el simulador son de carácter informativo y no constituyen una pre aprobación del crédito. No se incluyen cargos adicionales (por ejemplo seguros, cargos financieros).
               </Alert>
 
               <Alert key="error" severity="error">
-                La tasa de interés aplicada es de carácter mensual vencido, lo que significa que los
-                intereses se calculan al final de cada mes y no de forma anticipada.
+                La tasas de interés aplicadas en la simulación corresponden a la tasas de interés activas efectivas promedio ponderadas por entidad y tipo a mes vencido.
+              </Alert>
+              <Alert key="success" severity="success">
+                En esta versión trabajamos con información de créditos de consumo únicamente. Próximamente iremos agregando más productos!
               </Alert>
             </Box>
           </Box>

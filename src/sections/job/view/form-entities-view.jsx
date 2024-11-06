@@ -50,9 +50,15 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
                   InputLabelProps={{ shrink: true,
-                    style: { color: 'white' }, // Cambia el color del label a blanco
+                    style: { color: 'black' }, // Cambia el color del label a blanco
                   }}
                   inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
+                  InputProps={{
+                    style: {
+                      backgroundColor: 'white', // Fondo blanco
+                      borderRadius: '9px', // Bordes redondeados
+                    },
+                  }}
                 />
               </Grid>
               <Grid xs={12} md={4}>
@@ -60,9 +66,15 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   name="num_cuotas"
                   label="# CUOTAS *"
                   InputLabelProps={{ shrink: true,
-                    style: { color: 'white' }, // Cambia el color del label a blanco
+                    style: { color: 'black' }, // Cambia el color del label a blanco
                 }}
                   inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
+                  InputProps={{
+                    style: {
+                      backgroundColor: 'white', // Fondo blanco
+                      borderRadius: '9px', // Bordes redondeados
+                    },
+                  }}
                 />
               </Grid>
               <Grid xs={12} md={4}>

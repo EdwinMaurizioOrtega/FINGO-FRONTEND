@@ -4,7 +4,7 @@ import {PrivacyPolicyView} from 'src/sections/pricing/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Pricing - ${CONFIG.appName}` };
+export const metadata = { title: `POLÍTICA - ${CONFIG.appName}` };
 
 export default function Page() {
   return <PrivacyPolicyView />;
