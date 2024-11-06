@@ -50,7 +50,12 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
                   InputLabelProps={{ shrink: true,
-                    style: { color: 'black' }, // Cambia el color del label a blanco
+                    style: { color: 'black',
+                      backgroundColor: 'white',
+                      borderRadius: '5px',
+                      padding: '0 5px',
+                    }, // Cambia el color del label a blanco
+
                   }}
                   inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
                   InputProps={{
@@ -64,9 +69,13 @@ export function FormEntitiesView({ onSubmit, ...props }) {
               <Grid xs={12} md={4}>
                 <Field.Text
                   name="num_cuotas"
-                  label="# CUOTAS *"
+                  label="NRO. CUOTAS *"
                   InputLabelProps={{ shrink: true,
-                    style: { color: 'black' }, // Cambia el color del label a blanco
+                    style: { color: 'black',
+                      backgroundColor: 'white',
+                      borderRadius: '5px',
+                      padding: '0 5px',
+                    }, // Cambia el color del label a blanco
                 }}
                   inputProps={{ type: 'number', min: 0 }} // Asegura que solo se ingresen números
                   InputProps={{
