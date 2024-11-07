@@ -7,8 +7,20 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Unstable_Grid2';
 import Alert from '@mui/material/Alert';
+import { Block } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
+
+const OPTIONS = [
+  { value: 'option 1', label: 'Option 1' },
+  { value: 'option 2', label: 'Option 2' },
+  { value: 'option 3', label: 'Option 3' },
+  { value: 'option 4', label: 'Option 4' },
+  { value: 'option 5', label: 'Option 5' },
+  { value: 'option 6', label: 'Option 6' },
+  { value: 'option 7', label: 'Option 7' },
+  { value: 'option 8', label: 'Option 8' },
+];
 
 export function FormEntitiesView({ onSubmit, ...props }) {
 
@@ -45,7 +57,35 @@ export function FormEntitiesView({ onSubmit, ...props }) {
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
-              <Grid xs={12} md={4}>
+              <Grid xs={12} md={2}>
+                  <Field.Autocomplete
+                    name="provincia"
+                    label="Provincia"
+                    options={OPTIONS}
+                    getOptionLabel={(option) => option.label}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.value}>
+                        {option.label}
+                      </li>
+                    )}
+                  />
+              </Grid>
+              <Grid xs={12} md={2}>
+                <Field.Autocomplete
+                  name="tipo_credito"
+                  label="Tipo Crédito"
+                  options={OPTIONS}
+                  getOptionLabel={(option) => option.label}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option.label}
+                    </li>
+                  )}
+                />
+              </Grid>
+              <Grid xs={12} md={3}>
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
@@ -66,7 +106,7 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={4}>
+              <Grid xs={12} md={3}>
                 <Field.Text
                   name="num_cuotas"
                   label="NRO. CUOTAS *"
@@ -86,7 +126,7 @@ export function FormEntitiesView({ onSubmit, ...props }) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={4}>
+              <Grid xs={12} md={2}>
                 <LoadingButton
                   fullWidth
                   color="inherit"
