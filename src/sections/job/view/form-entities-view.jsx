@@ -12,61 +12,91 @@ import Button from "@mui/material/Button";
 import {Iconify} from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
-
-const OPTIONS = [
-  {value: 'option 1', label: 'Option 1'},
-  {value: 'option 2', label: 'Option 2'},
-];
+//
+// const OPTIONS = [
+//   {value: 'option 1', label: 'Option 1'},
+//   {value: 'option 2', label: 'Option 2'},
+// ];
 
 export function FormEntitiesView({onSubmit, ...props}) {
 
-  const [localStorageData, setLocalStorageData] = useState({
+  const [storageLoaded, setStorageLoaded] = useState(false);
+  const [defaultValues, setDefaultValues] = useState({
     monto_a_solicitar: '',
     num_cuotas: ''
   });
 
-  const methods = useForm({
-    defaultValues: localStorageData,
-  });
-
-  const {handleSubmit, watch, reset, formState: {isSubmitting}} = methods;
-
-  // Load values from localStorage if available
+  // Cargar valores desde localStorage después de que se haya cargado el almacenamiento
   useEffect(() => {
     if (localStorageAvailable()) {
-      setLocalStorageData({
-        monto_a_solicitar: localStorageGetItem('monto_a_solicitar', ''),
-        num_cuotas: localStorageGetItem('num_cuotas', '')
+      const storedMonto = localStorageGetItem("monto_a_solicitar", "");
+      const storedCuotas = localStorageGetItem("num_cuotas", "");
+      setDefaultValues({
+        monto_a_solicitar: storedMonto,
+        num_cuotas: storedCuotas,
       });
     }
+    setStorageLoaded(true);
   }, []);
 
+  // Inicializa el formulario con react-hook-form
+  const methods = useForm({
+    defaultValues,
+  });
+
+  const { handleSubmit, watch, formState: { isSubmitting }, reset } = methods;
+
   useEffect(() => {
-    if (localStorageAvailable()) {
+    if (storageLoaded) {
+      // Resetear el formulario con los valores del localStorage una vez que esté cargado
+      reset(defaultValues);
+    }
+  }, [storageLoaded, defaultValues, reset]);
+
+  const formValues = watch();
+  const isFormFilled = Object.values(formValues).some((value) => value !== "");
+
+  useEffect(() => {
+    if (storageLoaded && localStorageAvailable()) {
+      // Si los valores del formulario cambian, guardarlos en localStorage
       const subscription = watch((values) => {
-        localStorage.setItem('monto_a_solicitar', values.monto_a_solicitar);
-        localStorage.setItem('num_cuotas', values.num_cuotas);
+        localStorage.setItem("monto_a_solicitar", values.monto_a_solicitar);
+        localStorage.setItem("num_cuotas", values.num_cuotas);
       });
       return () => subscription.unsubscribe();
     }
-  }, [watch]);
+  }, [watch, storageLoaded]);
 
   const onFormSubmit = handleSubmit(async (data) => {
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
-
-    // Llamar al prop onSubmit para pasar los datos al componente padre
     onSubmit(montoTotalSolicitar, numeroDeCuotas);
-
-    console.log(`Calculando...`);
+    console.log("Calculando...");
   });
 
   const handleClear = () => {
-    reset(localStorageData);
+    // Limpiar los valores del formulario
+    methods.reset({
+      monto_a_solicitar: '',
+      num_cuotas: ''
+    });
+
+    // Borrar los valores en localStorage
+    localStorage.removeItem('monto_a_solicitar');
+    localStorage.removeItem('num_cuotas');
   };
 
-  const formValues = watch();
-  const isFormFilled = Object.values(formValues).some((value) => value !== '');
+  if (!storageLoaded) {
+    return <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      // height: '100vh', // Ocupa toda la altura de la ventana
+      // fontSize: '20px', // Tamaño de la fuente
+    }}>
+      Cargando...
+    </div>
+  }
 
   return (
     <DashboardContent>
@@ -165,11 +195,11 @@ export function FormEntitiesView({onSubmit, ...props}) {
               </Grid>
               {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
               {isFormFilled && (
-                <Grid xs={12} md={1} sx={{display: 'flex', justifyContent: 'center'}}>
+                <Grid xs={12} md={1} sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Button
                     onClick={handleClear}
-                    startIcon={<Iconify icon="solar:trash-bin-trash-bold"/>}
-                    sx={{flexDirection: 'column', alignItems: 'center'}}
+                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                    sx={{ flexDirection: 'column', alignItems: 'center' }}
                   >
                     Limpiar
                   </Button>
