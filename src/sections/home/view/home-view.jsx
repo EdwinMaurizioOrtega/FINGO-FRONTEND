@@ -20,6 +20,8 @@ export function HomeView() {
   // Estado para manejar los datos de FormEntitiesView
   const [montoTotalSolicitar, setMontoTotalSolicitar] = useState(0);
   const [numeroDeCuotas, setNumeroDeCuotas] = useState(0);
+  const [tipoCredito, setTipoCredito] = useState('');
+  const [provincia, setProvincia] = useState('');
 
   // Estado para controlar la visibilidad de HomeHero
   const [show, setShow] = useState(true);
@@ -44,9 +46,11 @@ export function HomeView() {
   }, []);
 
   // Función que actualizará el estado con los datos desde FormEntitiesView
-  const handleFormSubmit = (monto, cuotas) => {
+  const handleFormSubmit = (monto, cuotas, tipo, provincia) => {
     setMontoTotalSolicitar(monto);
     setNumeroDeCuotas(cuotas);
+    setTipoCredito(tipo)
+    setProvincia(provincia)
     // Ocultar HomeHero cuando el formulario se envíe
     setShow(false);
   };
@@ -69,7 +73,12 @@ export function HomeView() {
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
         {show && <HomeMinimal />}
 
-        {!show &&  <JobListView montoTotalSolicitar={montoTotalSolicitar} numeroDeCuotas={numeroDeCuotas} />}
+        {!show &&  <JobListView
+          montoTotalSolicitar={montoTotalSolicitar}
+          numeroDeCuotas={numeroDeCuotas}
+          tipoCredito={tipoCredito}
+          provincia={provincia}
+        />}
       </Stack>
     </>
   );

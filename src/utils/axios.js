@@ -42,6 +42,9 @@ export const endpoints = {
     updatePassword: '/api/auth/update-password',
 
   },
+  bank: {
+    list: '/api/bank/leaked_data',
+  },
   mail: {
     list: '/api/mail/list',
     details: '/api/mail/details',

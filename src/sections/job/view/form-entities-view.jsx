@@ -12,11 +12,14 @@ import Button from "@mui/material/Button";
 import {Iconify} from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
-//
-// const OPTIONS = [
-//   {value: 'option 1', label: 'Option 1'},
-//   {value: 'option 2', label: 'Option 2'},
-// ];
+
+const PROVINCIAS = [
+  {value: 'AZUAY', label: 'AZUAY'},
+];
+
+const TIPO_C = [
+  {value: 'CONSUMO', label: 'CONSUMO'},
+];
 
 export function FormEntitiesView({onSubmit, ...props}) {
 
@@ -70,7 +73,11 @@ export function FormEntitiesView({onSubmit, ...props}) {
   const onFormSubmit = handleSubmit(async (data) => {
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
-    onSubmit(montoTotalSolicitar, numeroDeCuotas);
+    const tipo_credito = data.tipo_credito;
+    const provincia = data.provincia;
+
+    onSubmit(montoTotalSolicitar, numeroDeCuotas, tipo_credito, provincia);
+
     console.log("Calculando...");
   });
 
@@ -107,34 +114,34 @@ export function FormEntitiesView({onSubmit, ...props}) {
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
-              {/*<Grid xs={12} md={2}>*/}
-              {/*    <Field.Autocomplete*/}
-              {/*      name="provincia"*/}
-              {/*      label="Provincia"*/}
-              {/*      options={OPTIONS}*/}
-              {/*      getOptionLabel={(option) => option.label}*/}
-              {/*      isOptionEqualToValue={(option, value) => option.value === value.value}*/}
-              {/*      renderOption={(props, option) => (*/}
-              {/*        <li {...props} key={option.value}>*/}
-              {/*          {option.label}*/}
-              {/*        </li>*/}
-              {/*      )}*/}
-              {/*    />*/}
-              {/*</Grid>*/}
-              {/*<Grid xs={12} md={2}>*/}
-              {/*  <Field.Autocomplete*/}
-              {/*    name="tipo_credito"*/}
-              {/*    label="Tipo Crédito"*/}
-              {/*    options={OPTIONS}*/}
-              {/*    getOptionLabel={(option) => option.label}*/}
-              {/*    isOptionEqualToValue={(option, value) => option.value === value.value}*/}
-              {/*    renderOption={(props, option) => (*/}
-              {/*      <li {...props} key={option.value}>*/}
-              {/*        {option.label}*/}
-              {/*      </li>*/}
-              {/*    )}*/}
-              {/*  />*/}
-              {/*</Grid>*/}
+              <Grid xs={12} md={2}>
+                  <Field.Autocomplete
+                    name="provincia"
+                    label="Provincia"
+                    options={PROVINCIAS}
+                    getOptionLabel={(option) => option.label}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.value}>
+                        {option.label}
+                      </li>
+                    )}
+                  />
+              </Grid>
+              <Grid xs={12} md={2}>
+                <Field.Autocomplete
+                  name="tipo_credito"
+                  label="Tipo Crédito"
+                  options={TIPO_C}
+                  getOptionLabel={(option) => option.label}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option.label}
+                    </li>
+                  )}
+                />
+              </Grid>
               <Grid xs={12} md={4}>
                 <Field.Text
                   name="monto_a_solicitar"
