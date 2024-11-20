@@ -19,6 +19,10 @@ const PROVINCIAS = [
 
 const TIPO_C = [
   {value: 'CONSUMO', label: 'CONSUMO'},
+  {value: 'INMOBILIARIO', label: 'INMOBILIARIO'},
+  {value: 'MICROCREDITO MINORISTA', label: 'MICROCREDITO MINORISTA'},
+  {value: 'PRODUCTIVO EMPRESARIAL', label: 'PRODUCTIVO EMPRESARIAL'},
+  {value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES'},
 ];
 
 export function FormEntitiesView({onSubmit, ...props}) {
@@ -73,8 +77,8 @@ export function FormEntitiesView({onSubmit, ...props}) {
   const onFormSubmit = handleSubmit(async (data) => {
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
-    const tipo_credito = data.tipo_credito;
-    const provincia = data.provincia;
+    const tipo_credito = data.tipo_credito.value;
+    const provincia = data.provincia.value;
 
     onSubmit(montoTotalSolicitar, numeroDeCuotas, tipo_credito, provincia);
 
@@ -126,9 +130,21 @@ export function FormEntitiesView({onSubmit, ...props}) {
                         {option.label}
                       </li>
                     )}
+                    disableClearable // Desactiva la opción de limpiar el campo
+                    freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                    clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                    sx={{
+                      backgroundColor: 'white',
+                      borderRadius: 1, // Bordes redondeados
+                      '& .MuiInputLabel-root': {
+                        backgroundColor: 'white', // Fondo blanco para el label
+                        padding: '0 4px', // Asegura que el fondo no tape el borde
+                        borderRadius: 1, // Bordes redondeados
+                      },
+                    }}
                   />
               </Grid>
-              <Grid xs={12} md={2}>
+              <Grid xs={12} md={3}>
                 <Field.Autocomplete
                   name="tipo_credito"
                   label="Tipo Crédito"
@@ -140,9 +156,21 @@ export function FormEntitiesView({onSubmit, ...props}) {
                       {option.label}
                     </li>
                   )}
+                  disableClearable // Desactiva la opción de limpiar el campo
+                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                  sx={{
+                    backgroundColor: 'white',
+                    borderRadius: 1, // Bordes redondeados
+                    '& .MuiInputLabel-root': {
+                      backgroundColor: 'white', // Fondo blanco para el label
+                      padding: '0 4px', // Asegura que el fondo no tape el borde
+                      borderRadius: 1, // Bordes redondeados
+                    },
+                  }}
                 />
               </Grid>
-              <Grid xs={12} md={4}>
+              <Grid xs={12} md={2}>
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
@@ -165,7 +193,7 @@ export function FormEntitiesView({onSubmit, ...props}) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={4}>
+              <Grid xs={12} md={2}>
                 <Field.Text
                   name="num_cuotas"
                   label="NRO. CUOTAS *"
@@ -187,7 +215,7 @@ export function FormEntitiesView({onSubmit, ...props}) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={3}>
+              <Grid xs={12} md={2}>
                 <LoadingButton
                   fullWidth
                   color="inherit"

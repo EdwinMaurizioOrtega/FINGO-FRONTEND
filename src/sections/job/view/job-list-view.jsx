@@ -7,13 +7,13 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
 import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import axios, { endpoints } from '../../../utils/axios';
 
 // ----------------------------------------------------------------------
 
-export async function JobListView({
+export function JobListView({
                                     montoTotalSolicitar,
                                     numeroDeCuotas,
                                     tipoCredito,
@@ -28,23 +28,32 @@ export async function JobListView({
 
   const [banks, setBanks] = useState([]); // Controla el estado del diálogo
 
-  try {
-    const params = {
-      tipo_credito: tipoCredito,
-      plazo: numeroDeCuotas,
-      provincia: provincia
+  useEffect(() => {
+    const fetchBanks = async () => {
+
+      try {
+        const params = {
+          tipo_credito: tipoCredito,
+          plazo: parseInt(numeroDeCuotas),
+          provincia: provincia,
+        };
+
+        console.log("Request Params:", params); // Imprime los parámetros antes de enviarlos
+
+        const res = await axios.post(endpoints.bank.list, params);
+        const { data } = res.data;
+
+        setBanks(data);
+      } catch (err) {
+        console.error("Error fetching banks:", err);
+      } finally {
+        console.info("Consultado.");
+      }
     };
 
-    console.log('Request Params:', params); // Imprime los parámetros antes de enviarlos
+    fetchBanks();
+  }, [tipoCredito, numeroDeCuotas, provincia]); // Ejecuta cuando cambian estas dependencias
 
-    const res = await axios.post(endpoints.bank.list, params);
-    const { data } = res.data;
-    setBanks(data);
-
-  } catch (error) {
-    console.error('Error during sign in:', error);
-    throw error;
-  }
 
 
   return (

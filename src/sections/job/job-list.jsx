@@ -48,7 +48,7 @@ export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
       >
         {jobs.slice(0, visibleJobs).map((job) => (
           <JobItem
-            key={job.id}
+            key={job.razon_social}
             job={job}
             onMontoTotalSolicitar={montoTotalSolicitar}
             onNumeroDeCuotas={numeroDeCuotas}

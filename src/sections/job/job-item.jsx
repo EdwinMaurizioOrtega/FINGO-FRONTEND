@@ -9,13 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { fDate } from 'src/utils/format-time';
 import { fCurrency } from 'src/utils/format-number';
-
 import { Iconify } from 'src/components/iconify';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
 import {useAuthContext} from "../../auth/hooks";
@@ -31,7 +27,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
 
   const montoTotalSolicitar = onMontoTotalSolicitar || 0;
   const numeroDeCuotas = onNumeroDeCuotas || 0;
-  const tasaNominal = job.tasa / 100 || 0; // Tasa nominal
+  const tasaNominal = job.tasa_interes_promedio_ponderada / 100 || 0; // Tasa nominal
 
   // Cálculo de la tasa de interés mensual
   const tasaMensual = tasaNominal / 12 || 0;
@@ -54,13 +50,13 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
         <Stack sx={{ p: 3, pb: 2 }}>
           <Box
             component="img"
-            alt={job.name}
+            alt={job.razon_social}
             src={job.logo}
             sx={{
               height: 50,
               width: 'auto', // El ancho se ajustará automáticamente según el tamaño original de la imagen
               mb: 2,
-              backgroundColor: job.backgroundColor,
+              backgroundColor: job.background_color,
               objectFit: 'contain' // Evita la distorsión de la imagen
             }}
           />
@@ -73,7 +69,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
                 href="#"
                 color="inherit"
               >
-                {job.name}
+                {job.razon_social}
               </Link>
             }
             // secondary={`Posted date: ${fDate(job.createdAt)}`}
@@ -101,7 +97,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
           >
             <Iconify width={16} icon="solar:users-group-rounded-bold" />
             {
-              job.tasa !== '1' ? job.tasa + '% Tasa Nominal' : 'Sin % Tasa Nominal'
+              job.tasa_interes_promedio_ponderada !== '1' ? job.tasa_interes_promedio_ponderada + '% Tasa Nominal' : 'Sin % Tasa Nominal'
             }
           </Stack>
         </Stack>
