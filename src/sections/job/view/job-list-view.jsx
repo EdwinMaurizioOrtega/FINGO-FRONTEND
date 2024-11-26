@@ -10,6 +10,7 @@ import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import axios, { endpoints } from '../../../utils/axios';
+import {localStorageAvailable, localStorageGetItem} from '../../../utils/storage-available';
 
 // ----------------------------------------------------------------------
 
@@ -40,9 +41,30 @@ export function JobListView({
 
         console.log("Request Params:", params); // Imprime los parámetros antes de enviarlos
 
+        if (localStorageAvailable()) {
+          // Verifica si ya existen datos en el localStorage
+          const cachedData = localStorage.getItem("data_response");
+          if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+
+            // Comprueba que los datos no estén vacíos
+            if (parsedData && Object.keys(parsedData).length > 0) {
+              console.log("Using cached data");
+              setBanks(parsedData);
+              return;
+            }
+          }
+        }
+
         const res = await axios.post(endpoints.bank.list, params);
         const { data } = res.data;
 
+        if (localStorageAvailable()) {
+          // Guarda los datos en el localStorage
+          localStorage.setItem("data_response", JSON.stringify(data));
+        }
+
+        // Actualiza el estado
         setBanks(data);
       } catch (err) {
         console.error("Error fetching banks:", err);

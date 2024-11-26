@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { CarouselAnimation } from '../../_examples/extra/carousel-view';
 import { HomeHero } from '../home-hero';
 import {HomeMinimal} from "../home-minimal";
+import {localStorageAvailable, localStorageGetItem} from "../../../utils/storage-available";
+import {hidden} from "next/dist/lib/picocolors";
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,35 @@ export function HomeView() {
     } else {
       setError('Este navegador no admite la geolocalización.');
     }
+
+    //Validamos
+    if (localStorageAvailable()) {
+      // Verifica si ya existen datos en el localStorage
+      const cachedData = localStorage.getItem("data_response");
+      if (cachedData) {
+        const parsedData = JSON.parse(cachedData);
+
+        // Comprueba que los datos no estén vacíos
+        if (parsedData && Object.keys(parsedData).length > 0) {
+          console.log("Using cached data");
+
+          const storedProvincia = JSON.parse(localStorageGetItem("provincia") || '{"value": "AZUAY", "label": "AZUAY"}');
+          const storedTipoCredito = JSON.parse(localStorageGetItem("tipo_credito") || '{"value": "CONSUMO", "label": "CONSUMO"}');
+          const storedMonto = localStorageGetItem("monto_a_solicitar", "");
+          const storedCuotas = localStorageGetItem("num_cuotas", "");
+
+          // Solo actualizar el estado si los valores no están vacíos
+          if (storedMonto) setMontoTotalSolicitar(storedMonto);
+          if (storedCuotas) setNumeroDeCuotas(storedCuotas);
+          if (storedTipoCredito) setTipoCredito(storedTipoCredito);
+          if (storedProvincia) setProvincia(storedProvincia);
+
+          // Ocultar HomeHero cuando el formulario se envíe
+          setShow(false);
+        }
+      }
+    }
+
   }, []);
 
   // Función que actualizará el estado con los datos desde FormEntitiesView
@@ -55,6 +86,10 @@ export function HomeView() {
     setShow(false);
   };
 
+  const handleFormOnClear = (hidden) => {
+    setShow(hidden);
+  }
+
   return (
     <>
       <ScrollProgress
@@ -64,7 +99,7 @@ export function HomeView() {
       />
 
       <BackToTop />
-      <FormEntitiesView onSubmit={handleFormSubmit} />
+      <FormEntitiesView onSubmit={handleFormSubmit} onClear={handleFormOnClear} />
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}
       {show && <CarouselAnimation />}

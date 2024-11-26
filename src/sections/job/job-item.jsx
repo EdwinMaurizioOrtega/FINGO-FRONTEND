@@ -9,17 +9,17 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
-import { fCurrency } from 'src/utils/format-number';
-import { Iconify } from 'src/components/iconify';
-import { usePopover, CustomPopover } from 'src/components/custom-popover';
+import {paths} from 'src/routes/paths';
+import {RouterLink} from 'src/routes/components';
+import {fCurrency} from 'src/utils/format-number';
+import {Iconify} from 'src/components/iconify';
+import {usePopover, CustomPopover} from 'src/components/custom-popover';
 import {useAuthContext} from "../../auth/hooks";
 import Button from "@mui/material/Button";
 
 // ----------------------------------------------------------------------
 
-export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, onNumeroDeCuotas }) {
+export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, onNumeroDeCuotas}) {
 
   const {user} = useAuthContext();
 
@@ -33,7 +33,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
   const tasaMensual = tasaNominal / 12 || 0;
 
   // Cálculo de la cuota mensual usando la fórmula de amortización
-  const cuotaMensual = (montoTotalSolicitar * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -numeroDeCuotas))  || 0;
+  const cuotaMensual = (montoTotalSolicitar * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -numeroDeCuotas)) || 0;
 
   // Cálculo del total a pagar (cuota mensual * número de cuotas)
   const totalAPagar = cuotaMensual * numeroDeCuotas || 0;
@@ -43,11 +43,11 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
   return (
     <>
       <Card>
-        <IconButton onClick={popover.onOpen} sx={{ position: 'absolute', top: 8, right: 8 }}>
-          <Iconify icon="eva:more-vertical-fill" />
+        <IconButton onClick={popover.onOpen} sx={{position: 'absolute', top: 8, right: 8}}>
+          <Iconify icon="eva:more-vertical-fill"/>
         </IconButton>
 
-        <Stack sx={{ p: 3, pb: 2 }}>
+        <Stack sx={{p: 3, pb: 2}}>
           <Box
             component="img"
             alt={job.razon_social}
@@ -62,7 +62,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
           />
 
           <ListItemText
-            sx={{ mb: 1 }}
+            sx={{mb: 1}}
             primary={
               <Link
                 component={RouterLink}
@@ -73,7 +73,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
               </Link>
             }
             // secondary={`Posted date: ${fDate(job.createdAt)}`}
-            primaryTypographyProps={{ typography: 'subtitle1' }}
+            primaryTypographyProps={{typography: 'subtitle1'}}
             secondaryTypographyProps={{
               mt: 1,
               component: 'span',
@@ -93,16 +93,16 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
               transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
               color: 'primary.main',
               typography: 'caption'
-          }}
+            }}
           >
-            <Iconify width={16} icon="solar:users-group-rounded-bold" />
+            <Iconify width={16} icon="solar:users-group-rounded-bold"/>
             {
               job.tasa_interes_promedio_ponderada !== '1' ? job.tasa_interes_promedio_ponderada + '% Tasa Nominal' : 'Sin % Tasa Nominal'
             }
           </Stack>
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{borderStyle: 'dashed'}}/>
 
         <Box
           sx={{
@@ -112,23 +112,23 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
             transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
             p: 3
           }}
-          rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)" >
+          rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)">
           {[
             {
               label: fCurrency(montoTotalSolicitar) + ' Monto A Solicitar',
-              icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{ flexShrink: 0 }} />,
+              icon: <Iconify width={16} icon="solar:wad-of-money-bold" sx={{flexShrink: 0}}/>,
             },
             {
               label: numeroDeCuotas + ' # Cuotas',
-              icon: <Iconify width={16}  icon="solar:clock-circle-bold"  sx={{ flexShrink: 0 }} />,
+              icon: <Iconify width={16} icon="solar:clock-circle-bold" sx={{flexShrink: 0}}/>,
             },
             {
               label: fCurrency(totalAPagar) + ' Total A Pagar',
-              icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{ flexShrink: 0 }} />,
+              icon: <Iconify width={16} icon="solar:user-rounded-bold" sx={{flexShrink: 0}}/>,
             },
             {
               label: fCurrency(cuotaMensual) + ' Cuota Mensual',
-              icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{ flexShrink: 0 }} />,
+              icon: <Iconify width={16} icon="carbon:skill-level-basic" sx={{flexShrink: 0}}/>,
             }
           ].map((item, index) => (
             <Stack
@@ -137,16 +137,74 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
               flexShrink={0}
               direction="row"
               alignItems="center"
-              sx={{ color: 'text.disabled', minWidth: 0 }}
+              sx={{color: 'text.disabled', minWidth: 0}}
             >
               {item.icon}
-              <Typography variant="caption" noWrap sx={{ fontSize: '0.9rem' }}>
+              <Typography variant="caption" noWrap sx={{fontSize: '0.9rem'}}>
                 {item.label}
               </Typography>
             </Stack>
           ))}
+
         </Box>
 
+        <Box
+          sx={{
+            pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+            filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+            opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
+            p: 3
+          }}
+          >
+        <Stack
+          spacing={0.5}
+          flexShrink={0}
+          direction="row"
+          alignItems="center"
+          sx={{
+            color: 'text.disabled',
+            minWidth: 0,
+            width: '100%',
+            justifyContent: 'space-between'
+          }} // Alinea los botones a los extremos
+        >
+          <Button
+            fullWidth // Esta es la propiedad que hace que el botón sea de ancho completo
+            color="inherit"
+            type="submit"
+            variant="contained"
+          >
+            Descargar
+          </Button>
+
+          <Button
+            color="inherit"
+            type="submit"
+            variant="contained"
+            sx={{
+              position: 'relative',
+              cursor: 'not-allowed', // Asegura que el cursor refleje que está deshabilitado
+              '&:hover::after': {
+                content: '"Próximamente"',
+                position: 'absolute',
+                top: '100%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                color: '#fff',
+                padding: '4px 8px',
+                borderRadius: '4px',
+                whiteSpace: 'nowrap',
+                fontSize: '12px',
+                zIndex: 1,
+              },
+            }}
+          >
+            Chat
+          </Button>
+        </Stack>
+        </Box>
         {!user && (
           <Button
             component={RouterLink}
@@ -167,7 +225,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
         open={popover.open}
         anchorEl={popover.anchorEl}
         onClose={popover.onClose}
-        slotProps={{ arrow: { placement: 'right-top' } }}
+        slotProps={{arrow: {placement: 'right-top'}}}
       >
         <MenuList>
           <MenuItem
@@ -176,7 +234,7 @@ export function JobItem({ job, onView, onEdit, onDelete, onMontoTotalSolicitar, 
               onView();
             }}
           >
-            <Iconify icon="solar:eye-bold" />
+            <Iconify icon="solar:eye-bold"/>
             Info
           </MenuItem>
 

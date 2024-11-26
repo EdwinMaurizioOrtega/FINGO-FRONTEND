@@ -48,14 +48,13 @@ const TIPO_C = [
   {value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES'},
   {value: 'EDUCATIVO', label: 'EDUCATIVO'},
   {value: 'PRODUCTIVO CORPORATIVO', label: 'PRODUCTIVO CORPORATIVO'},
-  {value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES'},
   {value: 'VIVIENDA INTERES SOCIAL', label: 'VIVIENDA INTERES SOCIAL'},
   {value: 'VIVIENDA INTERES PÚBLICO', label: 'VIVIENDA INTERES PÚBLICO'},
   {value: 'MICROCREDITO DE ACUMULACION AMPLIADA', label: 'MICROCREDITO DE ACUMULACION AMPLIADA'},
   {value: 'MICROCREDITO DE ACUMULACION SIMPLE', label: 'MICROCREDITO DE ACUMULACION SIMPLE'},
 ];
 
-export function FormEntitiesView({onSubmit, ...props}) {
+export function FormEntitiesView({onSubmit, onClear, ...props}) {
 
   const [storageLoaded, setStorageLoaded] = useState(false);
   const [defaultValues, setDefaultValues] = useState({
@@ -127,17 +126,22 @@ export function FormEntitiesView({onSubmit, ...props}) {
   const handleClear = () => {
     // Limpiar los valores del formulario
     methods.reset({
-      provincia: '',
-      tipo_credito: '',
+      provincia: JSON.parse('{"value": "AZUAY", "label": "AZUAY"}'),
+      tipo_credito: JSON.parse('{"value": "CONSUMO", "label": "CONSUMO"}'),
       monto_a_solicitar: '',
       num_cuotas: ''
     });
 
     // Borrar los valores en localStorage
-    localStorage.removeItem('provincia');
-    localStorage.removeItem('tipo_credito');
+    localStorage.setItem('provincia', JSON.stringify('{"value": "AZUAY", "label": "AZUAY"}'));
+    localStorage.setItem('tipo_credito', JSON.stringify('{"value": "CONSUMO", "label": "CONSUMO"}'));
     localStorage.removeItem('monto_a_solicitar');
     localStorage.removeItem('num_cuotas');
+
+    localStorage.setItem("data_response", JSON.stringify([]));
+
+    onClear(true);
+
   };
 
   if (!storageLoaded) {
