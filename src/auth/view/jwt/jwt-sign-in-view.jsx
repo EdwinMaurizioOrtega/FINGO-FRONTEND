@@ -76,9 +76,16 @@ export function JwtSignInView() {
     }
   });
 
+  const handleInput = (event) => {
+    event.target.value = event.target.value.toLowerCase(); // Convierte directamente a minúsculas
+  };
+
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }} />
+      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
+                  onInput={handleInput} // Usa `onInput` para manejar el evento directamente
+
+      />
 
       <Box gap={1.5} display="flex" flexDirection="column">
         <Link

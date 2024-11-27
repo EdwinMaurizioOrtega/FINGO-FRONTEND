@@ -126,7 +126,9 @@ export function JwtSignUpView() {
     }
   };
 
-
+  const handleInput = (event) => {
+    event.target.value = event.target.value.toLowerCase(); // Convierte directamente a minúsculas
+  };
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
@@ -143,7 +145,9 @@ export function JwtSignUpView() {
         onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
       />
 
-      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }} />
+      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
+                  onInput={handleInput} // Usa `onInput` para manejar el evento directamente
+      />
 
       <Field.Text
         name="password"

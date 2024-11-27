@@ -113,6 +113,9 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
   }, [watch, storageLoaded]);
 
   const onFormSubmit = handleSubmit(async (data) => {
+
+    localStorage.setItem("data_response", JSON.stringify([]));
+
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
     const tipo_credito = data.tipo_credito.value;
