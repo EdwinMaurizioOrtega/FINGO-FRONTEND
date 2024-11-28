@@ -63,7 +63,7 @@ export function HomeHugePackElementsDos({ sx, ...other }) {
                     Haz que tu dinero y tus decisiones financieras trabajen a tu favor.
                   </Box>
                   <br />
-                  Únete a [Nombre del Marketplace] y descubre un mundo de posibilidades en productos financieros. ¡Registrarte es rápido, fácil y gratuito!
+                  Únete a FINGO y descubre un mundo de posibilidades en productos financieros. ¡Registrarte es rápido, fácil y gratuito!
                 </Typography>
               </m.div>
             </Grid>
