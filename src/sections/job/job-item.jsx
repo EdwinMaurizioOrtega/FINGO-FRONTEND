@@ -43,9 +43,9 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
   return (
     <>
       <Card>
-        <IconButton onClick={popover.onOpen} sx={{position: 'absolute', top: 8, right: 8}}>
-          <Iconify icon="eva:more-vertical-fill"/>
-        </IconButton>
+        {/*<IconButton onClick={popover.onOpen} sx={{position: 'absolute', top: 8, right: 8}}>*/}
+        {/*  <Iconify icon="eva:more-vertical-fill"/>*/}
+        {/*</IconButton>*/}
 
         <Stack sx={{p: 3, pb: 2}}>
           <Box
@@ -112,7 +112,7 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
             transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
             p: 3
           }}
-          rowGap={1.5} display="grid" gridTemplateColumns="repeat(2, 1fr)">
+          rowGap={1.5} display="grid" gridTemplateColumns="repeat(1, 1fr)">
           {[
             {
               label: fCurrency(montoTotalSolicitar) + ' Monto A Solicitar',
@@ -221,22 +221,22 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
 
       </Card>
 
-      <CustomPopover
-        open={popover.open}
-        anchorEl={popover.anchorEl}
-        onClose={popover.onClose}
-        slotProps={{arrow: {placement: 'right-top'}}}
-      >
-        <MenuList>
-          <MenuItem
-            onClick={() => {
-              popover.onClose();
-              onView();
-            }}
-          >
-            <Iconify icon="solar:eye-bold"/>
-            Info
-          </MenuItem>
+      {/*<CustomPopover*/}
+      {/*  open={popover.open}*/}
+      {/*  anchorEl={popover.anchorEl}*/}
+      {/*  onClose={popover.onClose}*/}
+      {/*  slotProps={{arrow: {placement: 'right-top'}}}*/}
+      {/*>*/}
+      {/*  <MenuList>*/}
+          {/*<MenuItem*/}
+          {/*  onClick={() => {*/}
+          {/*    popover.onClose();*/}
+          {/*    onView();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <Iconify icon="solar:eye-bold"/>*/}
+          {/*  Info*/}
+          {/*</MenuItem>*/}
 
           {/*<MenuItem*/}
           {/*  onClick={() => {*/}
@@ -258,8 +258,8 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
           {/*  <Iconify icon="solar:trash-bin-trash-bold" />*/}
           {/*  Delete*/}
           {/*</MenuItem>*/}
-        </MenuList>
-      </CustomPopover>
+      {/*  </MenuList>*/}
+      {/*</CustomPopover>*/}
     </>
   );
 }

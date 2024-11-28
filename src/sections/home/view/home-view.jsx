@@ -10,6 +10,9 @@ import { HomeHero } from '../home-hero';
 import {HomeMinimal} from "../home-minimal";
 import {localStorageAvailable, localStorageGetItem} from "../../../utils/storage-available";
 import {hidden} from "next/dist/lib/picocolors";
+import { HomeHugePackElements } from '../home-hugepack-elements';
+import { HomeMinimalDos } from '../home-minimal-dos';
+import { HomeHugePackElementsDos } from '../home-hugepack-elements-dos';
 
 // ----------------------------------------------------------------------
 
@@ -106,7 +109,14 @@ export function HomeView() {
       {show && <HomeHero />}
 
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
+
+        {show && <HomeHugePackElements />}
+
         {show && <HomeMinimal />}
+
+        {show && <HomeMinimalDos />}
+
+        {show && <HomeHugePackElementsDos />}
 
         {!show &&  <JobListView
           montoTotalSolicitar={montoTotalSolicitar}

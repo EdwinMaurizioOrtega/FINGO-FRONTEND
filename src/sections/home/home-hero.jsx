@@ -18,6 +18,7 @@ import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { varFade, MotionContainer } from 'src/components/animate';
 import { HeroBackground } from './components/hero-background';
+import Link from '@mui/material/Link';
 
 // ----------------------------------------------------------------------
 
@@ -57,15 +58,15 @@ export function HomeHero({ sx, ...other }) {
           ...theme.typography.h2,
           my: 0,
           mx: 'auto',
-          maxWidth: 680,
+          // maxWidth: 680,
           fontFamily: theme.typography.fontSecondaryFamily,
           [theme.breakpoints.up(lgKey)]: { fontSize: 72, lineHeight: '90px' },
         }}
       >
         <Box component="span" sx={{ width: 1, opacity: 0.24 }}>
-          Consigue un
+          Tu Puente al Mundo de los Productos Financieros
         </Box>
-        préstamo rápido con
+        Bienvenido a
         <Box
           component={m.span}
           animate={{ backgroundPosition: '200% center' }}
@@ -99,7 +100,7 @@ export function HomeHero({ sx, ...other }) {
           [theme.breakpoints.up(lgKey)]: { fontSize: 20, lineHeight: '36px' },
         }}
       >
-        {`Centraliza información de productos financieros, obtenida exclusivamente de fuentes oficiales y públicas, en un solo lugar. \nOfrecemos datos actualizados a mes vencido sobre una amplia gama de productos financieros, incluyendo productos de crédito e inversiones*. `}
+        {`¿Buscas las mejores opciones para  tu crédito? \nHemos creado un espacio único para conectarte directamente con las mejores instituciones financieras y ayudarte a tomar decisiones informadas, rápidas y seguras.`}
       </Typography>
     </AnimatedDiv>
   );
@@ -134,14 +135,14 @@ export function HomeHero({ sx, ...other }) {
         <Stack alignItems="center" spacing={2.5}>
           <Button
             component={RouterLink}
-            href={paths.auth.jwt.signIn}
+            href={paths.auth.jwt.signUp}
             color="inherit"
             size="large"
             variant="contained"
             startIcon={<Iconify width={24} icon="iconoir:flash" />}
           >
             <span>
-              Simulador
+              Regístrate Ahora
               <Box
                 component="small"
                 sx={{
@@ -272,10 +273,10 @@ export function HomeHero({ sx, ...other }) {
         >
           <Stack spacing={3} sx={{ textAlign: 'center' }}>
             <m.div style={{ y: y1 }}>{renderHeading}</m.div>
-            <m.div style={{ y: y2 }}>{renderText}</m.div>
+            <m.div style={{ y: y1 }}>{renderText}</m.div>
           </Stack>
           {/*<m.div style={{ y: y3 }}>{renderRatings}</m.div>*/}
-          {/*<m.div style={{ y: y4 }}>{renderButtons}</m.div>*/}
+          <m.div style={{ y: y1 }}>{renderButtons}</m.div>
           {/*<m.div style={{ y: y5 }}>{renderIcons}</m.div>*/}
         </Container>
 

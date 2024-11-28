@@ -23,7 +23,7 @@ import { FloatLine, FloatTriangleLeftIcon } from './components/svg-elements';
 
 // ----------------------------------------------------------------------
 
-export function HomeHugePackElements({ sx, ...other }) {
+export function HomeHugePackElementsDos({ sx, ...other }) {
   const renderLines = (
     <>
       <FloatTriangleLeftIcon sx={{ top: 80, left: 80, opacity: 0.4 }} />
@@ -43,14 +43,14 @@ export function HomeHugePackElements({ sx, ...other }) {
             rowSpacing={{ xs: 3, md: 0 }}
             columnSpacing={{ xs: 0, md: 8 }}
           >
-            <Grid xs={12} md={4} lg={4}>
-              <SectionCaption title="Visualizando el éxito" />
-              <SectionTitle title="¿Qué es Fingo?"
+            <Grid xs={12} md={5} lg={5}>
+              <SectionCaption title="Interface Starter Kit" />
+              <SectionTitle title="Empieza Hoy Mismo"
                             // txtGradient="elements"
                             sx={{ mt: 3 }} />
             </Grid>
 
-            <Grid xs={12} md={8} lg={8}>
+            <Grid xs={12} md={7} lg={7}>
               <m.div variants={varFade({ distance: 24 }).inUp}>
                 <Typography
                   sx={{
@@ -60,10 +60,10 @@ export function HomeHugePackElements({ sx, ...other }) {
                   }}
                 >
                   <Box component="span" sx={{ color: 'text.primary' }}>
-                    Fingo es una plataforma diseñada para facilitar el acceso a productos financieros.
+                    Haz que tu dinero y tus decisiones financieras trabajen a tu favor.
                   </Box>
                   <br />
-                  Aquí puedes simular el crédito que buscas, su monto y número de cuotas, comparar ofertas, consultar detalles y conectar en tiempo real con instituciones financieras que ofrecen servicios como: Créditos de consumo, hipotecarios o educativos con las tasas más competitivas.
+                  Únete a [Nombre del Marketplace] y descubre un mundo de posibilidades en productos financieros. ¡Registrarte es rápido, fácil y gratuito!
                 </Typography>
               </m.div>
             </Grid>

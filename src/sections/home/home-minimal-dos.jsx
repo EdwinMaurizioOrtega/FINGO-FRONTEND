@@ -20,7 +20,7 @@ import { Iconify } from '../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-export function HomeMinimal({ sx, ...other }) {
+export function HomeMinimalDos({ sx, ...other }) {
   const renderLines = (
     <>
       <FloatPlusIcon sx={{ top: 72, left: 72 }} />
@@ -35,7 +35,7 @@ export function HomeMinimal({ sx, ...other }) {
     <>
       <SectionTitle
         caption="Visualizando el éxito"
-        title="¿Cómo Funciona?"
+        title="¿Por Qué Elegirnos?"
         // txtGradient="FinGo"
         sx={{ mb: { xs: 5, md: 8 }, textAlign: { xs: 'center', md: 'left' } }}
       />
@@ -110,27 +110,26 @@ export function HomeMinimal({ sx, ...other }) {
 const ITEMS = [
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-make-brand.svg`,
-    title: '1. Regístrate Gratis:',
-    description:
-      'Crea tu cuenta y accede a una experiencia personalizada para encontrar los productos que mejor se adapten a ti.',
+    title: '•Transparencia Total',
+    description: 'Compara las ofertas financieras con información clara y detallada.',
   },
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-design.svg`,
-    title: '2. Explora y Compara:',
+    title: '•Ahorra Tiempo: ',
     description:
-      'Utiliza nuestro buscador para explorar las opciones disponibles. Puedes comparar tasas, plazos y beneficios de cada producto en un solo lugar.',
+      'Olvídate de visitar múltiples sucursales o sitios web; aquí tienes todo en un solo lugar.',
   },
   {
     icon: `${CONFIG.assetsDir}/assets/icons/home/ic-development.svg`,
-    title: '3. Conéctate en Tiempo Real: ',
+    title: '•Conexión Directa:  ',
     description:
-      '¿Tienes dudas? Usa nuestro sistema de chat en vivo para comunicarte directamente con las instituciones financieras y obtener respuestas rápidas y precisas.',
+      'Nuestro sistema de chat en tiempo real te acerca a los expertos financieros de cada institución.',
   },
   {
     icon: `${CONFIG.assetsDir}/assets/icons/courses/ic-courses-certificates.svg`,
-    title: '4. Toma Decisiones Informadas:',
+    title: '•Protección de tus Datos: ',
     description:
-      'Una vez que encuentres el producto ideal, completa el proceso con el respaldo de nuestra plataforma y las instituciones financieras.',
+      'Cumplimos con la Ley Orgánica de Protección de Datos, para que tengas la tranquilidad de que tus datos están protegidos.',
   },
 ];
 

@@ -4,10 +4,19 @@ import {useEffect, useState} from 'react';
 import { JobItem } from './job-item';
 import {CircularProgress} from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from '@mui/material/Button';
+import { RouterLink } from '../../routes/components';
+import { paths } from '../../routes/paths';
+import { useAuthContext } from '../../auth/hooks';
+import { Label } from '@mui/icons-material';
+import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 
 // ----------------------------------------------------------------------
 
 export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
+
+  const {user} = useAuthContext();
 
   const [visibleJobs, setVisibleJobs] = useState(10); // Estado para manejar los trabajos visibles
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar el indicador de carga
@@ -41,6 +50,31 @@ export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
 
   return (
     <>
+
+      {!user && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center', // Alineación del contenedor
+            height: '10vh', // Ajusta si necesitas centrar todo en la pantalla
+            paddingBottom: '2rem',
+          }}
+        >
+          <Alert
+            key="success"
+            severity="success"
+            sx={{
+              width: '100%', // O ajustar según el diseño deseado
+              justifyContent: 'center', // Centra el texto y el icono en el Alert
+            }}
+          >
+            Para visualizar la información debes Registrarte o Iniciar Sesión
+          </Alert>
+        </Box>
+      )}
+
       <Box
         gap={3}
         display="grid"
