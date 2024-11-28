@@ -210,7 +210,11 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                     }, // Cambia el color del label a blanco
 
                   }}
-                  inputProps={{type: 'number', min: 0}} // Asegura que solo se ingresen números
+                  inputProps={{
+                    type: 'number',
+                    min: 0,
+                    max: 500000,
+                }} // Asegura que solo se ingresen números
                   InputProps={{
                     style: {
                       backgroundColor: 'white', // Fondo blanco
@@ -222,7 +226,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
               <Grid xs={12} md={2}>
                 <Field.Text
                   name="num_cuotas"
-                  label="NRO. CUOTAS *"
+                  label="NRO. CUOTAS MESES"
                   InputLabelProps={{
                     shrink: true,
                     style: {
@@ -232,7 +236,11 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                       padding: '0 5px',
                     }, // Cambia el color del label a blanco
                   }}
-                  inputProps={{type: 'number', min: 0}} // Asegura que solo se ingresen números
+                  inputProps={{
+                    type: 'number',
+                    min: 0,
+                    max: 360,
+                }} // Asegura que solo se ingresen números
                   InputProps={{
                     style: {
                       backgroundColor: 'white', // Fondo blanco
