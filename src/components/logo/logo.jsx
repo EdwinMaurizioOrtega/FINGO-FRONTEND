@@ -44,8 +44,8 @@ export const Logo = forwardRef(
       alt="Full logo"
       component="img"
       src={`${CONFIG.assetsDir}/logo/logo-fingo-full.png`}
-      width="100%"
-      height="100%"
+      width="80px"
+      height="35px"
     />
   );
 
@@ -201,7 +201,7 @@ export const Logo = forwardRef(
           flexShrink: 0,
           display: 'inline-flex',
           verticalAlign: 'middle',
-          // width: 'auto', // Aquí se especifica que el ancho es automático
+          width: 'auto', // Aquí se especifica que el ancho es automático
           ...(disableLink && { pointerEvents: 'none' }),
           ...sx,
         }}
