@@ -87,7 +87,12 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
     defaultValues,
   });
 
-  const { handleSubmit, watch, formState: { isSubmitting }, reset } = methods;
+  const { handleSubmit, watch, setValue, formState: { isSubmitting }, reset } = methods;
+
+  const [errors, setErrors] = useState({
+    monto_a_solicitar: '',
+    num_cuotas: '',
+  });
 
   useEffect(() => {
     if (storageLoaded) {
@@ -159,6 +164,22 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
     </div>
   }
 
+  const handleChange = (fieldName, value, max) => {
+    if (value > max) {
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: `El valor máximo permitido es ${max}.`,
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: '',
+      }));
+    }
+
+    setValue(fieldName, value);
+  };
+
   return (
     <DashboardContent>
       <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
@@ -191,6 +212,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                       backgroundColor: 'white', // Fondo blanco para el label
                       padding: '0 4px', // Asegura que el fondo no tape el borde
                       borderRadius: 1, // Bordes redondeados
+                      color: 'red',
                     },
                   }}
                 />
@@ -200,6 +222,11 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
+                  onChange={(e) =>
+                    handleChange('monto_a_solicitar', Number(e.target.value), 500000)
+                  }
+                  error={!!errors.monto_a_solicitar}
+                  helperText={errors.monto_a_solicitar}
                   InputLabelProps={{
                     shrink: true,
                     style: {
@@ -226,7 +253,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
               <Grid xs={12} md={2}>
                 <Field.Text
                   name="num_cuotas"
-                  label="NRO. CUOTAS MESES"
+                  label="NRO. CUOTAS (Meses)"
                   InputLabelProps={{
                     shrink: true,
                     style: {
@@ -271,6 +298,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                       backgroundColor: 'white', // Fondo blanco para el label
                       padding: '0 4px', // Asegura que el fondo no tape el borde
                       borderRadius: 1, // Bordes redondeados
+                      color: 'red',
                     },
                   }}
                 />

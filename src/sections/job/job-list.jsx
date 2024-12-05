@@ -11,6 +11,7 @@ import { useAuthContext } from '../../auth/hooks';
 import { Label } from '@mui/icons-material';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
+import Link from "@mui/material/Link";
 
 // ----------------------------------------------------------------------
 
@@ -68,9 +69,17 @@ export function JobList({ jobs, montoTotalSolicitar, numeroDeCuotas }) {
             sx={{
               width: '100%', // O ajustar según el diseño deseado
               justifyContent: 'center', // Centra el texto y el icono en el Alert
+              fontSize: '20px'
             }}
           >
-            Para visualizar la información debes Registrarte o Iniciar Sesión
+            Para visualizar la información debes{' '}
+            <Link href="/auth/jwt/sign-up/" sx={{ fontWeight: 'bold' }}>
+              Registrarte
+            </Link>{' '}
+            o{' '}
+            <Link href="/auth/jwt/sign-in/" sx={{ fontWeight: 'bold' }}>
+              Iniciar Sesión
+            </Link>.
           </Alert>
         </Box>
       )}

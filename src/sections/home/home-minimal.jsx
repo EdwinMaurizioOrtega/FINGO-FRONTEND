@@ -34,7 +34,7 @@ export function HomeMinimal({ sx, ...other }) {
   const renderDescription = (
     <>
       <SectionTitle
-        caption="Visualizando el éxito"
+        // caption="Visualizando el éxito"
         title="¿Cómo Funciona?"
         // txtGradient="FinGo"
         sx={{ mb: { xs: 5, md: 8 }, textAlign: { xs: 'center', md: 'left' } }}

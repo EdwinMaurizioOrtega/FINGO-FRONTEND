@@ -44,7 +44,7 @@ export function HomeHugePackElements({ sx, ...other }) {
             columnSpacing={{ xs: 0, md: 8 }}
           >
             <Grid xs={12} md={4} lg={4}>
-              <SectionCaption title="Visualizando el éxito" />
+              {/*<SectionCaption title="Visualizando el éxito" />*/}
               <SectionTitle title="¿Qué es Fingo?"
                             // txtGradient="elements"
                             sx={{ mt: 3 }} />

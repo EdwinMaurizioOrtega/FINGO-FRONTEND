@@ -161,9 +161,11 @@ export function HomeFooter({ sx }) {
       <Container>
         <Logo />
         <Box sx={{ mt: 1, typography: 'caption' }}>
-          © All rights reserved.
-          <br /> made by
-          <Link href="#"> fingo.ec </Link>
+          © Reservados todos los derechos.
+          <br /> hecho por
+          <Link href="/"> fingo.ec </Link>
+          <br/>
+          <Link href="/privacy-policy/"> Términos y condiciones  </Link>
         </Box>
       </Container>
     </Box>

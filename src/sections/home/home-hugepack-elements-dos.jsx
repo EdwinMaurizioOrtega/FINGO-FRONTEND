@@ -44,7 +44,7 @@ export function HomeHugePackElementsDos({ sx, ...other }) {
             columnSpacing={{ xs: 0, md: 8 }}
           >
             <Grid xs={12} md={5} lg={5}>
-              <SectionCaption title="Interface Starter Kit" />
+              {/*<SectionCaption title="Interface Starter Kit" />*/}
               <SectionTitle title="Empieza Hoy Mismo"
                             // txtGradient="elements"
                             sx={{ mt: 3 }} />

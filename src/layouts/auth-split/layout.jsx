@@ -49,12 +49,12 @@ export function AuthSplitLayout({ sx, section, children, header }) {
               <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }}>
                 {/* -- Help link -- */}
                 <Link
-                  href={paths.faqs}
+                  href="/privacy-policy"
                   component={RouterLink}
                   color="inherit"
                   sx={{ typography: 'subtitle2' }}
                 >
-                  ¿Necesitar ayuda?
+                  ¿Necesitas ayuda?
                 </Link>
                 {/* -- Settings button -- */}
                 <SettingsButton />
