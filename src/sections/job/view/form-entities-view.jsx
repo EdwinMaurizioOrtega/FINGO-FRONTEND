@@ -141,8 +141,8 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
     });
 
     // Borrar los valores en localStorage
-    localStorage.setItem('provincia', JSON.stringify('{"value": "AZUAY", "label": "AZUAY"}'));
-    localStorage.setItem('tipo_credito', JSON.stringify('{"value": "CONSUMO", "label": "CONSUMO"}'));
+    localStorage.setItem('provincia', JSON.stringify({value: "AZUAY", label: "AZUAY"}));
+    localStorage.setItem('tipo_credito', JSON.stringify({value: "CONSUMO", label: "CONSUMO"}));
     localStorage.removeItem('monto_a_solicitar');
     localStorage.removeItem('num_cuotas');
 
