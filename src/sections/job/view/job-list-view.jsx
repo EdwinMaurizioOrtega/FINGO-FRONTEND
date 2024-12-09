@@ -6,11 +6,13 @@ import { JobList } from '../job-list';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
-import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {CircularProgress, DialogActions, DialogContent, DialogTitle} from '@mui/material';
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import axios, { endpoints } from '../../../utils/axios';
 import {localStorageAvailable, localStorageGetItem} from '../../../utils/storage-available';
+import Loading from "../../../app/loading";
+import {LoadingScreen} from "../../../components/loading-screen";
 
 // ----------------------------------------------------------------------
 
@@ -28,10 +30,11 @@ export function JobListView({
   };
 
   const [banks, setBanks] = useState([]); // Controla el estado del diálogo
+  const [loading, setLoading] = useState(false); // Estado para manejar el loading
 
   useEffect(() => {
     const fetchBanks = async () => {
-
+      setLoading(true); // Empieza la carga
       try {
         const params = {
           tipo_credito: tipoCredito,
@@ -69,6 +72,7 @@ export function JobListView({
       } catch (err) {
         console.error("Error fetching banks:", err);
       } finally {
+        setLoading(false); // Termine la carga
         console.info("Consultado.");
       }
     };
@@ -109,11 +113,15 @@ export function JobListView({
       </Dialog>
 
       <Box>
+        {loading ? (
+          <LoadingScreen />  // Muestra un spinner de carga
+        ) : (
         <JobList
           jobs={banks}
           montoTotalSolicitar={montoTotalSolicitar}
           numeroDeCuotas={numeroDeCuotas}
         />
+        )}
       </Box>
     </DashboardContent>
   );

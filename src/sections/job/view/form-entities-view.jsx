@@ -14,46 +14,6 @@ import Tooltip from "@mui/material/Tooltip";
 
 // ----------------------------------------------------------------------
 
-const PROVINCIAS = [
-  {value: 'AZUAY', label: 'AZUAY'},
-  {value: 'PICHINCHA', label: 'PICHINCHA'},
-  {value: 'GUAYAS', label: 'GUAYAS'},
-  {value: 'MANABI', label: 'MANABI'},
-  {value: 'CARCHI', label: 'CARCHI'},
-  {value: 'GALAPAGOS', label: 'GALAPAGOS'},
-  {value: 'IMBABURA', label: 'IMBABURA'},
-  {value: 'NAPO', label: 'NAPO'},
-  {value: 'SUCUMBIOS', label: 'SUCUMBIOS'},
-  {value: 'BOLIVAR', label: 'BOLIVAR'},
-  {value: 'CHIMBORAZO', label: 'CHIMBORAZO'},
-  {value: 'COTOPAXI', label: 'COTOPAXI'},
-  {value: 'EL ORO', label: 'EL ORO'},
-  {value: 'ESMERALDAS', label: 'ESMERALDAS'},
-  {value: 'LOS RIOS', label: 'LOS RIOS'},
-  {value: 'MORONA SANTIAGO', label: 'MORONA SANTIAGO'},
-  {value: 'ORELLANA', label: 'ORELLANA'},
-  {value: 'PASTAZA', label: 'PASTAZA'},
-  {value: 'SANTA ELENA', label: 'SANTA ELENA'},
-  {value: 'SANTO DOMINGO DE LOS TSACHILAS', label: 'SANTO DOMINGO DE LOS TSACHILAS'},
-  {value: 'TUNGURAHUA', label: 'TUNGURAHUA'},
-  {value: 'CAÑAR', label: 'CAÑAR'},
-  {value: 'ZAMORA CHINCHIPE', label: 'ZAMORA CHINCHIPE'},
-];
-
-const TIPO_C = [
-  {value: 'CONSUMO', label: 'CONSUMO'},
-  {value: 'INMOBILIARIO', label: 'INMOBILIARIO'},
-  {value: 'MICROCREDITO MINORISTA', label: 'MICROCREDITO MINORISTA'},
-  {value: 'PRODUCTIVO EMPRESARIAL', label: 'PRODUCTIVO EMPRESARIAL'},
-  {value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES'},
-  {value: 'EDUCATIVO', label: 'EDUCATIVO'},
-  {value: 'PRODUCTIVO CORPORATIVO', label: 'PRODUCTIVO CORPORATIVO'},
-  {value: 'VIVIENDA INTERES SOCIAL', label: 'VIVIENDA INTERES SOCIAL'},
-  {value: 'VIVIENDA INTERES PÚBLICO', label: 'VIVIENDA INTERES PÚBLICO'},
-  {value: 'MICROCREDITO DE ACUMULACION AMPLIADA', label: 'MICROCREDITO DE ACUMULACION AMPLIADA'},
-  {value: 'MICROCREDITO DE ACUMULACION SIMPLE', label: 'MICROCREDITO DE ACUMULACION SIMPLE'},
-];
-
 export function FormEntitiesView({onSubmit, onClear, ...props}) {
 
   const [storageLoaded, setStorageLoaded] = useState(false);
@@ -337,3 +297,44 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
 }
 
 // ----------------------------------------------------------------------
+
+
+const PROVINCIAS = [
+  {value: 'AZUAY', label: 'AZUAY'},
+  {value: 'PICHINCHA', label: 'PICHINCHA'},
+  {value: 'GUAYAS', label: 'GUAYAS'},
+  {value: 'MANABI', label: 'MANABI'},
+  {value: 'CARCHI', label: 'CARCHI'},
+  {value: 'GALAPAGOS', label: 'GALAPAGOS'},
+  {value: 'IMBABURA', label: 'IMBABURA'},
+  {value: 'NAPO', label: 'NAPO'},
+  {value: 'SUCUMBIOS', label: 'SUCUMBIOS'},
+  {value: 'BOLIVAR', label: 'BOLIVAR'},
+  {value: 'CHIMBORAZO', label: 'CHIMBORAZO'},
+  {value: 'COTOPAXI', label: 'COTOPAXI'},
+  {value: 'EL ORO', label: 'EL ORO'},
+  {value: 'ESMERALDAS', label: 'ESMERALDAS'},
+  {value: 'LOS RIOS', label: 'LOS RIOS'},
+  {value: 'MORONA SANTIAGO', label: 'MORONA SANTIAGO'},
+  {value: 'ORELLANA', label: 'ORELLANA'},
+  {value: 'PASTAZA', label: 'PASTAZA'},
+  {value: 'SANTA ELENA', label: 'SANTA ELENA'},
+  {value: 'SANTO DOMINGO DE LOS TSACHILAS', label: 'SANTO DOMINGO DE LOS TSACHILAS'},
+  {value: 'TUNGURAHUA', label: 'TUNGURAHUA'},
+  {value: 'CAÑAR', label: 'CAÑAR'},
+  {value: 'ZAMORA CHINCHIPE', label: 'ZAMORA CHINCHIPE'},
+];
+
+const TIPO_C = [
+  {value: 'CONSUMO', label: 'CONSUMO'},
+  {value: 'INMOBILIARIO', label: 'INMOBILIARIO'},
+  {value: 'MICROCREDITO MINORISTA', label: 'MICROCREDITO MINORISTA'},
+  {value: 'PRODUCTIVO EMPRESARIAL', label: 'PRODUCTIVO EMPRESARIAL'},
+  {value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES'},
+  {value: 'EDUCATIVO', label: 'EDUCATIVO'},
+  {value: 'PRODUCTIVO CORPORATIVO', label: 'PRODUCTIVO CORPORATIVO'},
+  {value: 'VIVIENDA INTERES SOCIAL', label: 'VIVIENDA INTERES SOCIAL'},
+  {value: 'VIVIENDA INTERES PÚBLICO', label: 'VIVIENDA INTERES PÚBLICO'},
+  {value: 'MICROCREDITO DE ACUMULACION AMPLIADA', label: 'MICROCREDITO DE ACUMULACION AMPLIADA'},
+  {value: 'MICROCREDITO DE ACUMULACION SIMPLE', label: 'MICROCREDITO DE ACUMULACION SIMPLE'},
+];
