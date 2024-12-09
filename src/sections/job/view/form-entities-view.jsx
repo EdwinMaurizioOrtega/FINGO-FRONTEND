@@ -182,11 +182,13 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
-                  onChange={(e) =>
-                    handleChange('monto_a_solicitar', Number(e.target.value), 500000)
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
+                    if (value > 500000) {
+                    value = 500000;
                   }
-                  error={!!errors.monto_a_solicitar}
-                  helperText={errors.monto_a_solicitar}
+                    setValue("monto_a_solicitar", value);
+                  }}
                   InputLabelProps={{
                     shrink: true,
                     style: {
@@ -214,6 +216,13 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                 <Field.Text
                   name="num_cuotas"
                   label="NRO. CUOTAS (Meses)"
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
+                    if (value > 360) {
+                      value = 360;
+                    }
+                    setValue("num_cuotas", value);
+                  }}
                   InputLabelProps={{
                     shrink: true,
                     style: {
