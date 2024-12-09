@@ -46,6 +46,7 @@
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.2.0",
     "framer-motion": "^11.3.29",
+    "html2canvas": "^1.4.1",
     "i18next": "^23.14.0",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-resources-to-backend": "^1.2.1",

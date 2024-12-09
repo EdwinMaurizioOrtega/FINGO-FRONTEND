@@ -16,6 +16,7 @@ import {Iconify} from 'src/components/iconify';
 import {usePopover, CustomPopover} from 'src/components/custom-popover';
 import {useAuthContext} from "../../auth/hooks";
 import Button from "@mui/material/Button";
+import html2canvas from "html2canvas";
 
 // ----------------------------------------------------------------------
 
@@ -40,9 +41,61 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
 
   console.log(`La cuota mensual será aproximadamente $${cuotaMensual.toFixed(2)}.`);
 
+  // Supongamos que tu imagen está en la carpeta 'public' y se llama 'watermark.png'
+  const watermarkImageUrl = '/logo/logo-fingo-full.png';
+
+  const handleDownloadImage = () => {
+    const captureElement = document.getElementById('imprimir'); // Asegúrate de tener un elemento con este ID
+
+    html2canvas(captureElement).then((canvas) => {
+      // Obtener el contexto del canvas
+      const context = canvas.getContext('2d');
+
+      // Obtener el alto original
+      const originalHeight = canvas.height;
+      const originalWidth = canvas.width;
+
+      // Calcular la nueva altura manteniendo la relación de aspecto
+      const newWidth = 400;
+      const aspectRatio = originalHeight / originalWidth;
+      const newHeight = newWidth * aspectRatio;
+
+      // Crear un nuevo canvas con el tamaño deseado
+      const resizedCanvas = document.createElement('canvas');
+      resizedCanvas.width = newWidth;
+      resizedCanvas.height = newHeight;
+
+      // Dibujar la imagen redimensionada en el nuevo canvas
+      const resizedContext = resizedCanvas.getContext('2d');
+      resizedContext.drawImage(canvas, 0, 0, newWidth, newHeight);
+
+      // Cargar la imagen de la marca de agua
+      const watermarkImg = new Image();
+      watermarkImg.src = watermarkImageUrl;
+
+      watermarkImg.onload = () => {
+        // Calcular el tamaño y posición de la marca de agua
+        const watermarkWidth = 350; // Ajusta el tamaño de la marca de agua según desees
+        const watermarkHeight = watermarkWidth * (watermarkImg.height / watermarkImg.width);
+        const x = (newWidth - watermarkWidth) / 2;
+        const y = (newHeight - watermarkHeight) / 2;
+
+        // Dibujar la marca de agua
+        resizedContext.globalAlpha = 0.2; // Ajustar opacidad si es necesario
+        resizedContext.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
+
+        // Descargar la imagen
+        const link = document.createElement('a');
+        link.download = 'fingo.png';
+        link.href = resizedCanvas.toDataURL();
+        link.click();
+      };
+    });
+  };
+
   return (
     <>
-      <Card>
+      <Card id="imprimir">
         {/*<IconButton onClick={popover.onOpen} sx={{position: 'absolute', top: 8, right: 8}}>*/}
         {/*  <Iconify icon="eva:more-vertical-fill"/>*/}
         {/*</IconButton>*/}
@@ -174,6 +227,7 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
             color="inherit"
             type="submit"
             variant="contained"
+            onClick={handleDownloadImage}
           >
             Descargar
           </Button>
