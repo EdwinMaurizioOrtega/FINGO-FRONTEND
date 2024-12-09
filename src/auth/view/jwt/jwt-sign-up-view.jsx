@@ -1,7 +1,7 @@
 'use client';
 
 import { z as zod } from 'zod';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/material/Box';
@@ -57,6 +57,32 @@ export function JwtSignUpView() {
 
   const [termsAccepted, setTermsAccepted] = React.useState(false);
 
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  // Obtener la ubicación del usuario
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          console.log(`Latitud: ${lat}, Longitud: ${lng}`); // Imprimir coordenadas en consola
+
+          setLatitude(lat);
+          setLongitude(lng);
+        },
+        (error) => {
+          console.error("Error obteniendo la ubicación:", error);
+          setErrorMsg("No se pudo obtener la ubicación.");
+        }
+      );
+    } else {
+      setErrorMsg("Geolocalización no soportada en este navegador.");
+    }
+  }, []);
+
   const defaultValues = {
     firstName: '',
     lastName: '',
@@ -84,6 +110,8 @@ export function JwtSignUpView() {
         last_name: data.lastName,
         cedula: data.cedula,
         terms_accepted: termsAccepted,
+        lat: latitude, // Incluyendo latitud
+        lng: longitude // Incluyendo longitud
 
       });
       await checkUserSession?.();
