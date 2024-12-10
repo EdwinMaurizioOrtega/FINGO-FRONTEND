@@ -13,6 +13,7 @@ import {hidden} from "next/dist/lib/picocolors";
 import { HomeHugePackElements } from '../home-hugepack-elements';
 import { HomeMinimalDos } from '../home-minimal-dos';
 import { HomeHugePackElementsDos } from '../home-hugepack-elements-dos';
+import Script from 'next/script';
 
 // ----------------------------------------------------------------------
 
@@ -95,6 +96,24 @@ export function HomeView() {
 
   return (
     <>
+      <Script
+        type="text/javascript"
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-870509432"
+      />
+      <Script
+        id="google-analytics"
+        type="text/javascript"
+        strategy="afterInteractive"
+      >
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-870509432');
+          `}
+      </Script>
+
       <ScrollProgress
         variant="linear"
         progress={pageProgress.scrollYProgress}
