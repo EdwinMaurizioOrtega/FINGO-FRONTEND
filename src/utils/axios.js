@@ -44,6 +44,7 @@ export const endpoints = {
   },
   bank: {
     list: '/api/bank/leaked_data',
+    registered_users: '/api/report/report_user',
   },
   mail: {
     list: '/api/mail/list',
