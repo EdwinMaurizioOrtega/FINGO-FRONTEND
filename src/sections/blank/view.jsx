@@ -78,7 +78,27 @@ export function BlankView({ title = 'Blank' }) {
       field: 'created_at',
       headerName: 'CREADO',
       flex: 1,
-      minWidth: 160,
+      minWidth: 250,
+      renderCell: (params) => {
+        const createdAt = new Date(params.value); // Convertir el valor a una fecha
+        if (isNaN(createdAt)) return 'Fecha inválida'; // Manejo de error si la fecha no es válida
+
+        // Obtener fecha en el formato deseado
+        const formattedDate = createdAt.toLocaleDateString('es-EC', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        });
+
+        // Obtener hora en el formato deseado
+        const formattedTime = createdAt.toLocaleTimeString('es-EC', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+
+        return `${formattedDate} ${formattedTime}`;
+      },
     },
     {
       field: 'display_name',
