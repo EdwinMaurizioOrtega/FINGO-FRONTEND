@@ -140,9 +140,12 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
             direction="row"
             alignItems="center"
             sx={{
-              pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
-              filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
-              opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+              // pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+              // filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+              // opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+              pointerEvents: 'auto',  // Deshabilita clics si el usuario no está
+              filter: 'none',    // Aplica efecto difuso si el usuario no está
+              opacity: 1,                // Baja la opacidad si el usuario no está
               transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
               color: 'primary.main',
               typography: 'caption'
@@ -159,9 +162,12 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
 
         <Box
           sx={{
-            pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
-            filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
-            opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            // pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+            // filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+            // opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            pointerEvents: 'auto',  // Deshabilita clics si el usuario no está
+            filter: 'none',    // Aplica efecto difuso si el usuario no está
+            opacity: 1,                // Baja la opacidad si el usuario no está
             transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
             p: 3
           }}
@@ -203,9 +209,12 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
 
         <Box
           sx={{
-            pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
-            filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
-            opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            // pointerEvents: user ? 'auto' : 'none',  // Deshabilita clics si el usuario no está
+            // filter: user ? 'none' : 'blur(4px)',    // Aplica efecto difuso si el usuario no está
+            // opacity: user ? 1 : 0.5,                // Baja la opacidad si el usuario no está
+            pointerEvents: 'auto',  // Deshabilita clics si el usuario no está
+            filter: 'none',    // Aplica efecto difuso si el usuario no está
+            opacity: 1,                // Baja la opacidad si el usuario no está
             transition: 'filter 0.3s, opacity 0.3s', // Suaviza la transición
             p: 3
           }}
@@ -259,19 +268,19 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
           </Button>
         </Stack>
         </Box>
-        {!user && (
-          <Button
-            component={RouterLink}
-            href={paths.auth.jwt.signIn}
-            color="inherit"
-            type="submit"
-            variant="contained"
-            fullWidth // Esta es la propiedad que hace que el botón sea de ancho completo
-          >
-            VER TODOS LOS DATOS
-          </Button>
+        {/*{!user && (*/}
+        {/*  <Button*/}
+        {/*    component={RouterLink}*/}
+        {/*    href={paths.auth.jwt.signIn}*/}
+        {/*    color="inherit"*/}
+        {/*    type="submit"*/}
+        {/*    variant="contained"*/}
+        {/*    fullWidth // Esta es la propiedad que hace que el botón sea de ancho completo*/}
+        {/*  >*/}
+        {/*    VER TODOS LOS DATOS*/}
+        {/*  </Button>*/}
 
-        )}
+        {/*)}*/}
 
       </Card>
 

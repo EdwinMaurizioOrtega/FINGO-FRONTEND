@@ -124,7 +124,7 @@ export function HomeView() {
       <FormEntitiesView onSubmit={handleFormSubmit} onClear={handleFormOnClear} />
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}
-      {show && <CarouselAnimation />}
+      {/*{show && <CarouselAnimation />}*/}
       {show && <HomeHero />}
 
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
