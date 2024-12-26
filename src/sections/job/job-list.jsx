@@ -121,7 +121,6 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
               justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center', // Alineación del contenedor
-              height: '10vh', // Ajusta si necesitas centrar todo en la pantalla
               paddingBottom: '2rem',
               marginTop: '2rem',
             }}
