@@ -14,6 +14,8 @@ import { HomeHugePackElements } from '../home-hugepack-elements';
 import { HomeMinimalDos } from '../home-minimal-dos';
 import { HomeHugePackElementsDos } from '../home-hugepack-elements-dos';
 import Script from 'next/script';
+import Cookies from 'js-cookie'; // Asegúrate de instalar esta librería: `npm install js-cookie`
+
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +50,21 @@ export function HomeView() {
       );
     } else {
       setError('Este navegador no admite la geolocalización.');
+    }
+
+
+
+    // Verificar si el usuario dio consentimiento para cookies de terceros
+    const thirdPartyConsent = Cookies.get('thirdPartyConsent');
+
+    if (thirdPartyConsent === 'accepted') {
+      // Almacenar la ubicación en cookies de terceros
+      Cookies.set('cooooooo', {
+        domain: 'fingo.ec', // Cambia por el dominio que corresponda
+        secure: true,
+        sameSite: 'None',
+        expires: 30, // La cookie expira en 30 días
+      });
     }
 
     //Validamos

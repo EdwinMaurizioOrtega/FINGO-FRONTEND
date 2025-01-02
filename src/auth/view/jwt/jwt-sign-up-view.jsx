@@ -27,8 +27,6 @@ import { SignUpTerms } from '../../components/sign-up-terms';
 const cedulaRegex = /\b(0[1-9]|1[0-9]|2[0-4])\d{8}\b/;
 
 export const SignUpSchema = zod.object({
-  firstName: zod.string().min(1, { message: '¡Se requieren los nombres!' }),
-  lastName: zod.string().min(1, { message: '¡Se requiere los apellidos!' }),
   cedula: zod
     .string()
     .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
@@ -38,10 +36,6 @@ export const SignUpSchema = zod.object({
     .string()
     .min(1, { message: '¡Se requiere un correo!' })
     .email({ message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!' }),
-  password: zod
-    .string()
-    .min(1, { message: '¡Se requiere contraseña!' })
-    .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
 });
 
 // ----------------------------------------------------------------------
@@ -50,8 +44,6 @@ export function JwtSignUpView() {
   const { checkUserSession } = useAuthContext();
 
   const router = useRouter();
-
-  const password = useBoolean();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -84,11 +76,8 @@ export function JwtSignUpView() {
   }, []);
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
     cedula: '',
     email: '',
-    password: '',
   };
 
   const methods = useForm({
@@ -105,9 +94,6 @@ export function JwtSignUpView() {
     try {
       await signUp({
         email: data.email,
-        password: data.password,
-        first_name: data.firstName,
-        last_name: data.lastName,
         cedula: data.cedula,
         terms_accepted: termsAccepted,
         lat: latitude, // Incluyendo latitud
@@ -160,11 +146,6 @@ export function JwtSignUpView() {
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Box display="flex" gap={{ xs: 3, sm: 2 }} flexDirection={{ xs: 'column', sm: 'row' }}>
-        <Field.Text name="firstName" label="Nombres" InputLabelProps={{ shrink: true }} />
-        <Field.Text name="lastName" label="Apellidos" InputLabelProps={{ shrink: true }} />
-      </Box>
-
       <Field.Text
         name="cedula"
         label="Cédula"
@@ -175,23 +156,6 @@ export function JwtSignUpView() {
 
       <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
                   onInput={handleInput} // Usa `onInput` para manejar el evento directamente
-      />
-
-      <Field.Text
-        name="password"
-        label="Contraseña"
-        placeholder="6+ caracteres"
-        type={password.value ? 'text' : 'password'}
-        InputLabelProps={{ shrink: true }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
       />
 
       <SignUpTerms

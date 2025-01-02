@@ -24,7 +24,6 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
   const [openRegisterModal, setOpenRegisterModal] = useState(false); // Estado para controlar el modal de registro
   const [openLoginModal, setOpenLoginModal] = useState(false); // Estado para controlar el modal de inicio de sesión
 
-
   const loadMoreJobs = () => {
     setIsLoading(true); // Mostrar el indicador de carga
 
@@ -36,11 +35,16 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
   };
 
   useEffect(() => {
-    if (!user) return; // No se carga más si el usuario no está autenticado
 
     const handleScroll = () => {
       const hasReachedBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+
+      // Si el usuario no está autenticado, abrir el modal de registro al llegar al fondo
+      if (!user && hasReachedBottom) {
+        setOpenRegisterModal(true);
+        return; // Salir para evitar cargar más trabajos
+      }
 
       // Verificar si el usuario ha llegado al fondo y si no está cargando ya
       if (hasReachedBottom && !isLoading && visibleJobs < jobs.length) {
@@ -52,7 +56,7 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
     return () => {
       window.removeEventListener('scroll', handleScroll); // Limpiar el evento al desmontar
     };
-  }, [isLoading, visibleJobs, jobs.length]); // Dependencia de isLoading, visibleJobs y jobs.length
+  }, [user, isLoading, visibleJobs, jobs.length]); // Dependencia de isLoading, visibleJobs y jobs.length
 
   // Handlers para abrir y cerrar el modal de registro
   const handleOpenRegisterModal = () => setOpenRegisterModal(true);
@@ -64,39 +68,6 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
 
   return (
     <>
-
-      {/*{!user && (*/}
-      {/*  <Box*/}
-      {/*    sx={{*/}
-      {/*      display: 'flex',*/}
-      {/*      justifyContent: 'center',*/}
-      {/*      alignItems: 'center',*/}
-      {/*      textAlign: 'center', // Alineación del contenedor*/}
-      {/*      height: '10vh', // Ajusta si necesitas centrar todo en la pantalla*/}
-      {/*      paddingBottom: '2rem',*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <Alert*/}
-      {/*      key="success"*/}
-      {/*      severity="success"*/}
-      {/*      sx={{*/}
-      {/*        width: '100%', // O ajustar según el diseño deseado*/}
-      {/*        justifyContent: 'center', // Centra el texto y el icono en el Alert*/}
-      {/*        fontSize: '20px'*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      Para visualizar la información debes{' '}*/}
-      {/*      <Link href="/auth/jwt/sign-up/" sx={{ fontWeight: 'bold' }}>*/}
-      {/*        Registrarte*/}
-      {/*      </Link>{' '}*/}
-      {/*      o{' '}*/}
-      {/*      <Link href="/auth/jwt/sign-in/" sx={{ fontWeight: 'bold' }}>*/}
-      {/*        Iniciar Sesión*/}
-      {/*      </Link>.*/}
-      {/*    </Alert>*/}
-      {/*  </Box>*/}
-      {/*)}*/}
-
       <Box
         gap={3}
         display="grid"
@@ -174,7 +145,6 @@ export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
           </Dialog>
         </>
       )}
-
 
       {/* Indicador de carga cuando se están cargando más trabajos */}
       {isLoading && (
