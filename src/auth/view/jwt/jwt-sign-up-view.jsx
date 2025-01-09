@@ -152,10 +152,24 @@ export function JwtSignUpView() {
         placeholder="10 caracteres"
         InputLabelProps={{ shrink: true }}
         onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
+        autoFocus  // Este atributo hará que el campo esté activo al cargar
       />
 
       <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
                   onInput={handleInput} // Usa `onInput` para manejar el evento directamente
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: 'black',  // Cambia el color del borde al azul (o el que prefieras)
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'black',  // Asegura que el borde se quede azul incluso al pasar el mouse
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'black',  // Este estilo asegura que el borde estará "activo"
+                      }
+                    }
+                  }}
       />
 
       <SignUpTerms
@@ -182,7 +196,7 @@ export function JwtSignUpView() {
   return (
     <>
       <FormHead
-        title="Comience absolutamente gratis"
+        title="Regístrate o inicia sesión para visualizar más instituciones financieras!"
         description={
           <>
             {`¿Ya tienes una cuenta? `}
