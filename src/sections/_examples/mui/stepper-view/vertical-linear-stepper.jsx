@@ -1,18 +1,7 @@
 import { useState } from 'react';
-import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
-import Step from '@mui/material/Step';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Stepper from '@mui/material/Stepper';
-import StepLabel from '@mui/material/StepLabel';
-import Typography from '@mui/material/Typography';
-import StepContent from '@mui/material/StepContent';
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
-
-// ----------------------------------------------------------------------
-
 
 // ----------------------------------------------------------------------
 
@@ -25,8 +14,6 @@ export function VerticalLinearStepper() {
   const [inmobiliarioOption, setInmobiliarioOption] = useState('');
   const [socialCredito, setSocialCredito] = useState('');
   const [publicoCredito, setPublicoCredito] = useState('');
-
-
 
   const handleReset = () => {
     setSelectedOption('');
