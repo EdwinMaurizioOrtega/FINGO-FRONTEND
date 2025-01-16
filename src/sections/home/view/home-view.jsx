@@ -14,7 +14,8 @@ import { HomeHugePackElements } from '../home-hugepack-elements';
 import { HomeMinimalDos } from '../home-minimal-dos';
 import { HomeHugePackElementsDos } from '../home-hugepack-elements-dos';
 import Script from 'next/script';
-import Cookies from 'js-cookie'; // Asegúrate de instalar esta librería: `npm install js-cookie`
+import Cookies from 'js-cookie';
+import {VerticalLinearStepper} from "../../_examples/mui/stepper-view/vertical-linear-stepper"; // Asegúrate de instalar esta librería: `npm install js-cookie`
 
 
 // ----------------------------------------------------------------------
@@ -138,6 +139,9 @@ export function HomeView() {
       />
 
       <BackToTop />
+
+
+
       <FormEntitiesView onSubmit={handleFormSubmit} onClear={handleFormOnClear} />
 
       {/* Renderizar HomeHero solo si showHomeHero es true */}

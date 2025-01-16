@@ -11,10 +11,21 @@ import {localStorageAvailable, localStorageGetItem} from '../../../utils/storage
 import Button from "@mui/material/Button";
 import {Iconify} from "../../../components/iconify";
 import Tooltip from "@mui/material/Tooltip";
+import {VerticalLinearStepper} from "../../_examples/mui/stepper-view/vertical-linear-stepper";
+import {FormControlLabel, Radio, RadioGroup, TextField} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export function FormEntitiesView({onSubmit, onClear, ...props}) {
+
+  const [selectedOption, setSelectedOption] = useState('');
+  const [personalOption, setPersonalOption] = useState('');
+  const [consumoCredito, setConsumoCredito] = useState('');
+  const [educativoCredito, setEducativoCredito] = useState('');
+  const [empresaFacturacion, setEmpresaFacturacion] = useState('');
+  const [inmobiliarioOption, setInmobiliarioOption] = useState('');
+  const [socialCredito, setSocialCredito] = useState('');
+  const [publicoCredito, setPublicoCredito] = useState('');
 
   const [storageLoaded, setStorageLoaded] = useState(false);
   const [defaultValues, setDefaultValues] = useState({
@@ -140,53 +151,156 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
     setValue(fieldName, value);
   };
 
+
+
+
+
+
+  const handleReset = () => {
+    setSelectedOption('');
+    setPersonalOption('');
+    setConsumoCredito('');
+    setEducativoCredito('');
+    setEmpresaFacturacion('');
+    setInmobiliarioOption('');
+    setSocialCredito('');
+    setPublicoCredito('');
+  };
+
+
   return (
     <DashboardContent>
+
+
+      {/*<VerticalLinearStepper />*/}
+
+
+
       <div style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
         Elige el crédito que más se ajuste a tus necesidades de entre decenas de opciones en el mercado.
       </div>
-      <Box sx={{mt: 2, mb: 5, bgcolor: '#ff9999', p: 2, borderRadius: '16px'}}>
+      <Box sx={{
+        mt: 2,
+        mb: 5,
+        p: 2,
+        borderRadius: '16px',
+        position: 'relative',
+        background: 'linear-gradient(135deg, #ff9999, #ff4d4d)',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          borderRadius: 'inherit',
+          padding: '2px', // Grosor del borde degradado
+          background: 'inherit',
+          WebkitMask: 'linear-gradient(white, white) content-box, linear-gradient(white, white)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+        },
+      }}>
+        <h3>Cuál es el uso que le vas a dar al crédito?</h3>
+
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
+
             <Grid container spacing={2}>
-              {/*<Tooltip title="test">*/}
-              <Grid xs={12} md={3}>
-                <Field.Autocomplete
-                  name="tipo_credito"
-                  label="Tipo Crédito"
-                  options={TIPO_C}
-                  getOptionLabel={(option) => option.label}
-                  isOptionEqualToValue={(option, value) => option.value === value.value}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.value}>
-                      {option.label}
-                    </li>
-                  )}
-                  disableClearable // Desactiva la opción de limpiar el campo
-                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                  sx={{
-                    backgroundColor: 'white',
-                    borderRadius: 1, // Bordes redondeados
-                    '& .MuiInputLabel-root': {
-                      backgroundColor: 'white', // Fondo blanco para el label
-                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                      borderRadius: 1, // Bordes redondeados
-                      color: 'red',
-                    },
-                  }}
-                />
+
+              <Grid item xs={12} md={3}>
+
+                <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+
+                  <RadioGroup
+                    name="uso-credito"
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                    <Box>
+                      <FormControlLabel value="personal" control={<Radio/>} label="USO PERSONAL"
+                                        sx={{
+                                          '& .MuiFormControlLabel-label': {
+                                            fontWeight: 'bold', // Negrita
+                                          },
+                                        }}
+                      />
+                      {selectedOption === 'personal' && (
+                        <RadioGroup sx={{mt: 1, ml: 4}} value={personalOption}
+                                    onChange={(e) => setPersonalOption(e.target.value)}>
+                          <FormControlLabel value="consumo" control={<Radio/>} label="Consumo"/>
+                          <FormControlLabel value="educativo" control={<Radio/>} label="Educativo"/>
+                        </RadioGroup>
+                      )}
+                    </Box>
+
+                    <Box>
+                      <FormControlLabel value="empresa" control={<Radio/>}
+                                        label="USO PARA MI EMPRESA / ¿CÚANTO FACTURAS AL AÑO?"
+                                        sx={{
+                                          '& .MuiFormControlLabel-label': {
+                                            fontWeight: 'bold', // Negrita
+                                          },
+                                        }}/>
+                    </Box>
+
+                    <Box>
+                      <FormControlLabel value="inmobiliario" control={<Radio/>} label="CRÉDITO INMOBILIARIO" sx={{
+                        '& .MuiFormControlLabel-label': {
+                          fontWeight: 'bold', // Negrita
+                        },
+                      }}/>
+                      {selectedOption === 'inmobiliario' && (
+                        <RadioGroup sx={{mt: 1, ml: 4}} value={inmobiliarioOption}
+                                    onChange={(e) => setInmobiliarioOption(e.target.value)}>
+                          <FormControlLabel value="social" control={<Radio/>} label="Social"/>
+                          <FormControlLabel value="publico" control={<Radio/>} label="Público"/>
+                        </RadioGroup>
+                      )}
+                    </Box>
+                  </RadioGroup>
+                </Box>
               </Grid>
+
+
+              {/*<Tooltip title="test">*/}
+              {/*<Grid xs={12} md={3}>*/}
+              {/*  <Field.Autocomplete*/}
+              {/*    name="tipo_credito"*/}
+              {/*    label="Tipo Crédito"*/}
+              {/*    options={TIPO_C}*/}
+              {/*    getOptionLabel={(option) => option.label}*/}
+              {/*    isOptionEqualToValue={(option, value) => option.value === value.value}*/}
+              {/*    renderOption={(props, option) => (*/}
+              {/*      <li {...props} key={option.value}>*/}
+              {/*        {option.label}*/}
+              {/*      </li>*/}
+              {/*    )}*/}
+              {/*    disableClearable // Desactiva la opción de limpiar el campo*/}
+              {/*    freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones*/}
+              {/*    clearOnBlur // Borra el valor cuando el campo pierde el enfoque*/}
+              {/*    sx={{*/}
+              {/*      backgroundColor: 'white',*/}
+              {/*      borderRadius: 1, // Bordes redondeados*/}
+              {/*      '& .MuiInputLabel-root': {*/}
+              {/*        backgroundColor: 'white', // Fondo blanco para el label*/}
+              {/*        padding: '0 4px', // Asegura que el fondo no tape el borde*/}
+              {/*        borderRadius: 1, // Bordes redondeados*/}
+              {/*        color: 'red',*/}
+              {/*      },*/}
+              {/*    }}*/}
+              {/*  />*/}
+              {/*</Grid>*/}
               {/*</Tooltip>*/}
-              <Grid xs={12} md={2}>
+              <Grid xs={12} md={2} sx={{display: 'block', alignContent: 'center'}}>
                 <Field.Text
                   name="monto_a_solicitar"
                   label="MONTO A SOLICITAR *"
                   onChange={(e) => {
                     let value = parseFloat(e.target.value);
                     if (value > 500000) {
-                    value = 500000;
-                  }
+                      value = 500000;
+                    }
                     setValue("monto_a_solicitar", value);
                   }}
                   InputLabelProps={{
@@ -203,7 +317,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                     type: 'number',
                     min: 0,
                     max: 500000,
-                }} // Asegura que solo se ingresen números
+                  }} // Asegura que solo se ingresen números
                   InputProps={{
                     style: {
                       backgroundColor: 'white', // Fondo blanco
@@ -212,7 +326,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={2}>
+              <Grid xs={12} md={2} sx={{display: 'block', alignContent: 'center'}}>
                 <Field.Text
                   name="num_cuotas"
                   label="NRO. CUOTAS (Meses)"
@@ -236,7 +350,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                     type: 'number',
                     min: 0,
                     max: 360,
-                }} // Asegura que solo se ingresen números
+                  }} // Asegura que solo se ingresen números
                   InputProps={{
                     style: {
                       backgroundColor: 'white', // Fondo blanco
@@ -245,7 +359,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={2}>
+              <Grid xs={12} md={2} sx={{display: 'block', alignContent: 'center'}}>
                 <Field.Autocomplete
                   name="provincia"
                   label="Provincia"
@@ -272,7 +386,7 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} md={2}>
+              <Grid xs={12} md={2} sx={{display: 'block', alignContent: 'center'}}>
                 <LoadingButton
                   fullWidth
                   color="inherit"
@@ -287,11 +401,11 @@ export function FormEntitiesView({onSubmit, onClear, ...props}) {
               </Grid>
               {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
               {isFormFilled && (
-                <Grid xs={12} md={1} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid xs={12} md={1} sx={{display: 'flex', justifyContent: 'center'}}>
                   <Button
                     onClick={handleClear}
-                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                    sx={{ flexDirection: 'column', alignItems: 'center' }}
+                    startIcon={<Iconify icon="solar:trash-bin-trash-bold"/>}
+                    sx={{flexDirection: 'column', alignItems: 'center'}}
                   >
                     Limpiar
                   </Button>
