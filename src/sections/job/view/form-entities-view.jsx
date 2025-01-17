@@ -525,11 +525,11 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                           onChange={(e) => setHijoUnoOption(e.target.value)}
                         >
                           <FormControlLabel
-                            value="MENOR_3000000"
+                            value="MENOR_300000"
                             control={<Radio />}
-                            label="Facturacion de ventas menor a 3000000"
+                            label="Facturacion de ventas menor a 300000"
                           />
-                          {hijoUnoOption === 'MENOR_3000000' && (
+                          {hijoUnoOption === 'MENOR_300000' && (
                             <>
                               <Grid
                                 xs={12}
@@ -541,8 +541,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                                   label="¿CÚANTO FACTURAS AL AÑO? *"
                                   onChange={(e) => {
                                     let value = parseFloat(e.target.value);
-                                    if (value > 0) {
-                                      value = 3000000;
+                                    if (value > 300000) {
+                                      value = 300000;
                                     }
                                     setValue('facturacion_anual', value);
                                   }}
@@ -711,11 +711,11 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                             </>
                           )}
                           <FormControlLabel
-                            value="MAYOR_3000000"
+                            value="MAYOR_300000"
                             control={<Radio />}
-                            label="Facturacion de ventas entre 3000000 y 1.5M"
+                            label="Facturacion de ventas entre 300000 y 1.5M"
                           />
-                          {hijoUnoOption === 'MAYOR_3000000' && (
+                          {hijoUnoOption === 'MAYOR_300000' && (
                             <>
                               <Grid
                                 xs={12}
@@ -727,8 +727,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                                   label="¿CÚANTO FACTURAS AL AÑO? *"
                                   onChange={(e) => {
                                     let value = parseFloat(e.target.value);
-                                    if (value > 3000000) {
-                                      value = 1500000;
+                                    if (value < 300000) {
+                                      value = 300000;
                                     }
                                     setValue('facturacion_anual', value);
                                   }}
@@ -743,8 +743,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                                   }}
                                   inputProps={{
                                     type: 'number',
-                                    min: 0,
-                                    max: 500000,
+                                    min: 300000,
+                                    max: 1500000,
                                   }} // Asegura que solo se ingresen números
                                   InputProps={{
                                     style: {
