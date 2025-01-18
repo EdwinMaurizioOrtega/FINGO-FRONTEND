@@ -11,6 +11,7 @@ import { localStorageAvailable, localStorageGetItem } from '../../../utils/stora
 import Button from '@mui/material/Button';
 import { Iconify } from '../../../components/iconify';
 import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import Typography from "@mui/material/Typography";
 
 // ----------------------------------------------------------------------
 
@@ -149,12 +150,13 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
   return (
     <DashboardContent>
       <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-        Elige el crédito que más se ajuste a tus necesidades de entre decenas de opciones en el
-        mercado.
+        <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
+        Cuál es el uso que le vas a dar al crédito?
+        </Typography>
       </div>
       <Box
         sx={{
-          mt: 2,
+
           mb: 5,
           p: 2,
           borderRadius: '16px',
@@ -176,8 +178,6 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
           },
         }}
       >
-        <h3>Cuál es el uso que le vas a dar al crédito?</h3>
-
         <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
           <Box gap={3} display="flex" flexDirection="column">
             <Grid container spacing={2}>
@@ -199,7 +199,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                     <Box>
                       <FormControlLabel
                         value="personal"
-                        control={<Radio />}
+                        control={<Radio style={{ color: 'white' }} />}
                         label="USO PERSONAL"
                         sx={{
                           '& .MuiFormControlLabel-label': {
@@ -209,7 +209,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                       />
                       {selectedOption === 'personal' && (
                         <RadioGroup
-                          sx={{ mt: 1, ml: 4 }}
+                          sx={{ ml: 4 }}
                           value={hijoUnoOption}
                           onChange={(e) => setHijoUnoOption(e.target.value)}
                         >
@@ -515,7 +515,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                     <Box>
                       <FormControlLabel
                         value="PRODUCTIVO EMPRESARIAL"
-                        control={<Radio onChange={(e) => setHijoUnoOption(e.target.value)} />}
+                        control={<Radio style={{ color: 'white' }} onChange={(e) => setHijoUnoOption(e.target.value)} />}
                         label="USO PARA MI EMPRESA"
                         sx={{
                           '& .MuiFormControlLabel-label': {
@@ -526,7 +526,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
 
                       {selectedOption === 'PRODUCTIVO EMPRESARIAL' && (
                         <RadioGroup
-                          sx={{ mt: 1, ml: 4 }}
+                          sx={{ ml: 4 }}
                           value={hijoUnoOption}
                           onChange={(e) => setHijoUnoOption(e.target.value)}
                         >
@@ -909,7 +909,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                     <Box>
                       <FormControlLabel
                         value="inmobiliario"
-                        control={<Radio />}
+                        control={<Radio style={{ color: 'white' }}/>}
                         label="CRÉDITO INMOBILIARIO"
                         sx={{
                           '& .MuiFormControlLabel-label': {
@@ -919,7 +919,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                       />
                       {selectedOption === 'inmobiliario' && (
                         <RadioGroup
-                          sx={{ mt: 1, ml: 4 }}
+                          sx={{ ml: 4 }}
                           value={hijoUnoOption}
                           onChange={(e) => setHijoUnoOption(e.target.value)}
                         >
