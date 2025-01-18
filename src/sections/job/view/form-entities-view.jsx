@@ -97,7 +97,11 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
     //const tipo_credito = hijoUnoOption; //Tipo de Crédito
-    let tipo_credito = (hijoUnoOption === 'MENOR_300000' || hijoUnoOption === 'MAYOR_300000') ? 'PRODUCTIVO EMPRESARIAL' : hijoUnoOption;
+    let tipo_credito = (hijoUnoOption === 'MAYOR_300000')
+      ? 'PRODUCTIVO PYMES'
+      : (hijoUnoOption === 'MENOR_300000')
+        ? 'MICROCREDITO DE ACUMULACION AMPLIADA' //Consultar a Daniel, hay varios tipos de microcréditos
+        : hijoUnoOption;
 
     const provincia = data.provincia.value;
 
