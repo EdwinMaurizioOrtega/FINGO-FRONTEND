@@ -96,7 +96,9 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
 
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
-    const tipo_credito = hijoUnoOption; //Tipo de Crédito
+    //const tipo_credito = hijoUnoOption; //Tipo de Crédito
+    let tipo_credito = (hijoUnoOption === 'MENOR_300000' || hijoUnoOption === 'MAYOR_300000') ? 'PRODUCTIVO EMPRESARIAL' : hijoUnoOption;
+
     const provincia = data.provincia.value;
 
     onSubmit(montoTotalSolicitar, numeroDeCuotas, tipo_credito, provincia);
@@ -539,7 +541,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                                 <Field.Text
                                   name="facturacion_anual"
                                   label="¿CÚANTO FACTURAS AL AÑO? *"
-                                  onChange={(e) => {
+                                  onBlur={(e) => {
                                     let value = parseFloat(e.target.value);
                                     if (value > 300000) {
                                       value = 300000;
@@ -725,7 +727,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                                 <Field.Text
                                   name="facturacion_anual"
                                   label="¿CÚANTO FACTURAS AL AÑO? *"
-                                  onChange={(e) => {
+                                  onBlur={(e) => {
                                     let value = parseFloat(e.target.value);
                                     if (value < 300000) {
                                       value = 300000;
@@ -1265,8 +1267,8 @@ const TIPO_C = [
   { value: 'MICROCREDITO MINORISTA', label: 'MICROCREDITO MINORISTA' },
   { value: 'PRODUCTIVO EMPRESARIAL', label: 'PRODUCTIVO EMPRESARIAL' },
   { value: 'PRODUCTIVO PYMES', label: 'PRODUCTIVO PYMES' },
-  { value: 'EDUCATIVO', label: 'EDUCATIVO' },
   { value: 'PRODUCTIVO CORPORATIVO', label: 'PRODUCTIVO CORPORATIVO' },
+  { value: 'EDUCATIVO', label: 'EDUCATIVO' },
   { value: 'VIVIENDA INTERES SOCIAL', label: 'VIVIENDA INTERES SOCIAL' },
   { value: 'VIVIENDA INTERES PÚBLICO', label: 'VIVIENDA INTERES PÚBLICO' },
   { value: 'MICROCREDITO DE ACUMULACION AMPLIADA', label: 'MICROCREDITO DE ACUMULACION AMPLIADA' },
