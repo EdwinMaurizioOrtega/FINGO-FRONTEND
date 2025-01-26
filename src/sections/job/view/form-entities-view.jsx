@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { localStorageAvailable, localStorageGetItem } from '../../../utils/storage-available';
 import Button from '@mui/material/Button';
 import { Iconify } from '../../../components/iconify';
-import { FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import {FormControlLabel, Modal, Radio, RadioGroup, TextField} from '@mui/material';
 import Typography from "@mui/material/Typography";
 
 // ----------------------------------------------------------------------
@@ -20,6 +20,12 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
   const [hijoUnoOption, setHijoUnoOption] = useState('');
 
   const [storageLoaded, setStorageLoaded] = useState(false);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [defaultValues, setDefaultValues] = useState({
     provincia: '',
     tipo_credito: '',
@@ -109,6 +115,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
     onSubmit(montoTotalSolicitar, numeroDeCuotas, tipo_credito, provincia);
 
     console.log('Calculando...');
+
+    handleClose();
   });
 
   const handleClear = () => {
@@ -147,1092 +155,1161 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
     );
   }
 
+
+
   return (
     <DashboardContent>
-      <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-        <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
-        Cuál es el uso que le vas a dar al crédito?
-        </Typography>
-      </div>
-      <Box
-        sx={{
 
-          mb: 5,
-          p: 2,
-          borderRadius: '16px',
-          position: 'relative',
-          background: 'linear-gradient(135deg, #ff9999, #ff4d4d)',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            borderRadius: 'inherit',
-            padding: '2px', // Grosor del borde degradado
-            background: 'inherit',
-            WebkitMask: 'linear-gradient(white, white) content-box, linear-gradient(white, white)',
-            WebkitMaskComposite: 'xor',
-            maskComposite: 'exclude',
+      <div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
+
+      <Button
+        onClick={handleOpen}
+        variant="outlined"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "#fff",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          borderRadius: "50px",
+          padding: "10px 20px",
+          minWidth: "300px",
+          justifyContent: "flex-start",
+          ":hover": {
+            backgroundColor: "#f5f5f5",
+            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)",
           },
         }}
       >
-        <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
-          <Box gap={3} display="flex" flexDirection="column">
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={12}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <RadioGroup
-                    name="uso-credito"
-                    style={{width:'100%'}}
-                    value={selectedOption}
-                    onChange={(e) => setSelectedOption(e.target.value)}
-                  >
-                    <Box>
-                      <FormControlLabel
-                        value="personal"
-                        control={<Radio style={{ color: 'white' }} />}
-                        label="USO PERSONAL"
-                        sx={{
-                          '& .MuiFormControlLabel-label': {
-                            fontWeight: 'bold', // Negrita
-                          },
-                        }}
-                      />
-                      {selectedOption === 'personal' && (
-                        <RadioGroup
-                          sx={{ ml: 4 }}
-                          value={hijoUnoOption}
-                          onChange={(e) => setHijoUnoOption(e.target.value)}
-                        >
-                          <FormControlLabel value="CONSUMO" control={<Radio />} label="Consumo" />
+        {/* SVG personalizado */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          style={{ width: "20px", height: "20px", marginRight: "10px", color: "#000" }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+          />
+        </svg>
+        <Typography sx={{ color: "#000", fontWeight: "500" }}>
+          Simulador de Créditos
+        </Typography>
+      </Button>
+      </div>
 
-                          {hijoUnoOption === 'CONSUMO' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
-                                  >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
-                              )}
-                            </>
-                          )}
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "100%",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+            <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
+              Cuál es el uso que le vas a dar al crédito?
+            </Typography>
+          </div>
+          <Box
+            sx={{
+
+              mb: 5,
+              p: 2,
+              borderRadius: '16px',
+              position: 'relative',
+              background: 'linear-gradient(135deg, #ff9999, #ff4d4d)',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: 'inherit',
+                padding: '2px', // Grosor del borde degradado
+                background: 'inherit',
+                WebkitMask: 'linear-gradient(white, white) content-box, linear-gradient(white, white)',
+                WebkitMaskComposite: 'xor',
+                maskComposite: 'exclude',
+              },
+            }}
+          >
+            <Form methods={methods} onSubmit={handleSubmit(onFormSubmit)}>
+              <Box gap={3} display="flex" flexDirection="column">
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={12}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <RadioGroup
+                        name="uso-credito"
+                        style={{width:'100%'}}
+                        value={selectedOption}
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                      >
+                        <Box>
                           <FormControlLabel
-                            value="EDUCATIVO"
-                            control={<Radio />}
-                            label="Educativo"
+                            value="personal"
+                            control={<Radio style={{ color: 'white' }} />}
+                            label="USO PERSONAL"
+                            sx={{
+                              '& .MuiFormControlLabel-label': {
+                                fontWeight: 'bold', // Negrita
+                              },
+                            }}
                           />
-                          {hijoUnoOption === 'EDUCATIVO' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
+                          {selectedOption === 'personal' && (
+                            <RadioGroup
+                              sx={{ ml: 4 }}
+                              value={hijoUnoOption}
+                              onChange={(e) => setHijoUnoOption(e.target.value)}
+                            >
+                              <FormControlLabel value="CONSUMO" control={<Radio />} label="Consumo" />
+
+                              {hijoUnoOption === 'CONSUMO' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
                                   >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
                               )}
-                            </>
+                              <FormControlLabel
+                                value="EDUCATIVO"
+                                control={<Radio />}
+                                label="Educativo"
+                              />
+                              {hijoUnoOption === 'EDUCATIVO' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
+                              )}
+                            </RadioGroup>
                           )}
-                        </RadioGroup>
-                      )}
+                        </Box>
+
+                        <Box>
+                          <FormControlLabel
+                            value="PRODUCTIVO EMPRESARIAL"
+                            control={<Radio style={{ color: 'white' }} onChange={(e) => setHijoUnoOption(e.target.value)} />}
+                            label="USO PARA MI EMPRESA"
+                            sx={{
+                              '& .MuiFormControlLabel-label': {
+                                fontWeight: 'bold', // Negrita
+                              },
+                            }}
+                          />
+
+                          {selectedOption === 'PRODUCTIVO EMPRESARIAL' && (
+                            <RadioGroup
+                              sx={{ ml: 4 }}
+                              value={hijoUnoOption}
+                              onChange={(e) => setHijoUnoOption(e.target.value)}
+                            >
+                              <FormControlLabel
+                                value="MENOR_300000"
+                                control={<Radio />}
+                                label="Facturacion de ventas menor a 300000"
+                              />
+                              {hijoUnoOption === 'MENOR_300000' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="facturacion_anual"
+                                      label="¿CÚANTO FACTURAS AL AÑO? *"
+                                      onBlur={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 300000) {
+                                          value = 300000;
+                                        }
+                                        setValue('facturacion_anual', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 300000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
+                              )}
+                              <FormControlLabel
+                                value="MAYOR_300000"
+                                control={<Radio />}
+                                label="Facturacion de ventas entre 300000 y 1.5M"
+                              />
+                              {hijoUnoOption === 'MAYOR_300000' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="facturacion_anual"
+                                      label="¿CÚANTO FACTURAS AL AÑO? *"
+                                      onBlur={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value < 300000) {
+                                          value = 300000;
+                                        }
+                                        setValue('facturacion_anual', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 300000,
+                                        max: 1500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
+                              )}
+                            </RadioGroup>
+                          )}
+                        </Box>
+
+                        <Box>
+                          <FormControlLabel
+                            value="inmobiliario"
+                            control={<Radio style={{ color: 'white' }}/>}
+                            label="CRÉDITO INMOBILIARIO"
+                            sx={{
+                              '& .MuiFormControlLabel-label': {
+                                fontWeight: 'bold', // Negrita
+                              },
+                            }}
+                          />
+                          {selectedOption === 'inmobiliario' && (
+                            <RadioGroup
+                              sx={{ ml: 4 }}
+                              value={hijoUnoOption}
+                              onChange={(e) => setHijoUnoOption(e.target.value)}
+                            >
+                              <FormControlLabel
+                                value="VIVIENDA INTERES SOCIAL"
+                                control={<Radio />}
+                                label="Social"
+                              />
+                              {hijoUnoOption === 'VIVIENDA INTERES SOCIAL' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
+                              )}
+                              <FormControlLabel
+                                value="VIVIENDA INTERES PÚBLICO"
+                                control={<Radio />}
+                                label="Público"
+                              />
+                              {hijoUnoOption === 'VIVIENDA INTERES PÚBLICO' && (
+                                <>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="monto_a_solicitar"
+                                      label="MONTO A SOLICITAR *"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 500000) {
+                                          value = 500000;
+                                        }
+                                        setValue('monto_a_solicitar', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 500000,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Text
+                                      name="num_cuotas"
+                                      label="NRO. CUOTAS (Meses)"
+                                      onChange={(e) => {
+                                        let value = parseFloat(e.target.value);
+                                        if (value > 360) {
+                                          value = 360;
+                                        }
+                                        setValue('num_cuotas', value);
+                                      }}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                        style: {
+                                          color: 'black',
+                                          backgroundColor: 'white',
+                                          borderRadius: '5px',
+                                          padding: '0 5px',
+                                        }, // Cambia el color del label a blanco
+                                      }}
+                                      inputProps={{
+                                        type: 'number',
+                                        min: 0,
+                                        max: 360,
+                                      }} // Asegura que solo se ingresen números
+                                      InputProps={{
+                                        style: {
+                                          backgroundColor: 'white', // Fondo blanco
+                                          borderRadius: '9px', // Bordes redondeados
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <Field.Autocomplete
+                                      name="provincia"
+                                      label="Provincia"
+                                      options={PROVINCIAS}
+                                      getOptionLabel={(option) => option.label}
+                                      isOptionEqualToValue={(option, value) =>
+                                        option.value === value.value
+                                      }
+                                      renderOption={(props, option) => (
+                                        <li {...props} key={option.value}>
+                                          {option.label}
+                                        </li>
+                                      )}
+                                      disableClearable // Desactiva la opción de limpiar el campo
+                                      freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
+                                      clearOnBlur // Borra el valor cuando el campo pierde el enfoque
+                                      sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: 1, // Bordes redondeados
+                                        '& .MuiInputLabel-root': {
+                                          backgroundColor: 'white', // Fondo blanco para el label
+                                          padding: '0 4px', // Asegura que el fondo no tape el borde
+                                          borderRadius: 1, // Bordes redondeados
+                                          color: 'red',
+                                        },
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid
+                                    xs={12}
+                                    md={12}
+                                    sx={{ display: 'block', alignContent: 'center' }}
+                                  >
+                                    <LoadingButton
+                                      fullWidth
+                                      color="inherit"
+                                      size="large"
+                                      type="submit"
+                                      variant="contained"
+                                      loading={isSubmitting}
+                                      loadingIndicator="Generando..."
+                                    >
+                                      BUSCAR
+                                    </LoadingButton>
+                                  </Grid>
+                                  {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
+                                  {isFormFilled && (
+                                    <Grid
+                                      xs={12}
+                                      md={12}
+                                      sx={{ display: 'flex', justifyContent: 'center' }}
+                                    >
+                                      <Button
+                                        onClick={handleClear}
+                                        startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                        sx={{ flexDirection: 'column', alignItems: 'center' }}
+                                      >
+                                        Limpiar
+                                      </Button>
+                                    </Grid>
+                                  )}
+                                </>
+                              )}
+                            </RadioGroup>
+                          )}
+                        </Box>
+                      </RadioGroup>
                     </Box>
+                  </Grid>
 
-                    <Box>
-                      <FormControlLabel
-                        value="PRODUCTIVO EMPRESARIAL"
-                        control={<Radio style={{ color: 'white' }} onChange={(e) => setHijoUnoOption(e.target.value)} />}
-                        label="USO PARA MI EMPRESA"
-                        sx={{
-                          '& .MuiFormControlLabel-label': {
-                            fontWeight: 'bold', // Negrita
-                          },
-                        }}
-                      />
-
-                      {selectedOption === 'PRODUCTIVO EMPRESARIAL' && (
-                        <RadioGroup
-                          sx={{ ml: 4 }}
-                          value={hijoUnoOption}
-                          onChange={(e) => setHijoUnoOption(e.target.value)}
-                        >
-                          <FormControlLabel
-                            value="MENOR_300000"
-                            control={<Radio />}
-                            label="Facturacion de ventas menor a 300000"
-                          />
-                          {hijoUnoOption === 'MENOR_300000' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="facturacion_anual"
-                                  label="¿CÚANTO FACTURAS AL AÑO? *"
-                                  onBlur={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 300000) {
-                                      value = 300000;
-                                    }
-                                    setValue('facturacion_anual', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 300000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
-                                  >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
-                              )}
-                            </>
-                          )}
-                          <FormControlLabel
-                            value="MAYOR_300000"
-                            control={<Radio />}
-                            label="Facturacion de ventas entre 300000 y 1.5M"
-                          />
-                          {hijoUnoOption === 'MAYOR_300000' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="facturacion_anual"
-                                  label="¿CÚANTO FACTURAS AL AÑO? *"
-                                  onBlur={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value < 300000) {
-                                      value = 300000;
-                                    }
-                                    setValue('facturacion_anual', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 300000,
-                                    max: 1500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
-                                  >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
-                              )}
-                            </>
-                          )}
-                        </RadioGroup>
-                      )}
-                    </Box>
-
-                    <Box>
-                      <FormControlLabel
-                        value="inmobiliario"
-                        control={<Radio style={{ color: 'white' }}/>}
-                        label="CRÉDITO INMOBILIARIO"
-                        sx={{
-                          '& .MuiFormControlLabel-label': {
-                            fontWeight: 'bold', // Negrita
-                          },
-                        }}
-                      />
-                      {selectedOption === 'inmobiliario' && (
-                        <RadioGroup
-                          sx={{ ml: 4 }}
-                          value={hijoUnoOption}
-                          onChange={(e) => setHijoUnoOption(e.target.value)}
-                        >
-                          <FormControlLabel
-                            value="VIVIENDA INTERES SOCIAL"
-                            control={<Radio />}
-                            label="Social"
-                          />
-                          {hijoUnoOption === 'VIVIENDA INTERES SOCIAL' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
-                                  >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
-                              )}
-                            </>
-                          )}
-                          <FormControlLabel
-                            value="VIVIENDA INTERES PÚBLICO"
-                            control={<Radio />}
-                            label="Público"
-                          />
-                          {hijoUnoOption === 'VIVIENDA INTERES PÚBLICO' && (
-                            <>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="monto_a_solicitar"
-                                  label="MONTO A SOLICITAR *"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 500000) {
-                                      value = 500000;
-                                    }
-                                    setValue('monto_a_solicitar', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 500000,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Text
-                                  name="num_cuotas"
-                                  label="NRO. CUOTAS (Meses)"
-                                  onChange={(e) => {
-                                    let value = parseFloat(e.target.value);
-                                    if (value > 360) {
-                                      value = 360;
-                                    }
-                                    setValue('num_cuotas', value);
-                                  }}
-                                  InputLabelProps={{
-                                    shrink: true,
-                                    style: {
-                                      color: 'black',
-                                      backgroundColor: 'white',
-                                      borderRadius: '5px',
-                                      padding: '0 5px',
-                                    }, // Cambia el color del label a blanco
-                                  }}
-                                  inputProps={{
-                                    type: 'number',
-                                    min: 0,
-                                    max: 360,
-                                  }} // Asegura que solo se ingresen números
-                                  InputProps={{
-                                    style: {
-                                      backgroundColor: 'white', // Fondo blanco
-                                      borderRadius: '9px', // Bordes redondeados
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <Field.Autocomplete
-                                  name="provincia"
-                                  label="Provincia"
-                                  options={PROVINCIAS}
-                                  getOptionLabel={(option) => option.label}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.value === value.value
-                                  }
-                                  renderOption={(props, option) => (
-                                    <li {...props} key={option.value}>
-                                      {option.label}
-                                    </li>
-                                  )}
-                                  disableClearable // Desactiva la opción de limpiar el campo
-                                  freeSolo={false} // Impide que el usuario ingrese texto no definido en las opciones
-                                  clearOnBlur // Borra el valor cuando el campo pierde el enfoque
-                                  sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: 1, // Bordes redondeados
-                                    '& .MuiInputLabel-root': {
-                                      backgroundColor: 'white', // Fondo blanco para el label
-                                      padding: '0 4px', // Asegura que el fondo no tape el borde
-                                      borderRadius: 1, // Bordes redondeados
-                                      color: 'red',
-                                    },
-                                  }}
-                                />
-                              </Grid>
-                              <Grid
-                                xs={12}
-                                md={12}
-                                sx={{ display: 'block', alignContent: 'center' }}
-                              >
-                                <LoadingButton
-                                  fullWidth
-                                  color="inherit"
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  loading={isSubmitting}
-                                  loadingIndicator="Generando..."
-                                >
-                                  BUSCAR
-                                </LoadingButton>
-                              </Grid>
-                              {/* Mostrar el botón de "Limpiar" solo si algún campo tiene datos */}
-                              {isFormFilled && (
-                                <Grid
-                                  xs={12}
-                                  md={12}
-                                  sx={{ display: 'flex', justifyContent: 'center' }}
-                                >
-                                  <Button
-                                    onClick={handleClear}
-                                    startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                    sx={{ flexDirection: 'column', alignItems: 'center' }}
-                                  >
-                                    Limpiar
-                                  </Button>
-                                </Grid>
-                              )}
-                            </>
-                          )}
-                        </RadioGroup>
-                      )}
-                    </Box>
-                  </RadioGroup>
-                </Box>
-              </Grid>
-
-              {/*tipo_credito*/}
-            </Grid>
+                  {/*tipo_credito*/}
+                </Grid>
+              </Box>
+            </Form>
           </Box>
-        </Form>
-      </Box>
+
+        </Box>
+      </Modal>
+
+
     </DashboardContent>
   );
 }
