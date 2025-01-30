@@ -1,24 +1,16 @@
-import { useRef, useState } from 'react';
-import { m, useScroll, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
+
+import { m } from 'framer-motion';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar, { avatarClasses } from '@mui/material/Avatar';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-import { useResponsive } from 'src/hooks/use-responsive';
-import { _mock } from 'src/_mock';
-import { CONFIG } from 'src/config-global';
 import { textGradient } from 'src/theme/styles';
 import { Iconify } from 'src/components/iconify';
-import { SvgColor } from 'src/components/svg-color';
 import { varFade, MotionContainer } from 'src/components/animate';
-import { HeroBackground } from './components/hero-background';
-import Link from '@mui/material/Link';
 
 // ----------------------------------------------------------------------
 
@@ -28,24 +20,6 @@ const lgKey = 'lg';
 
 export function HomeHero({ sx, ...other }) {
   const theme = useTheme();
-
-  const scroll = useScrollPercent();
-
-  const mdUp = useResponsive('up', mdKey);
-
-  const distance = mdUp ? scroll.percent : 0;
-
-  const y1 = useTransformY(scroll.scrollY, distance * -7);
-  const y2 = useTransformY(scroll.scrollY, distance * -6);
-  const y3 = useTransformY(scroll.scrollY, distance * -5);
-  const y4 = useTransformY(scroll.scrollY, distance * -4);
-  const y5 = useTransformY(scroll.scrollY, distance * -3);
-
-  const opacity = useTransform(
-    scroll.scrollY,
-    [0, 1], // Rango de scroll
-    [0, 1] // El elemento se desplaza hacia arriba a medida que se hace scroll
-  );
 
   const renderHeading = (
     <AnimatedDiv>
@@ -102,30 +76,6 @@ export function HomeHero({ sx, ...other }) {
       >
         {`¿Buscas las mejores opciones para  tu crédito? \nHemos creado un espacio único para conectarte directamente con las mejores instituciones financieras y ayudarte a tomar decisiones informadas, rápidas y seguras.`}
       </Typography>
-    </AnimatedDiv>
-  );
-
-  const renderRatings = (
-    <AnimatedDiv>
-      <Box
-        gap={1.5}
-        display="flex"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ typography: 'subtitle2' }}
-      >
-        <AvatarGroup sx={{ [`& .${avatarClasses.root}`]: { width: 32, height: 32 } }}>
-          {[...Array(3)].map((_, index) => (
-            <Avatar
-              key={_mock.fullName(index + 1)}
-              alt={_mock.fullName(index + 1)}
-              src={_mock.image.avatar(index + 1)}
-            />
-          ))}
-        </AvatarGroup>
-        160+ clientes satisfechos
-      </Box>
     </AnimatedDiv>
   );
 
@@ -190,97 +140,46 @@ export function HomeHero({ sx, ...other }) {
     </Box>
   );
 
-  const renderIcons = (
-    <Stack spacing={3} sx={{ textAlign: 'center' }}>
-      <AnimatedDiv>
-        <Typography variant="overline" sx={{ opacity: 0.4 }}>
-          Available For
-        </Typography>
-      </AnimatedDiv>
-
-      <Stack spacing={2.5} direction="row">
-        {['js', 'ts', 'nextjs', 'vite', 'figma'].map((platform) => (
-          <AnimatedDiv key={platform}>
-            {platform === 'nextjs' ? (
-              <SvgColor
-                src={`${CONFIG.assetsDir}/assets/icons/platforms/ic-${platform}.svg`}
-                sx={{ width: 24, height: 24 }}
-              />
-            ) : (
-              <Box
-                component="img"
-                alt={platform}
-                src={`${CONFIG.assetsDir}/assets/icons/platforms/ic-${platform}.svg`}
-                sx={{ width: 24, height: 24 }}
-              />
-            )}
-          </AnimatedDiv>
-        ))}
-      </Stack>
-    </Stack>
-  );
-
   return (
     <Box
-      ref={scroll.elementRef}
+      // ref={scroll.elementRef}
       component="section"
       sx={{
         overflow: 'hidden',
         position: 'relative',
-        [theme.breakpoints.up(mdKey)]: {
-          minHeight: 760,
-          height: '100vh',
-          maxHeight: 1440,
-          display: 'block',
-          willChange: 'opacity',
-          mt: 'calc(var(--layout-header-desktop-height) * 0)',
-        },
         ...sx,
       }}
       {...other}
     >
       <Box
-        component={m.div}
-        style={{ opacity }}
+        // component={m.div}
+        // style={{ opacity }}
         sx={{
           width: 1,
           display: 'flex',
           position: 'relative',
           flexDirection: 'column',
-          transition: theme.transitions.create(['opacity']),
-          [theme.breakpoints.up(mdKey)]: {
-            height: 1,
-            position: 'fixed',
-            maxHeight: 'inherit',
-          },
+
         }}
       >
         <Container
-          component={MotionContainer}
+          // component={MotionContainer}
           sx={{
-            py: 3,
-            gap: 5,
-            zIndex: 9,
+            // py: 3,
+            // gap: 5,
+            // zIndex: 9,
             display: 'flex',
             alignItems: 'center',
             flexDirection: 'column',
-            [theme.breakpoints.up(mdKey)]: {
-              flex: '1 1 auto',
-              justifyContent: 'center',
-              py: 'var(--layout-header-desktop-height)',
-            },
           }}
         >
           <Stack spacing={3} sx={{ textAlign: 'center' }}>
-            <m.div style={{ y: y1 }}>{renderHeading}</m.div>
-            <m.div style={{ y: y1 }}>{renderText}</m.div>
+            <m.div >{renderHeading}</m.div>
+            <m.div >{renderText}</m.div>
           </Stack>
-          {/*<m.div style={{ y: y3 }}>{renderRatings}</m.div>*/}
-          <m.div style={{ y: y1 }}>{renderButtons}</m.div>
-          {/*<m.div style={{ y: y5 }}>{renderIcons}</m.div>*/}
+          <m.div >{renderButtons}</m.div>
         </Container>
 
-        <HeroBackground />
       </Box>
     </Box>
   );
@@ -294,43 +193,4 @@ function AnimatedDiv({ children, component = m.div }) {
       {children}
     </Box>
   );
-}
-
-// ----------------------------------------------------------------------
-
-function useTransformY(value, distance) {
-  const physics = {
-    mass: 0.1,
-    damping: 20,
-    stiffness: 300,
-    restDelta: 0.001,
-  };
-
-  return useSpring(useTransform(value, [0, 1], [0, distance]), physics);
-}
-
-function useScrollPercent() {
-  const elementRef = useRef(null);
-
-  const { scrollY } = useScroll();
-
-  const [percent, setPercent] = useState(0);
-
-  useMotionValueEvent(scrollY, 'change', (scrollHeight) => {
-    let heroHeight = 0;
-
-    if (elementRef.current) {
-      heroHeight = elementRef.current.offsetHeight;
-    }
-
-    const scrollPercent = Math.floor((scrollHeight / heroHeight) * 280);
-
-    if (scrollPercent >= 100) {
-      setPercent(100);
-    } else {
-      setPercent(Math.floor(scrollPercent));
-    }
-  });
-
-  return { elementRef, percent, scrollY };
 }
