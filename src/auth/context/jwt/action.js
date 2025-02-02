@@ -102,3 +102,22 @@ export const updatePassword = async ({ username, new_password }) => {
   }
 
 };
+
+export const googleSuccess = async (tokenData) => {
+  try {
+    if (!tokenData) throw new Error("No se recibió el token de Google");
+
+    const res = await axios.post(endpoints.auth.googleSuccess, { token: tokenData });
+    console.log("Datos del usuario:", res.data);
+
+    const { accessToken } = res.data;
+
+    if (!accessToken) {
+      throw new Error('Access token not found in response');
+    }
+
+    setSession(accessToken);
+  } catch (error) {
+    console.error("Error en Google Sign-In:", error);
+  }
+};

@@ -1,9 +1,9 @@
 'use client';
 
-import { z as zod } from 'zod';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {z as zod} from 'zod';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -12,30 +12,31 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
+import {paths} from 'src/routes/paths';
+import {useRouter} from 'src/routes/hooks';
+import {RouterLink} from 'src/routes/components';
 
-import { useBoolean } from 'src/hooks/use-boolean';
+import {useBoolean} from 'src/hooks/use-boolean';
 
-import { Iconify } from 'src/components/iconify';
-import { Form, Field } from 'src/components/hook-form';
+import {Iconify} from 'src/components/iconify';
+import {Form, Field} from 'src/components/hook-form';
 
-import { useAuthContext } from '../../hooks';
-import { FormHead } from '../../components/form-head';
-import { signInWithPassword } from '../../context/jwt';
+import {useAuthContext} from '../../hooks';
+import {FormHead} from '../../components/form-head';
+import {googleSuccess, jwtDecode, signInWithPassword} from '../../context/jwt';
+import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 
 // ----------------------------------------------------------------------
 
 export const SignInSchema = zod.object({
   email: zod
     .string()
-    .min(1, { message: '¡Se requiere un correo electrónico!' })
-    .email({ message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!' }),
+    .min(1, {message: '¡Se requiere un correo electrónico!'})
+    .email({message: '¡El correo electrónico debe ser una dirección de correo electrónico válida!'}),
   password: zod
     .string()
-    .min(1, { message: '¡Se requiere contraseña!' })
-    .min(6, { message: '¡La contraseña debe tener al menos 6 caracteres!' }),
+    .min(1, {message: '¡Se requiere contraseña!'})
+    .min(6, {message: '¡La contraseña debe tener al menos 6 caracteres!'}),
 });
 
 // ----------------------------------------------------------------------
@@ -43,7 +44,7 @@ export const SignInSchema = zod.object({
 export function JwtSignInView() {
   const router = useRouter();
 
-  const { checkUserSession } = useAuthContext();
+  const {checkUserSession} = useAuthContext();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -61,12 +62,12 @@ export function JwtSignInView() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: {isSubmitting},
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signInWithPassword({ email: data.email, password: data.password });
+      await signInWithPassword({email: data.email, password: data.password});
       await checkUserSession?.();
 
       router.refresh();
@@ -80,9 +81,30 @@ export function JwtSignInView() {
     event.target.value = event.target.value.toLowerCase(); // Convierte directamente a minúsculas
   };
 
+  //Google
+  const googleSuccessFront = async (res) => {
+
+    const result = jwtDecode(res.credential);
+    console.log("RESULT: " + JSON.stringify(result));
+
+    try {
+      await googleSuccess(result);
+      await checkUserSession?.();
+
+      router.refresh();
+
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(typeof error === 'string' ? error : error.message);
+    }
+  };
+
+  const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
+
+
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
+      <Field.Text name="email" label="Correo electrónico" InputLabelProps={{shrink: true}}
                   onInput={handleInput} // Usa `onInput` para manejar el evento directamente
 
       />
@@ -93,7 +115,7 @@ export function JwtSignInView() {
           href={paths.auth.jwt.resetPassword}
           variant="body2"
           color="inherit"
-          sx={{ alignSelf: 'flex-end' }}
+          sx={{alignSelf: 'flex-end'}}
         >
           ¿Has olvidado tu contraseña?
         </Link>
@@ -103,12 +125,12 @@ export function JwtSignInView() {
           label="Contraseña"
           placeholder="6+ characters"
           type={password.value ? 'text' : 'password'}
-          InputLabelProps={{ shrink: true }}
+          InputLabelProps={{shrink: true}}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'}/>
                 </IconButton>
               </InputAdornment>
             ),
@@ -142,7 +164,7 @@ export function JwtSignInView() {
             </Link>
           </>
         }
-        sx={{ textAlign: { xs: 'center', md: 'left' } }}
+        sx={{textAlign: {xs: 'center', md: 'left'}}}
       />
 
       {/*<Alert severity="info" sx={{ mb: 3 }}>*/}
@@ -152,7 +174,7 @@ export function JwtSignInView() {
       {/*</Alert>*/}
 
       {!!errorMsg && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+        <Alert severity="error" sx={{mb: 3}}>
           {errorMsg}
         </Alert>
       )}
@@ -160,6 +182,17 @@ export function JwtSignInView() {
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </Form>
+
+      <Box mt={3} >
+        <GoogleOAuthProvider
+          clientId="401996344322-cba70f138bi3nh76am65hinme3r4qsr2.apps.googleusercontent.com">
+          <GoogleLogin className="w-full"
+                       onSuccess={googleSuccessFront}
+                       onError={googleError}
+                       shape="pill"
+          />
+        </GoogleOAuthProvider>
+      </Box>
     </>
   );
 }

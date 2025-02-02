@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { CONFIG } from 'src/config-global';
+import {googleSuccess} from "../auth/context/jwt";
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +41,7 @@ export const endpoints = {
     signUp: '/api/auth/sign-up',
     resetPassword: '/api/auth/reset-password',
     updatePassword: '/api/auth/update-password',
+    googleSuccess: '/api/auth/google-signin',
 
   },
   bank: {
