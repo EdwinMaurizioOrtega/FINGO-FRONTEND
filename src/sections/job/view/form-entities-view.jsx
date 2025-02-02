@@ -12,17 +12,17 @@ import Button from '@mui/material/Button';
 import { Iconify } from '../../../components/iconify';
 import {FormControlLabel, Modal, Radio, RadioGroup, TextField} from '@mui/material';
 import Typography from "@mui/material/Typography";
+import {useTheme} from "@mui/material/styles";
+import {textGradient} from "../../../theme/styles";
 
 // ----------------------------------------------------------------------
 
 export function FormEntitiesView({ onSubmit, onClear, ...props }) {
   const [selectedOption, setSelectedOption] = useState('');
   const [hijoUnoOption, setHijoUnoOption] = useState('');
-
+  const theme = useTheme();
   const [storageLoaded, setStorageLoaded] = useState(false);
-
   const [open, setOpen] = useState(false);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -173,7 +173,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
           borderRadius: "50px",
           padding: "10px 20px",
           minWidth: "300px",
-          justifyContent: "flex-start",
+          justifyContent: "flex-center",
           ":hover": {
             backgroundColor: "#f5f5f5",
             boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)",
@@ -187,7 +187,12 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          style={{ width: "20px", height: "20px", marginRight: "10px", color: "#000" }}
+          style={{
+            width: "20px",
+            height: "20px",
+            marginRight: "10px",
+            color: "red",
+        }}
         >
           <path
             strokeLinecap="round"
@@ -195,8 +200,11 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
             d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
           />
         </svg>
-        <Typography sx={{ color: "#000", fontWeight: "500" }}>
-          Simulador de Créditos
+        <Typography sx={{
+          color: "#000",
+          fontWeight: "500",
+        }}>
+          Simula aquí tu crédito.
         </Typography>
       </Button>
       </div>
