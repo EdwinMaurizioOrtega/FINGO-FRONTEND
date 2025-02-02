@@ -183,7 +183,11 @@ export function JwtSignInView() {
         {renderForm}
       </Form>
 
-      <Box mt={3} >
+      <Box mt={3}
+           display="flex"
+           justifyContent="center"
+           alignItems="center"
+        >
         <GoogleOAuthProvider
           clientId="401996344322-cba70f138bi3nh76am65hinme3r4qsr2.apps.googleusercontent.com">
           <GoogleLogin className="w-full"
