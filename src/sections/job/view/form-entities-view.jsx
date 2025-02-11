@@ -10,10 +10,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { localStorageAvailable, localStorageGetItem } from '../../../utils/storage-available';
 import Button from '@mui/material/Button';
 import { Iconify } from '../../../components/iconify';
-import {FormControlLabel, Modal, Radio, RadioGroup, TextField} from '@mui/material';
-import Typography from "@mui/material/Typography";
-import {useTheme} from "@mui/material/styles";
-import {textGradient} from "../../../theme/styles";
+import { FormControlLabel, Modal, Radio, RadioGroup, TextField } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import { textGradient } from '../../../theme/styles';
+import GlobalStyles from '@mui/material/GlobalStyles';
 
 // ----------------------------------------------------------------------
 
@@ -104,11 +105,12 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
     const montoTotalSolicitar = parseFloat(data.monto_a_solicitar);
     const numeroDeCuotas = parseInt(data.num_cuotas);
     //const tipo_credito = hijoUnoOption; //Tipo de Crédito
-    let tipo_credito = (hijoUnoOption === 'MAYOR_300000')
-      ? 'PRODUCTIVO PYMES'
-      : (hijoUnoOption === 'MENOR_300000')
-        ? 'MICROCREDITO DE ACUMULACION AMPLIADA' //Consultar a Daniel, hay varios tipos de microcréditos
-        : hijoUnoOption;
+    let tipo_credito =
+      hijoUnoOption === 'MAYOR_300000'
+        ? 'PRODUCTIVO PYMES'
+        : hijoUnoOption === 'MENOR_300000'
+          ? 'MICROCREDITO DE ACUMULACION AMPLIADA' //Consultar a Daniel, hay varios tipos de microcréditos
+          : hijoUnoOption;
 
     const provincia = data.provincia.value;
 
@@ -155,60 +157,141 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
     );
   }
 
+  // Función para generar signos de dólares con animación de lluvia
+  const generateDollarRain = (count) => {
+    const dollars = [];
+    for (let i = 0; i < count; i++) {
+      const size = Math.floor(Math.random() * 30 + 10); // Tamaño entre 10px y 40px
+      const left = Math.random() * 100; // Posición horizontal aleatoria
+      const delay = Math.random() * 5; // Retardo aleatorio para la animación
+      const duration = Math.random() * 5 + 5; // Duración de la animación entre 5s y 10s
 
+      dollars.push(
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="rgba(255, 255, 255, 0.5)" // Color del SVG (blanco semitransparente)
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            position: 'absolute',
+            top: `-${size}px`, // Comienza desde arriba de la pantalla
+            left: `${left}%`,
+            animation: `fall ${duration}s linear ${delay}s infinite`, // Animación de caída
+          }}
+        >
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6" />
+        </svg>
+      );
+    }
+    return dollars;
+  };
 
   return (
     <DashboardContent>
 
-      <div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
-
-      <Button
-        onClick={handleOpen}
-        variant="outlined"
+      <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "#fff",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          borderRadius: "50px",
-          padding: "10px 20px",
-          minWidth: "300px",
-          justifyContent: "flex-center",
-          ":hover": {
-            backgroundColor: "#f5f5f5",
-            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)",
-          },
+          display: 'flex',
+          justifyContent: 'center',
+          margin: '20px',
+          position: 'relative', // Necesario para posicionar el pseudo-elemento
         }}
       >
-        {/* SVG personalizado */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          style={{
-            width: "20px",
-            height: "20px",
-            marginRight: "10px",
-            color: "red",
-        }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
-          />
-        </svg>
-        <Typography sx={{
-          color: "#000",
-          fontWeight: "500",
-        }}>
-          Simula aquí tu crédito.
-        </Typography>
-      </Button>
-      </div>
 
+        {/* Definir la animación @keyframes directamente en el componente */}
+        <style>
+          {`
+          @keyframes fall {
+            0% {
+              transform: translateY(-100px);
+            }
+            100% {
+              transform: translateY(100vh);
+            }
+          }
+        `}
+        </style>
+
+        {/* Fondo que atraviesa el botón */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '-50%', // Ajusta la posición vertical del fondo
+            left: '0',
+            right: '0',
+            height: '50px', // Grosor de la línea
+            backgroundColor: '#8c3535', // Color de la línea
+            zIndex: 1, // Asegura que esté detrás del botón
+            borderRadius: '0px 0px 20px 20px', // Bordes redondeados solo en la parte inferior
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Sombra para dar profundidad
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden', // Para que el SVG no se desborde
+            opacity: 0.8,
+          }}
+        >
+
+          {/* Generar múltiples signos de dólares */}
+          {generateDollarRain(30)} {/* Ajusta el número de signos de dólares */}
+        </Box>
+
+        <Button
+          onClick={handleOpen}
+          variant="outlined"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: '#fff',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+            borderRadius: '50px',
+            padding: '10px 20px',
+            minWidth: '300px',
+            justifyContent: 'flex-center',
+            position: 'relative', // Necesario para posicionar el botón sobre la línea
+            zIndex: 2, // Asegura que el botón esté sobre la línea
+            ':hover': {
+              backgroundColor: '#f5f5f5',
+              boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.15)',
+            },
+          }}
+        >
+          {/* SVG personalizado */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            style={{
+              width: '20px',
+              height: '20px',
+              marginRight: '10px',
+              color: 'red',
+            }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+            />
+          </svg>
+          <Typography
+            sx={{
+              color: '#000',
+              fontWeight: '500',
+            }}
+          >
+            Simula aquí tu crédito.
+          </Typography>
+        </Button>
+      </Box>
 
       <Modal
         open={open}
@@ -218,25 +301,28 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
       >
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            bgcolor: "background.paper",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '100%',
+            bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-            <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold', marginBottom: '8px' }}>
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{ fontWeight: 'bold', marginBottom: '8px' }}
+            >
               Cuál es el uso que le vas a dar al crédito?
             </Typography>
           </div>
           <Box
             sx={{
-
               mb: 5,
               p: 2,
               borderRadius: '16px',
@@ -252,7 +338,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                 borderRadius: 'inherit',
                 padding: '2px', // Grosor del borde degradado
                 background: 'inherit',
-                WebkitMask: 'linear-gradient(white, white) content-box, linear-gradient(white, white)',
+                WebkitMask:
+                  'linear-gradient(white, white) content-box, linear-gradient(white, white)',
                 WebkitMaskComposite: 'xor',
                 maskComposite: 'exclude',
               },
@@ -272,7 +359,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                     >
                       <RadioGroup
                         name="uso-credito"
-                        style={{width:'100%'}}
+                        style={{ width: '100%' }}
                         value={selectedOption}
                         onChange={(e) => setSelectedOption(e.target.value)}
                       >
@@ -293,7 +380,11 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                               value={hijoUnoOption}
                               onChange={(e) => setHijoUnoOption(e.target.value)}
                             >
-                              <FormControlLabel value="CONSUMO" control={<Radio />} label="Consumo" />
+                              <FormControlLabel
+                                value="CONSUMO"
+                                control={<Radio />}
+                                label="Consumo"
+                              />
 
                               {hijoUnoOption === 'CONSUMO' && (
                                 <>
@@ -595,7 +686,12 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                         <Box>
                           <FormControlLabel
                             value="PRODUCTIVO EMPRESARIAL"
-                            control={<Radio style={{ color: 'white' }} onChange={(e) => setHijoUnoOption(e.target.value)} />}
+                            control={
+                              <Radio
+                                style={{ color: 'white' }}
+                                onChange={(e) => setHijoUnoOption(e.target.value)}
+                              />
+                            }
                             label="USO PARA MI EMPRESA"
                             sx={{
                               '& .MuiFormControlLabel-label': {
@@ -989,7 +1085,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
                         <Box>
                           <FormControlLabel
                             value="inmobiliario"
-                            control={<Radio style={{ color: 'white' }}/>}
+                            control={<Radio style={{ color: 'white' }} />}
                             label="CRÉDITO INMOBILIARIO"
                             sx={{
                               '& .MuiFormControlLabel-label': {
@@ -1313,11 +1409,8 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
               </Box>
             </Form>
           </Box>
-
         </Box>
       </Modal>
-
-
     </DashboardContent>
   );
 }

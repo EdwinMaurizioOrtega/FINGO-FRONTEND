@@ -16,10 +16,11 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
-import { signUp } from '../../context/jwt';
+import { googleSuccess, jwtDecode, signUp } from '../../context/jwt';
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { SignUpTerms } from '../../components/sign-up-terms';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 // ----------------------------------------------------------------------
 
@@ -193,6 +194,27 @@ export function JwtSignUpView() {
     </Box>
   );
 
+
+  //Google
+  const googleSuccessFront = async (res) => {
+
+    const result = jwtDecode(res.credential);
+    console.log("RESULT: " + JSON.stringify(result));
+
+    try {
+      await googleSuccess(result);
+      await checkUserSession?.();
+
+      router.refresh();
+
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(typeof error === 'string' ? error : error.message);
+    }
+  };
+
+  const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
+
   return (
     <>
       <FormHead
@@ -217,6 +239,21 @@ export function JwtSignUpView() {
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm}
       </Form>
+
+      <Box mt={3}
+           display="flex"
+           justifyContent="center"
+           alignItems="center"
+      >
+        <GoogleOAuthProvider
+          clientId="401996344322-cba70f138bi3nh76am65hinme3r4qsr2.apps.googleusercontent.com">
+          <GoogleLogin className="w-full"
+                       onSuccess={googleSuccessFront}
+                       onError={googleError}
+                       shape="pill"
+          />
+        </GoogleOAuthProvider>
+      </Box>
 
     </>
   );
