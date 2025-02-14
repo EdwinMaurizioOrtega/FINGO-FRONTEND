@@ -17,7 +17,8 @@ export const CONFIG = {
   auth: {
     method: 'jwt',
     skip: false,
-    redirectPath: paths.dashboard.root,
+    redirectPath: '/',
+    // redirectPath: paths.dashboard.root,  <== Original Edwin Ortega
   },
   /**
    * Mapbox

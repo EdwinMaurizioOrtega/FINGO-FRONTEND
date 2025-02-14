@@ -40,6 +40,7 @@ export function JobListView({
           tipo_credito: tipoCredito,
           plazo: parseInt(numeroDeCuotas),
           provincia: provincia,
+          monto_total_solicitar: montoTotalSolicitar,
         };
 
         console.log("Request Params:", params); // Imprime los parámetros antes de enviarlos

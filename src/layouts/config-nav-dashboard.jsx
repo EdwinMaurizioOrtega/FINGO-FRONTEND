@@ -44,10 +44,10 @@ export const navData = [
    * Overview
    */
   {
-    subheader: 'Overview 6.0.0',
+    subheader: 'FinGo 6.0.0',
     items: [
       { title: 'One', path: paths.dashboard.root, icon: ICONS.dashboard },
-      // { title: 'Two', path: paths.dashboard.root, icon: ICONS.ecommerce },
+      { title: 'Two', path: paths.dashboard.two, icon: ICONS.ecommerce },
       // { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
     ],
   },
