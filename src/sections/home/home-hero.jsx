@@ -37,7 +37,7 @@ export function HomeHero({ sx, ...other }) {
           [theme.breakpoints.up(lgKey)]: { fontSize: 72, lineHeight: '90px' },
         }}
       >
-        <Box component="span" sx={{ width: 1, opacity: 0.24 }}>
+        <Box component="span" sx={{ width: 1, opacity: 0.24, fontSize: 35 }}>
           Tu Puente al Mundo de los Productos Financieros
         </Box>
         Bienvenido a
