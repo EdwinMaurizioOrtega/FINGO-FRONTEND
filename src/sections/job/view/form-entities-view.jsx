@@ -197,10 +197,15 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
 
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          margin: '20px',
-          position: 'relative', // Necesario para posicionar el pseudo-elemento
+          position: 'fixed',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 9999, // Asegura que esté por encima de todo
+          backgroundColor: '#fff', // Fondo para evitar que se mezcle con otros elementos
+          padding: '10px',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Sombra para mejor visibilidad
+          borderRadius: '50px',
         }}
       >
 
@@ -234,7 +239,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden', // Para que el SVG no se desborde
-            opacity: 0.8,
+            opacity: 0.1,
           }}
         >
 
@@ -259,6 +264,12 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
             ':hover': {
               backgroundColor: '#f5f5f5',
               boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.15)',
+            },
+            // Estilos responsivos
+            '@media (max-width: 600px)': {
+              minWidth: '200px', // Más pequeño en móviles
+              padding: '8px 15px',
+              fontSize: '12px',
             },
           }}
         >
@@ -286,6 +297,9 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
             sx={{
               color: '#000',
               fontWeight: '500',
+              '@media (max-width: 600px)': {
+                fontSize: '12px', // Texto más pequeño en móviles
+              },
             }}
           >
             Simula aquí tu crédito.
