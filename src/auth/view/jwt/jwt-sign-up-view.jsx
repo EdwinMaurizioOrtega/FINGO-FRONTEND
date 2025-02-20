@@ -230,17 +230,7 @@ export function JwtSignUpView() {
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
 
-      {!!errorMsg && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {errorMsg}
-        </Alert>
-      )}
-
-      <Form methods={methods} onSubmit={onSubmit}>
-        {renderForm}
-      </Form>
-
-      <Box mt={3}
+      <Box py={2}
            display="flex"
            justifyContent="center"
            alignItems="center"
@@ -254,6 +244,18 @@ export function JwtSignUpView() {
           />
         </GoogleOAuthProvider>
       </Box>
+
+      {!!errorMsg && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {errorMsg}
+        </Alert>
+      )}
+
+      <Form methods={methods} onSubmit={onSubmit}>
+        {renderForm}
+      </Form>
+
+
 
     </>
   );

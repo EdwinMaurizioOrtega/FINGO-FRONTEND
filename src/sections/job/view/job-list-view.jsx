@@ -97,7 +97,7 @@ export function JobListView({
 
               <Alert key="error" severity="error">
                 La tasas de interés aplicadas en la simulación corresponden a la tasas de interés activas efectivas
-                promedio ponderadas por entidad y tipo a mes vencido.
+                promedio ponderadas por entidad y tipo.
               </Alert>
               {/*<Alert key="success" severity="success">*/}
               {/*  En esta versión trabajamos con información de créditos de consumo únicamente. Próximamente iremos*/}

@@ -167,6 +167,22 @@ export function JwtSignInView() {
         sx={{textAlign: {xs: 'center', md: 'left'}}}
       />
 
+      <Box
+           py={2} // Padding en el eje Y (arriba y abajo)
+           display="flex"
+           justifyContent="center"
+           alignItems="center"
+      >
+        <GoogleOAuthProvider
+          clientId="401996344322-cba70f138bi3nh76am65hinme3r4qsr2.apps.googleusercontent.com">
+          <GoogleLogin className="w-full"
+                       onSuccess={googleSuccessFront}
+                       onError={googleError}
+                       shape="pill"
+          />
+        </GoogleOAuthProvider>
+      </Box>
+
       {/*<Alert severity="info" sx={{ mb: 3 }}>*/}
       {/*  Usar <strong>{defaultValues.email}</strong>*/}
       {/*  {' con la contraseña '}*/}
@@ -183,20 +199,6 @@ export function JwtSignInView() {
         {renderForm}
       </Form>
 
-      <Box mt={3}
-           display="flex"
-           justifyContent="center"
-           alignItems="center"
-        >
-        <GoogleOAuthProvider
-          clientId="401996344322-cba70f138bi3nh76am65hinme3r4qsr2.apps.googleusercontent.com">
-          <GoogleLogin className="w-full"
-                       onSuccess={googleSuccessFront}
-                       onError={googleError}
-                       shape="pill"
-          />
-        </GoogleOAuthProvider>
-      </Box>
     </>
   );
 }
