@@ -1,7 +1,7 @@
 'use client';
 
 import {z as zod} from 'zod';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 
@@ -25,6 +25,8 @@ import {useAuthContext} from '../../hooks';
 import {FormHead} from '../../components/form-head';
 import {googleSuccess, jwtDecode, signInWithPassword} from '../../context/jwt';
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
+import {Modal, TextField} from "@mui/material";
+import Button from "@mui/material/Button";
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +51,11 @@ export function JwtSignInView() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const password = useBoolean();
+
+
+  const [open, setOpen] = useState(false);
+  const [cedulaX, setCedulaX] = useState("");
+  const [userData, setUserData] = useState(null);
 
   const defaultValues = {
     email: '',
@@ -87,15 +94,38 @@ export function JwtSignInView() {
     const result = jwtDecode(res.credential);
     console.log("RESULT: " + JSON.stringify(result));
 
+    setUserData(result);
+    setOpen(true); // Abrir el modal para ingresar la cédula
+
+    // try {
+    //   await googleSuccess(result);
+    //   await checkUserSession?.();
+    //
+    //   router.refresh();
+    //
+    // } catch (error) {
+    //   console.error(error);
+    //   setErrorMsg(typeof error === 'string' ? error : error.message);
+    // }
+  };
+
+  const handleSubmitEnviar = async () => {
+    if (!cedulaX) {
+      console.log("cedulaX: "+ cedulaX);
+      setErrorMsg("Por favor, ingrese su cédula.");
+      return;
+    }
+
     try {
-      await googleSuccess(result);
+      console.log("cedulaX: "+ cedulaX);
+      await googleSuccess({ ...userData, cedula: cedulaX }); // Enviar datos con la cédula
       await checkUserSession?.();
-
       router.refresh();
-
     } catch (error) {
       console.error(error);
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(typeof error === "string" ? error : error.message);
+    } finally {
+      setOpen(false);
     }
   };
 
@@ -181,6 +211,37 @@ export function JwtSignInView() {
                        shape="pill"
           />
         </GoogleOAuthProvider>
+
+        {/* Modal para ingresar la cédula */}
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 300,
+              bgcolor: "white",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <TextField
+              label="Número de cédula"
+              variant="outlined"
+              value={cedulaX}
+              onChange={(e) => setCedulaX(e.target.value)}
+            />
+            {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+            <Button variant="contained" onClick={handleSubmitEnviar}>
+              Enviar
+            </Button>
+          </Box>
+        </Modal>
       </Box>
 
       {/*<Alert severity="info" sx={{ mb: 3 }}>*/}

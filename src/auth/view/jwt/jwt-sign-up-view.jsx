@@ -21,6 +21,8 @@ import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
 import { SignUpTerms } from '../../components/sign-up-terms';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import Button from "@mui/material/Button";
+import {Modal, TextField} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +54,11 @@ export function JwtSignUpView() {
 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
+
+  const [open, setOpen] = useState(false);
+  const [cedulaX, setCedulaX] = useState("");
+  const [userData, setUserData] = useState(null);
 
   // Obtener la ubicación del usuario
   useEffect(() => {
@@ -201,15 +208,38 @@ export function JwtSignUpView() {
     const result = jwtDecode(res.credential);
     console.log("RESULT: " + JSON.stringify(result));
 
+    setUserData(result);
+    setOpen(true); // Abrir el modal para ingresar la cédula
+
+    // try {
+    //   await googleSuccess(result);
+    //   await checkUserSession?.();
+    //
+    //   router.refresh();
+    //
+    // } catch (error) {
+    //   console.error(error);
+    //   setErrorMsg(typeof error === 'string' ? error : error.message);
+    // }
+  };
+
+  const handleSubmitEnviar = async () => {
+    if (!cedulaX) {
+      console.log("cedulaX: "+ cedulaX);
+      setErrorMsg("Por favor, ingrese su cédula.");
+      return;
+    }
+
     try {
-      await googleSuccess(result);
+      console.log("cedulaX: "+ cedulaX);
+      await googleSuccess({ ...userData, cedula: cedulaX }); // Enviar datos con la cédula
       await checkUserSession?.();
-
       router.refresh();
-
     } catch (error) {
       console.error(error);
-      setErrorMsg(typeof error === 'string' ? error : error.message);
+      setErrorMsg(typeof error === "string" ? error : error.message);
+    } finally {
+      setOpen(false);
     }
   };
 
@@ -243,6 +273,37 @@ export function JwtSignUpView() {
                        shape="pill"
           />
         </GoogleOAuthProvider>
+
+        {/* Modal para ingresar la cédula */}
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 300,
+              bgcolor: "white",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <TextField
+              label="Número de cédula"
+              variant="outlined"
+              value={cedulaX}
+              onChange={(e) => setCedulaX(e.target.value)}
+            />
+            {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+            <Button variant="contained" onClick={handleSubmitEnviar}>
+              Enviar
+            </Button>
+          </Box>
+        </Modal>
       </Box>
 
       {!!errorMsg && (
