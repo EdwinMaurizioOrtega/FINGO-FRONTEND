@@ -198,7 +198,7 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
       <Box
         sx={{
           position: 'fixed',
-          top: 0,
+          top: "35px",
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 9999, // Asegura que esté por encima de todo
@@ -206,6 +206,9 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
           padding: '10px',
           boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Sombra para mejor visibilidad
           borderRadius: '50px',
+          '@media (max-width: 600px)': {
+            top: "50px",
+          },
         }}
       >
 
@@ -224,28 +227,28 @@ export function FormEntitiesView({ onSubmit, onClear, ...props }) {
         </style>
 
         {/* Fondo que atraviesa el botón */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '-50%', // Ajusta la posición vertical del fondo
-            left: '0',
-            right: '0',
-            height: '50px', // Grosor de la línea
-            backgroundColor: '#8c3535', // Color de la línea
-            zIndex: 1, // Asegura que esté detrás del botón
-            borderRadius: '0px 0px 20px 20px', // Bordes redondeados solo en la parte inferior
-            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Sombra para dar profundidad
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden', // Para que el SVG no se desborde
-            opacity: 0.1,
-          }}
-        >
+        {/*<Box*/}
+        {/*  sx={{*/}
+        {/*    position: 'absolute',*/}
+        {/*    top: '-50%', // Ajusta la posición vertical del fondo*/}
+        {/*    left: '0',*/}
+        {/*    right: '0',*/}
+        {/*    height: '50px', // Grosor de la línea*/}
+        {/*    backgroundColor: '#8c3535', // Color de la línea*/}
+        {/*    zIndex: 1, // Asegura que esté detrás del botón*/}
+        {/*    borderRadius: '0px 0px 20px 20px', // Bordes redondeados solo en la parte inferior*/}
+        {/*    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Sombra para dar profundidad*/}
+        {/*    display: 'flex',*/}
+        {/*    alignItems: 'center',*/}
+        {/*    justifyContent: 'center',*/}
+        {/*    overflow: 'hidden', // Para que el SVG no se desborde*/}
+        {/*    opacity: 0.1,*/}
+        {/*  }}*/}
+        {/*>*/}
 
-          {/* Generar múltiples signos de dólares */}
-          {generateDollarRain(30)} {/* Ajusta el número de signos de dólares */}
-        </Box>
+        {/*  /!* Generar múltiples signos de dólares *!/*/}
+        {/*  {generateDollarRain(30)} /!* Ajusta el número de signos de dólares *!/*/}
+        {/*</Box>*/}
 
         <Button
           onClick={handleOpen}

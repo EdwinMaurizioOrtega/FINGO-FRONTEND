@@ -35,6 +35,11 @@ export function HomeHero({ sx, ...other }) {
           // maxWidth: 680,
           fontFamily: theme.typography.fontSecondaryFamily,
           [theme.breakpoints.up(lgKey)]: { fontSize: 72, lineHeight: '90px' },
+          marginTop: "30px",
+
+          '@media (max-width: 600px)': {
+            marginTop: "40px"
+          },
         }}
       >
         <Box component="span" sx={{ width: 1, opacity: 0.24, fontSize: 35 }}>
