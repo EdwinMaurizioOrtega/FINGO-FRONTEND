@@ -15,7 +15,13 @@ import { HomeMinimalDos } from '../home-minimal-dos';
 import { HomeHugePackElementsDos } from '../home-hugepack-elements-dos';
 import Script from 'next/script';
 import Cookies from 'js-cookie';
-import {VerticalLinearStepper} from "../../_examples/mui/stepper-view/vertical-linear-stepper"; // Asegúrate de instalar esta librería: `npm install js-cookie`
+import {VerticalLinearStepper} from "../../_examples/mui/stepper-view/vertical-linear-stepper";
+import Fab from "@mui/material/Fab"; // Asegúrate de instalar esta librería: `npm install js-cookie`
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import Dialog from "@mui/material/Dialog";
+import {DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
+import Button from "@mui/material/Button";
+import axios, {endpoints} from "../../../utils/axios";
 
 
 // ----------------------------------------------------------------------
@@ -34,6 +40,40 @@ export function HomeView() {
 
   // Estado para controlar la visibilidad de HomeHero
   const [show, setShow] = useState(true);
+
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    nombre: '',
+    empresa: '',
+    email: '',
+    observaciones: '',
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Aquí puedes manejar el envío de datos (API, email, etc.)
+    console.log(form);
+    const params = {
+      nombre: form.nombre,
+      empresa: form.empresa,
+      email: form.email,
+      observaciones: form.observaciones,
+    };
+    const res = await axios.post(endpoints.contact.message, params);
+    console.log("data: "+res.data);
+
+    alert('Formulario enviado');
+    setOpen(false);
+    setForm({nombre: '', empresa: '', email: '', observaciones: ''});
+  };
+
 
   // Solicitar permisos de ubicación al montar el componente
   useEffect(() => {
@@ -185,6 +225,77 @@ export function HomeView() {
           provincia={provincia}
         />}
       </Stack>
+
+      {/* Botón flotante inferior izquierdo */}
+      <Fab
+        color="primary"
+        onClick={() => setOpen(true)}
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          left: 16,
+          zIndex: 1000,
+        }}
+        variant="extended"
+      >
+        <ContactMailIcon sx={{ mr: 1 }} />
+        EMPRESA - CONTACTO
+      </Fab>
+
+      {/* Modal del formulario */}
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Formulario de Contacto</DialogTitle>
+        <form onSubmit={handleSubmit}>
+          <DialogContent dividers>
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Nombre"
+              name="nombre"
+              value={form.nombre}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+            <TextField
+              margin="dense"
+              label="Empresa"
+              name="empresa"
+              value={form.empresa}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+            <TextField
+              margin="dense"
+              label="Email"
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+            <TextField
+              margin="dense"
+              label="Observaciones"
+              name="observaciones"
+              value={form.observaciones}
+              onChange={handleChange}
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Cancelar</Button>
+            <Button type="submit" variant="contained">
+              Enviar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+
     </>
   );
 }

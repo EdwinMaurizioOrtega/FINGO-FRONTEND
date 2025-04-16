@@ -49,6 +49,9 @@ export const endpoints = {
     registered_users: '/api/report/report_user',
     registered_logs_bank_query_records: '/api/report/logs_bank_query_records',
   },
+  contact: {
+    message: '/api/contact/create_message',
+  },
   mail: {
     list: '/api/mail/list',
     details: '/api/mail/details',

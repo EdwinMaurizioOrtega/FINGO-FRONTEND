@@ -31,10 +31,10 @@ const cedulaRegex = /\b(0[1-9]|1[0-9]|2[0-4])\d{8}\b/;
 
 export const SignUpSchema = zod.object({
   cedula: zod
-    .string()
-    .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
-    .max(10, { message: '¡La cédula debe tener 10 caracteres!' })
-    .regex(cedulaRegex, { message: '¡El formato de la cédula es inválido!' }),
+    .string(),
+    // .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
+    // .max(10, { message: '¡La cédula debe tener 10 caracteres!' })
+    // .regex(cedulaRegex, { message: '¡El formato de la cédula es inválido!' }),
   email: zod
     .string()
     .min(1, { message: '¡Se requiere un correo!' })
@@ -117,36 +117,36 @@ export function JwtSignUpView() {
     }
   });
 
-  const validar = (cedula) => {
-    let total = 0;
-    const longitud = cedula.length;
-    const longcheck = longitud - 1;
-
-    // Validación inicial: La cédula no puede estar vacía y debe tener 10 dígitos
-    if (cedula !== "" && longitud === 10) {
-      for (let i = 0; i < longcheck; i++) {
-        if (i % 2 === 0) {
-          let aux = cedula.charAt(i) * 2;  // Multiplica el dígito por 2
-          if (aux > 9) aux -= 9;  // Si el resultado es mayor que 9, le resta 9
-          total += aux;  // Acumula el valor en total
-        } else {
-          total += parseInt(cedula.charAt(i));  // Si no es un índice par, simplemente suma el valor del dígito
-        }
-      }
-
-      // Calcula el dígito verificador
-      total = total % 10 ? 10 - total % 10 : 0;
-
-      // Verifica si el último dígito (dígito verificador) es correcto
-      if (cedula.charAt(longitud - 1) == total) {
-        setErrorMsg('Cédula válida');
-      } else {
-        setErrorMsg('Cédula inválida');
-      }
-    } else {
-      setErrorMsg('¡La cédula debe tener exactamente 10 dígitos!');
-    }
-  };
+  // const validar = (cedula) => {
+  //   let total = 0;
+  //   const longitud = cedula.length;
+  //   const longcheck = longitud - 1;
+  //
+  //   // Validación inicial: La cédula no puede estar vacía y debe tener 10 dígitos
+  //   if (cedula !== "" && longitud === 10) {
+  //     for (let i = 0; i < longcheck; i++) {
+  //       if (i % 2 === 0) {
+  //         let aux = cedula.charAt(i) * 2;  // Multiplica el dígito por 2
+  //         if (aux > 9) aux -= 9;  // Si el resultado es mayor que 9, le resta 9
+  //         total += aux;  // Acumula el valor en total
+  //       } else {
+  //         total += parseInt(cedula.charAt(i));  // Si no es un índice par, simplemente suma el valor del dígito
+  //       }
+  //     }
+  //
+  //     // Calcula el dígito verificador
+  //     total = total % 10 ? 10 - total % 10 : 0;
+  //
+  //     // Verifica si el último dígito (dígito verificador) es correcto
+  //     if (cedula.charAt(longitud - 1) == total) {
+  //       setErrorMsg('Cédula válida');
+  //     } else {
+  //       setErrorMsg('Cédula inválida');
+  //     }
+  //   } else {
+  //     setErrorMsg('¡La cédula debe tener exactamente 10 dígitos!');
+  //   }
+  // };
 
   const handleInput = (event) => {
     event.target.value = event.target.value.toLowerCase(); // Convierte directamente a minúsculas
@@ -159,7 +159,7 @@ export function JwtSignUpView() {
         label="Cédula"
         placeholder="10 caracteres"
         InputLabelProps={{ shrink: true }}
-        onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
+        // onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
         autoFocus  // Este atributo hará que el campo esté activo al cargar
       />
 
