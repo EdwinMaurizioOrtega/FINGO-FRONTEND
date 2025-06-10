@@ -30,8 +30,8 @@ import {Modal, TextField} from "@mui/material";
 const cedulaRegex = /\b(0[1-9]|1[0-9]|2[0-4])\d{8}\b/;
 
 export const SignUpSchema = zod.object({
-  cedula: zod
-    .string(),
+  // cedula: zod
+  //   .string(),
     // .min(10, { message: '¡La cédula debe tener 10 caracteres!' })
     // .max(10, { message: '¡La cédula debe tener 10 caracteres!' })
     // .regex(cedulaRegex, { message: '¡El formato de la cédula es inválido!' }),
@@ -102,7 +102,7 @@ export function JwtSignUpView() {
     try {
       await signUp({
         email: data.email,
-        cedula: data.cedula,
+        // cedula: data.cedula,
         terms_accepted: termsAccepted,
         lat: latitude, // Incluyendo latitud
         lng: longitude // Incluyendo longitud
@@ -154,14 +154,14 @@ export function JwtSignUpView() {
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text
-        name="cedula"
-        label="Cédula"
-        placeholder="10 caracteres"
-        InputLabelProps={{ shrink: true }}
-        // onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar
-        autoFocus  // Este atributo hará que el campo esté activo al cargar
-      />
+      {/*<Field.Text*/}
+      {/*  name="cedula"*/}
+      {/*  label="Cédula"*/}
+      {/*  placeholder="10 caracteres"*/}
+      {/*  InputLabelProps={{ shrink: true }}*/}
+      {/*  // onBlur={(e) => validar(e.target.value)}  // Pasa el valor del campo a la función validar*/}
+      {/*  autoFocus  // Este atributo hará que el campo esté activo al cargar*/}
+      {/*/>*/}
 
       <Field.Text name="email" label="Correo electrónico" InputLabelProps={{ shrink: true }}
                   onInput={handleInput} // Usa `onInput` para manejar el evento directamente
