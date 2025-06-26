@@ -46,9 +46,10 @@ export const navData = [
   {
     subheader: 'FinGo 6.0.0',
     items: [
-      { title: 'One', path: paths.dashboard.root, icon: ICONS.dashboard },
-      { title: 'Two', path: paths.dashboard.two, icon: ICONS.ecommerce },
-      // { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
+      { title: 'Usuarios Reg.', path: paths.dashboard.root, icon: ICONS.dashboard },
+      { title: 'Log Consultas', path: paths.dashboard.two, icon: ICONS.ecommerce },
+      { title: 'Cliente', path: paths.dashboard.three, icon: ICONS.analytics },
+      { title: 'Cooperativa', path: paths.dashboard.four, icon: ICONS.analytics },
     ],
   },
   /**
