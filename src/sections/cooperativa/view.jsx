@@ -1,19 +1,31 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { io } from 'socket.io-client';
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  TextField,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText
+} from '@mui/material';
 
-// ----------------------------------------------------------------------
 const socket = io('http://localhost:3001');
-const cooperativaId = 'cooperativa-1';  // Cambia esto si tienes varias cooperativas
+const cooperativaId = 'Cooperativa Caja';
 
 export function CooperativaView({ title = 'Chat' }) {
-
   const [sessions, setSessions] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState('');
+
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -23,8 +35,7 @@ export function CooperativaView({ title = 'Chat' }) {
     };
 
     fetchSessions();
-
-    const interval = setInterval(fetchSessions, 3000); // refresca cada 3s
+    const interval = setInterval(fetchSessions, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -35,11 +46,15 @@ export function CooperativaView({ title = 'Chat' }) {
     return () => socket.off('message');
   }, []);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   const entrarSala = (roomId, user) => {
     socket.emit('joinRoom', { roomId, user: 'Cooperativa' });
     setSelectedRoom(roomId);
     setSelectedUser(user);
-    setMessages([]); // Opcional: puedes cargar historial si guardas en BD
+    setMessages([]);
   };
 
   const enviar = () => {
@@ -59,64 +74,98 @@ export function CooperativaView({ title = 'Chat' }) {
     const reader = new FileReader();
     reader.onload = () => {
       socket.emit('message', {
-
         roomId: selectedRoom,
         sender: 'Cooperativa',
         type: 'file',
         fileName: file.name,
         fileType: file.type,
-        content: reader.result, // base64
-
+        content: reader.result,
       });
     };
     reader.readAsDataURL(file);
   };
 
-
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Panel de {cooperativaId}</h2>
+    <Box sx={{ display: 'flex', height: '100vh' }}>
+      {/* Panel izquierdo: usuarios conectados */}
+      <Box sx={{ width: 300, borderRight: '1px solid #ddd', p: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          Usuarios conectados
+        </Typography>
 
-      <h4>Usuarios conectados:</h4>
-      <ul>
-        {sessions.map(({ roomId, user }) => (
-          <li key={roomId}>
-            {user} <button onClick={() => entrarSala(roomId, user)}>Chatear</button>
-          </li>
-        ))}
-      </ul>
+        <Divider sx={{ mb: 2 }} />
 
-      {selectedRoom && (
-        <>
-          <h4>Chat con: {selectedUser}</h4>
-          <div style={{ border: '1px solid #ccc', height: '250px', overflowY: 'scroll', padding: '1rem' }}>
-            {messages.map((m, i) => (
-              <div key={i}>
-                <b>{m.sender}</b>:{' '}
-                {m.type === 'file' ? (
-                  <a href={m.content} download={m.fileName} target="_blank" rel="noopener noreferrer">
-                    📎 {m.fileName}
-                  </a>
-                ) : (
-                  m.content
-                )}
-              </div>
-            ))}
+        <List>
+          {sessions.map(({ roomId, user }) => (
+            <ListItem key={roomId} disablePadding>
+              <ListItemButton onClick={() => entrarSala(roomId, user)} selected={roomId === selectedRoom}>
+                <ListItemText primary={user} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
 
-          </div>
-          <input
-            value={msg}
-            onChange={(e) => setMsg(e.target.value)}
-            placeholder="Escribe un mensaje..."
-          />
-          <button onClick={enviar}>Enviar</button>
+      {/* Panel derecho: chat */}
+      <Box sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column', height: '80vh' }}>
+        <Typography variant="h5" gutterBottom>
+          Panel de {cooperativaId}
+        </Typography>
 
-          <div style={{ marginTop: '1rem' }}>
-            <input type="file" onChange={handleFileChange} />
-          </div>
-        </>
-      )}
-    </div>
+        {selectedRoom ? (
+          <>
+            <Typography variant="subtitle1" gutterBottom>
+              Chat con: {selectedUser}
+            </Typography>
+
+            <Paper
+              elevation={3}
+              sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}
+            >
+              {messages.map((m, i) => (
+                <Box key={i} sx={{ mb: 1 }}>
+                  <strong>{m.sender}:</strong>{' '}
+                  {m.type === 'file' ? (
+                    <a
+                      href={m.content}
+                      download={m.fileName}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      📎 {m.fileName}
+                    </a>
+                  ) : (
+                    m.content
+                  )}
+                </Box>
+              ))}
+              <div ref={messagesEndRef} />
+            </Paper>
+
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <TextField
+                fullWidth
+                size="small"
+                value={msg}
+                onChange={(e) => setMsg(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && enviar()}
+                placeholder="Escribe un mensaje..."
+              />
+              <Button variant="contained" onClick={enviar} disabled={!msg.trim()}>
+                Enviar
+              </Button>
+              <Button variant="outlined" component="label">
+                Subir archivo
+                <input type="file" hidden onChange={handleFileChange} />
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <Typography variant="h6" color="text.secondary" sx={{ mt: 4 }}>
+            Selecciona un usuario para iniciar el chat.
+          </Typography>
+        )}
+      </Box>
+    </Box>
   );
-
 }
