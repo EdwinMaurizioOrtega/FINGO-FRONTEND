@@ -15,8 +15,8 @@ import {
   ListItemText
 } from '@mui/material';
 
-//const socket = io('http://localhost:3001');
-const socket = io('https://socket.fingo.ec');
+const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET);
+
 const cooperativaId = 'Cooperativa Caja';
 
 export function CooperativaView({ title = 'Chat' }) {
@@ -30,7 +30,7 @@ export function CooperativaView({ title = 'Chat' }) {
 
   useEffect(() => {
     const fetchSessions = async () => {
-      const res = await fetch(`http://localhost:3001/sessions?cooperativa=${cooperativaId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/sessions?cooperativa=${cooperativaId}`);
       const data = await res.json();
       setSessions(data);
     };

@@ -16,8 +16,7 @@ import {
 } from '@mui/material';
 import { useAuthContext } from '../../auth/hooks';
 
-//const socket = io('http://localhost:3001');
-const socket = io('https://socket.fingo.ec');
+const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET);
 
 const COOPERATIVAS = ['Cooperativa Caja'];
 
