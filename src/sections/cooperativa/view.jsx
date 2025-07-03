@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 //const socket = io('http://localhost:3001');
-const socket = io('https://socket.fingo.ec:80');
+const socket = io('https://socket.fingo.ec');
 const cooperativaId = 'Cooperativa Caja';
 
 export function CooperativaView({ title = 'Chat' }) {
