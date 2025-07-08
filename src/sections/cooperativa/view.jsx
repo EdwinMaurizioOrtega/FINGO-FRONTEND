@@ -12,11 +12,10 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText
+  ListItemText,
 } from '@mui/material';
 
 const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET);
-
 const cooperativaId = 'Cooperativa Caja';
 
 export function CooperativaView({ title = 'Chat' }) {
@@ -28,28 +27,46 @@ export function CooperativaView({ title = 'Chat' }) {
 
   const messagesEndRef = useRef(null);
 
+  // Obtener sesiones activas
   useEffect(() => {
     const fetchSessions = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/sessions?cooperativa=${cooperativaId}`);
-      const data = await res.json();
-      setSessions(data);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/sessions?cooperativa=${cooperativaId}`);
+        const data = await res.json();
+        setSessions(data);
+      } catch (err) {
+        console.error('Error al obtener sesiones:', err);
+      }
     };
 
     fetchSessions();
-    const interval = setInterval(fetchSessions, 3000);
+    const interval = setInterval(fetchSessions, 3000); // refresco automático
     return () => clearInterval(interval);
   }, []);
 
+  // Recibir mensajes nuevos por socket
   useEffect(() => {
     socket.on('message', (data) => {
       setMessages((prev) => [...prev, data]);
     });
+
     return () => socket.off('message');
   }, []);
 
+  // Auto-scroll al nuevo mensaje
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Obtener mensajes previos al entrar a una sala
+  useEffect(() => {
+    if (!selectedRoom) return;
+
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${selectedRoom}`)
+      .then((res) => res.json())
+      .then((data) => setMessages(data))
+      .catch(console.error);
+  }, [selectedRoom]);
 
   const entrarSala = (roomId, user) => {
     socket.emit('joinRoom', { roomId, user: 'Cooperativa' });
@@ -60,11 +77,14 @@ export function CooperativaView({ title = 'Chat' }) {
 
   const enviar = () => {
     if (!msg.trim()) return;
+
     socket.emit('message', {
       roomId: selectedRoom,
       content: msg,
-      sender: 'Cooperativa'
+      sender: 'Cooperativa',
+      type: 'text',
     });
+
     setMsg('');
   };
 
@@ -88,18 +108,20 @@ export function CooperativaView({ title = 'Chat' }) {
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Panel izquierdo: usuarios conectados */}
+      {/* Panel izquierdo: lista de sesiones */}
       <Box sx={{ width: 300, borderRight: '1px solid #ddd', p: 2 }}>
         <Typography variant="h6" gutterBottom>
           Usuarios conectados
         </Typography>
-
         <Divider sx={{ mb: 2 }} />
 
         <List>
           {sessions.map(({ roomId, user }) => (
             <ListItem key={roomId} disablePadding>
-              <ListItemButton onClick={() => entrarSala(roomId, user)} selected={roomId === selectedRoom}>
+              <ListItemButton
+                onClick={() => entrarSala(roomId, user)}
+                selected={roomId === selectedRoom}
+              >
                 <ListItemText primary={user} />
               </ListItemButton>
             </ListItem>
@@ -107,10 +129,10 @@ export function CooperativaView({ title = 'Chat' }) {
         </List>
       </Box>
 
-      {/* Panel derecho: chat */}
+      {/* Panel derecho: ventana de chat */}
       <Box sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column', height: '80vh' }}>
         <Typography variant="h5" gutterBottom>
-          Panel de {cooperativaId}
+          {title} de {cooperativaId}
         </Typography>
 
         {selectedRoom ? (
@@ -119,21 +141,18 @@ export function CooperativaView({ title = 'Chat' }) {
               Chat con: {selectedUser}
             </Typography>
 
-            <Paper
-              elevation={3}
-              sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}
-            >
+            <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
               {messages.map((m, i) => (
                 <Box key={i} sx={{ mb: 1 }}>
                   <strong>{m.sender}:</strong>{' '}
                   {m.type === 'file' ? (
                     <a
                       href={m.content}
-                      download={m.fileName}
+                      download={m.file_name}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      📎 {m.fileName}
+                      📎 {m.file_name}
                     </a>
                   ) : (
                     m.content

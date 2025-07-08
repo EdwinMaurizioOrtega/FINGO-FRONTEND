@@ -16,14 +16,12 @@ import {
 } from '@mui/material';
 import { useAuthContext } from '../../auth/hooks';
 
-const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET);
+const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET); // 🔁 Ajusta si usas otra IP o puerto
 
 const COOPERATIVAS = ['Cooperativa Caja'];
 
 export function ChatView() {
   const { user } = useAuthContext();
-
-  console.log(user);
 
   const [cooperativa, setCooperativa] = useState('');
   const [message, setMessage] = useState('');
@@ -37,29 +35,52 @@ export function ChatView() {
     socket.on('message', (data) => {
       setMessages((prev) => [...prev, data]);
     });
+
     return () => socket.off('message');
   }, []);
 
   useEffect(() => {
-    // Auto-scroll al último mensaje
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    if (!roomId) return;
+
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${roomId}`)
+      .then((res) => res.json())
+      .then((data) => setMessages(data))
+      .catch(console.error);
+  }, [roomId]);
+
   const joinRoom = (coop) => {
-    if (!user) {
-      alert('Inicia Sesión para iniciar el chat');
+    if (!user?.display_name) {
+      alert('Inicia sesión para iniciar el chat');
       return;
     }
+
     setCooperativa(coop);
-    const room = `${coop}_${user?.display_name}`;
+    const room = `${coop}_${user.display_name}`.replace(/\s+/g, '_');
     setRoomId(room);
-    socket.emit('joinRoom', { roomId: room, user: user?.display_name, cooperativa: coop });
+
+    socket.emit('joinRoom', {
+      roomId: room,
+      user: user.display_name,
+      cooperativa: coop
+    });
+
     setJoined(true);
   };
 
   const sendMessage = () => {
     if (!message.trim()) return;
-    socket.emit('message', { roomId, content: message, sender: user?.display_name, type: 'text' });
+
+    socket.emit('message', {
+      roomId,
+      content: message,
+      sender: user.display_name,
+      type: 'text'
+    });
+
     setMessage('');
   };
 
@@ -71,11 +92,11 @@ export function ChatView() {
     reader.onload = () => {
       socket.emit('message', {
         roomId,
-        sender: user?.display_name,
+        sender: user.display_name,
         type: 'file',
         fileName: file.name,
         fileType: file.type,
-        content: reader.result,
+        content: reader.result
       });
     };
     reader.readAsDataURL(file);
@@ -83,7 +104,7 @@ export function ChatView() {
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Panel izquierdo: lista cooperativas */}
+      {/* Panel izquierdo: cooperativas */}
       <Box sx={{ width: 280, borderRight: '1px solid #ddd', p: 2 }}>
         <Typography variant="h6" gutterBottom>
           Cooperativas
@@ -113,24 +134,26 @@ export function ChatView() {
               Chat con {cooperativa}
             </Typography>
 
-            <Paper
-              elevation={3}
-              sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}
-            >
+            <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
               {messages.map((msg, idx) => (
                 <Box key={idx} sx={{ mb: 1 }}>
                   <strong>{msg.sender}:</strong>{' '}
                   {msg.type === 'file' ? (
                     <a
                       href={msg.content}
-                      download={msg.fileName}
+                      download={msg.file_name}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      📎 {msg.fileName}
+                      📎 {msg.file_name}
                     </a>
                   ) : (
                     msg.content
+                  )}
+                  {msg.timestamp && (
+                    <Typography variant="caption" sx={{ ml: 1 }} color="text.secondary">
+                      ({new Date(msg.timestamp).toLocaleTimeString()})
+                    </Typography>
                   )}
                 </Box>
               ))}
@@ -139,12 +162,12 @@ export function ChatView() {
 
             <Box sx={{ display: 'flex', gap: 1 }}>
               <TextField
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Escribe un mensaje..."
                 fullWidth
                 size="small"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                placeholder="Escribe un mensaje..."
               />
               <Button variant="contained" onClick={sendMessage} disabled={!message.trim()}>
                 Enviar
