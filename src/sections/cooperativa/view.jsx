@@ -64,7 +64,7 @@ export function CooperativaView({ title = 'Chat' }) {
 
     fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${selectedRoom}`)
       .then((res) => res.json())
-      .then((data) => setMessages(data))
+      .then((data) => setMessages(data.messages || []))
       .catch(console.error);
   }, [selectedRoom]);
 
@@ -142,7 +142,7 @@ export function CooperativaView({ title = 'Chat' }) {
             </Typography>
 
             <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
-              {messages.map((m, i) => (
+              {Array.isArray(messages) && messages.map((m, i) => (
                 <Box key={i} sx={{ mb: 1 }}>
                   <strong>{m.sender}:</strong>{' '}
                   {m.type === 'file' ? (

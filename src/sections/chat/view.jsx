@@ -48,7 +48,7 @@ export function ChatView() {
 
     fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${roomId}`)
       .then((res) => res.json())
-      .then((data) => setMessages(data))
+      .then((data) => setMessages(data.messages || []))
       .catch(console.error);
   }, [roomId]);
 
@@ -135,7 +135,7 @@ export function ChatView() {
             </Typography>
 
             <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
-              {messages.map((msg, idx) => (
+              { Array.isArray(messages) && messages.map((msg, idx) => (
                 <Box key={idx} sx={{ mb: 1 }}>
                   <strong>{msg.sender}:</strong>{' '}
                   {msg.type === 'file' ? (
