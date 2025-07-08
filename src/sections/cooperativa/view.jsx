@@ -33,7 +33,7 @@ export function CooperativaView({ title = 'Chat' }) {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/sessions?cooperativa=${cooperativaId}`);
         const data = await res.json();
-        setSessions(data);
+        setSessions(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Error al obtener sesiones:', err);
       }
@@ -64,8 +64,14 @@ export function CooperativaView({ title = 'Chat' }) {
 
     fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${selectedRoom}`)
       .then((res) => res.json())
-      .then((data) => setMessages(data.messages || []))
-      .catch(console.error);
+      .then((data) => {
+        const safeMessages = Array.isArray(data) ? data : (data.messages || []);
+        setMessages(safeMessages);
+      })
+      .catch((err) => {
+        console.error('Error al obtener mensajes:', err);
+        setMessages([]);
+      });
   }, [selectedRoom]);
 
   const entrarSala = (roomId, user) => {
@@ -148,14 +154,19 @@ export function CooperativaView({ title = 'Chat' }) {
                   {m.type === 'file' ? (
                     <a
                       href={m.content}
-                      download={m.file_name}
+                      download={m.fileName || 'archivo'}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      📎 {m.file_name}
+                      📎 {m.fileName || 'archivo adjunto'}
                     </a>
                   ) : (
                     m.content
+                  )}
+                  {m.timestamp && (
+                    <Typography variant="caption" sx={{ ml: 1 }} color="text.secondary">
+                      ({new Date(m.timestamp).toLocaleTimeString()})
+                    </Typography>
                   )}
                 </Box>
               ))}

@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { useAuthContext } from '../../auth/hooks';
 
-const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET); // 🔁 Ajusta si usas otra IP o puerto
+const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET); // Asegúrate de que esta variable esté definida correctamente
 
 const COOPERATIVAS = ['Cooperativa Caja'];
 
@@ -48,8 +48,14 @@ export function ChatView() {
 
     fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${roomId}`)
       .then((res) => res.json())
-      .then((data) => setMessages(data.messages || []))
-      .catch(console.error);
+      .then((data) => {
+        const safeMessages = Array.isArray(data) ? data : (data.messages || []);
+        setMessages(safeMessages);
+      })
+      .catch((err) => {
+        console.error('Error cargando mensajes:', err);
+        setMessages([]);
+      });
   }, [roomId]);
 
   const joinRoom = (coop) => {
@@ -58,17 +64,17 @@ export function ChatView() {
       return;
     }
 
-    setCooperativa(coop);
     const room = `${coop}_${user.display_name}`.replace(/\s+/g, '_');
+
+    setCooperativa(coop);
     setRoomId(room);
+    setJoined(true);
 
     socket.emit('joinRoom', {
       roomId: room,
       user: user.display_name,
       cooperativa: coop
     });
-
-    setJoined(true);
   };
 
   const sendMessage = () => {
@@ -135,17 +141,17 @@ export function ChatView() {
             </Typography>
 
             <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
-              { Array.isArray(messages) && messages.map((msg, idx) => (
+              {Array.isArray(messages) && messages.map((msg, idx) => (
                 <Box key={idx} sx={{ mb: 1 }}>
                   <strong>{msg.sender}:</strong>{' '}
                   {msg.type === 'file' ? (
                     <a
                       href={msg.content}
-                      download={msg.file_name}
+                      download={msg.fileName || 'archivo'}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      📎 {msg.file_name}
+                      📎 {msg.fileName || 'archivo adjunto'}
                     </a>
                   ) : (
                     msg.content
