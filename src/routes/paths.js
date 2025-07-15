@@ -97,8 +97,8 @@ export const paths = {
   dashboard: {
     root: ROOTS.DASHBOARD,
     two: `${ROOTS.DASHBOARD}/two`,
-    three: `${ROOTS.DASHBOARD}/three`,
-    four: `${ROOTS.DASHBOARD}/four`,
+    // three: `${ROOTS.DASHBOARD}/three`,
+    // four: `${ROOTS.DASHBOARD}/four`,
     mail: `${ROOTS.DASHBOARD}/mail`,
     chat: `${ROOTS.DASHBOARD}/chat`,
     blank: `${ROOTS.DASHBOARD}/blank`,

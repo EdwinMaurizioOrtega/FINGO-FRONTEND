@@ -17,10 +17,14 @@ import {usePopover, CustomPopover} from 'src/components/custom-popover';
 import {useAuthContext} from "../../auth/hooks";
 import Button from "@mui/material/Button";
 import html2canvas from "html2canvas";
+import { useState } from 'react';
+import { ChatView } from '../chat/view';
 
 // ----------------------------------------------------------------------
 
 export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, onNumeroDeCuotas}) {
+
+  const [showChat, setShowChat] = useState(false);
 
   const {user} = useAuthContext();
 
@@ -39,7 +43,7 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
   // Cálculo del total a pagar (cuota mensual * número de cuotas)
   const totalAPagar = cuotaMensual * numeroDeCuotas || 0;
 
-  console.log(`La cuota mensual será aproximadamente $${cuotaMensual.toFixed(2)}.`);
+  //console.log(`La cuota mensual será aproximadamente $${cuotaMensual.toFixed(2)}.`);
 
   // Supongamos que tu imagen está en la carpeta 'public' y se llama 'watermark.png'
   const watermarkImageUrl = '/logo/logo-fingo-full.png';
@@ -245,10 +249,13 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
             color="inherit"
             type="submit"
             variant="contained"
+            onClick={() => setShowChat(true)}
             sx={{
               position: 'relative',
-              cursor: 'not-allowed', // Asegura que el cursor refleje que está deshabilitado
-              '&:hover::after': {
+              cursor: job.razon_social === 'COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA'
+                ? 'pointer'
+                : 'not-allowed',
+              '&:hover::after': job.razon_social !== 'COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA' && {
                 content: '"Próximamente"',
                 position: 'absolute',
                 top: '100%',
@@ -283,6 +290,26 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
         {/*)}*/}
 
       </Card>
+
+
+      {showChat && (
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 16,
+            right: 16,
+            width: 400,
+            height: 500,
+            zIndex: 1300,
+            boxShadow: 6,
+            borderRadius: 2,
+            overflow: 'hidden',
+            backgroundColor: '#fff',
+          }}
+        >
+          <ChatView onClose={() => setShowChat(false)} />
+        </Box>
+      )}
 
       {/*<CustomPopover*/}
       {/*  open={popover.open}*/}

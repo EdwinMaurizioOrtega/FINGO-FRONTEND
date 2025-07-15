@@ -15,12 +15,13 @@ import {
   Divider,
 } from '@mui/material';
 import { useAuthContext } from '../../auth/hooks';
+import { JwtSignInView } from '../../auth/view/jwt';
 
 const socket = io(process.env.NEXT_PUBLIC_SERVER_SOCKET); // Asegúrate de que esta variable esté definida correctamente
 
 const COOPERATIVAS = ['Cooperativa Caja'];
 
-export function ChatView() {
+export function ChatView({ onClose }) {
   const { user } = useAuthContext();
 
   const [cooperativa, setCooperativa] = useState('');
@@ -28,6 +29,7 @@ export function ChatView() {
   const [messages, setMessages] = useState([]);
   const [joined, setJoined] = useState(false);
   const [roomId, setRoomId] = useState('');
+  const [requireLogin, setRequireLogin] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -49,7 +51,7 @@ export function ChatView() {
     fetch(`${process.env.NEXT_PUBLIC_SERVER_SOCKET}/messages?roomId=${roomId}`)
       .then((res) => res.json())
       .then((data) => {
-        const safeMessages = Array.isArray(data) ? data : (data.messages || []);
+        const safeMessages = Array.isArray(data) ? data : data.messages || [];
         setMessages(safeMessages);
       })
       .catch((err) => {
@@ -60,9 +62,11 @@ export function ChatView() {
 
   const joinRoom = (coop) => {
     if (!user?.display_name) {
-      alert('Inicia sesión para iniciar el chat');
-      return;
+      setRequireLogin(true); // Mostrar el login
+      return <JwtSignInView />;
     }
+
+    setRequireLogin(false); // Ocultar si ya está autenticado
 
     const room = `${coop}_${user.display_name}`.replace(/\s+/g, '_');
 
@@ -73,7 +77,7 @@ export function ChatView() {
     socket.emit('joinRoom', {
       roomId: room,
       user: user.display_name,
-      cooperativa: coop
+      cooperativa: coop,
     });
   };
 
@@ -84,7 +88,7 @@ export function ChatView() {
       roomId,
       content: message,
       sender: user.display_name,
-      type: 'text'
+      type: 'text',
     });
 
     setMessage('');
@@ -102,94 +106,155 @@ export function ChatView() {
         type: 'file',
         fileName: file.name,
         fileType: file.type,
-        content: reader.result
+        content: reader.result,
       });
     };
     reader.readAsDataURL(file);
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Panel izquierdo: cooperativas */}
-      <Box sx={{ width: 280, borderRight: '1px solid #ddd', p: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Cooperativas
-        </Typography>
-
-        <Divider sx={{ mb: 2 }} />
-
-        <List>
-          {COOPERATIVAS.map((coop) => (
-            <ListItem key={coop} disablePadding>
-              <ListItemButton
-                onClick={() => joinRoom(coop)}
-                selected={coop === cooperativa}
-              >
-                <ListItemText primary={coop} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-
-      {/* Panel derecho: chat */}
-      <Box sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column', height: '80vh' }}>
-        {joined ? (
-          <>
-            <Typography variant="h5" gutterBottom>
-              Chat con {cooperativa}
-            </Typography>
-
-            <Paper elevation={3} sx={{ flexGrow: 1, overflowY: 'auto', p: 2, mb: 2 }}>
-              {Array.isArray(messages) && messages.map((msg, idx) => (
-                <Box key={idx} sx={{ mb: 1 }}>
-                  <strong>{msg.sender}:</strong>{' '}
-                  {msg.type === 'file' ? (
-                    <a
-                      href={msg.content}
-                      download={msg.fileName || 'archivo'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      📎 {msg.fileName || 'archivo adjunto'}
-                    </a>
-                  ) : (
-                    msg.content
-                  )}
-                  {msg.timestamp && (
-                    <Typography variant="caption" sx={{ ml: 1 }} color="text.secondary">
-                      ({new Date(msg.timestamp).toLocaleTimeString()})
-                    </Typography>
-                  )}
-                </Box>
-              ))}
-              <div ref={messagesEndRef} />
-            </Paper>
-
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <TextField
-                fullWidth
-                size="small"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder="Escribe un mensaje..."
-              />
-              <Button variant="contained" onClick={sendMessage} disabled={!message.trim()}>
-                Enviar
-              </Button>
-              <Button variant="outlined" component="label">
-                Subir archivo
-                <input type="file" hidden onChange={handleFileChange} />
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <Typography variant="h6" color="text.secondary" sx={{ mt: 4 }}>
-            Selecciona una cooperativa para iniciar el chat.
+    <>
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+          width: 400,
+          height: 500,
+          display: 'flex',
+          boxShadow: 6,
+          borderRadius: 2,
+          overflow: 'hidden',
+          zIndex: 1300,
+          backgroundColor: '#fff',
+          border: '1px solid #ccc',
+        }}
+      >
+        {/* Panel izquierdo: cooperativas */}
+        <Box sx={{ width: 120, borderRight: '1px solid #ddd', p: 1 }}>
+          <Typography variant="body2" fontWeight="bold" gutterBottom>
+            Coops
           </Typography>
-        )}
+          <Divider sx={{ mb: 1 }} />
+          <List dense>
+            {COOPERATIVAS.map((coop) => (
+              <ListItem key={coop} disablePadding>
+                <ListItemButton
+                  onClick={() => joinRoom(coop)}
+                  selected={coop === cooperativa}
+                  sx={{ px: 1 }}
+                >
+                  <ListItemText primaryTypographyProps={{ fontSize: 12 }} primary={coop} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+
+        {/* Panel derecho: chat */}
+        <Box sx={{ flexGrow: 1, p: 1.5, display: 'flex', flexDirection: 'column' }}>
+          {joined ? (
+            <>
+              <Box
+                sx={{
+                  mb: 1,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="subtitle2" fontWeight="bold">
+                  {cooperativa}
+                </Typography>
+                <Button onClick={onClose} size="small" variant="text">
+                  ✖
+                </Button>
+              </Box>
+
+              <Paper
+                elevation={1}
+                sx={{
+                  flexGrow: 1,
+                  overflowY: 'auto',
+                  p: 1,
+                  mb: 1,
+                  backgroundColor: '#f9f9f9',
+                  borderRadius: 1,
+                }}
+              >
+                {Array.isArray(messages) &&
+                  messages.map((msg, idx) => (
+                    <Box key={idx} sx={{ mb: 1 }}>
+                      <Typography variant="caption" fontWeight="bold">
+                        {msg.sender}:
+                      </Typography>{' '}
+                      {msg.type === 'file' ? (
+                        <a
+                          href={msg.content}
+                          download={msg.fileName || 'archivo'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          📎 {msg.fileName || 'archivo adjunto'}
+                        </a>
+                      ) : (
+                        <Typography variant="body2" component="span">
+                          {msg.content}
+                        </Typography>
+                      )}
+                    </Box>
+                  ))}
+                <div ref={messagesEndRef} />
+              </Paper>
+
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                  placeholder="Mensaje..."
+                />
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={sendMessage}
+                  disabled={!message.trim()}
+                >
+                  ➤
+                </Button>
+              </Box>
+
+              <Box sx={{ mt: 1 }}>
+                <Button variant="text" component="label" fullWidth size="small">
+                  Subir archivo
+                  <input type="file" hidden onChange={handleFileChange} />
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Selecciona una cooperativa.
+            </Typography>
+          )}
+        </Box>
       </Box>
-    </Box>
+      {requireLogin && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: 10,
+            background: '#fff',
+            zIndex: 2000,
+          }}
+        >
+          <JwtSignInView />
+        </Box>
+      )}
+    </>
   );
 }

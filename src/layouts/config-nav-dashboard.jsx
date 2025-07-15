@@ -48,8 +48,8 @@ export const navData = [
     items: [
       { title: 'Usuarios Reg.', path: paths.dashboard.root, icon: ICONS.dashboard },
       { title: 'Log Consultas', path: paths.dashboard.two, icon: ICONS.ecommerce },
-      { title: 'Cliente', path: paths.dashboard.three, icon: ICONS.analytics },
-      { title: 'Cooperativa', path: paths.dashboard.four, icon: ICONS.analytics },
+      // { title: 'Cliente', path: paths.dashboard.three, icon: ICONS.analytics },
+      // { title: 'Cooperativa', path: paths.dashboard.four, icon: ICONS.analytics },
     ],
   },
   /**

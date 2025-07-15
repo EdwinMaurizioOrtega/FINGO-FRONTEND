@@ -16,6 +16,8 @@ import {JwtSignInView, JwtSignUpView} from "../../auth/view/jwt";
 
 export function JobList({jobs, montoTotalSolicitar, numeroDeCuotas}) {
 
+  console.log("jobs: "+JSON.stringify(jobs));
+
   const {user} = useAuthContext();
 
   const [visibleJobs, setVisibleJobs] = useState(10); // Estado para manejar los trabajos visibles
