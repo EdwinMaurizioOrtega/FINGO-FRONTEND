@@ -249,7 +249,12 @@ export function JobItem({job, onView, onEdit, onDelete, onMontoTotalSolicitar, o
             color="inherit"
             type="submit"
             variant="contained"
-            onClick={() => setShowChat(true)}
+            onClick={() => {
+              if (job.razon_social === 'COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA') {
+                setShowChat(true);
+              }
+            }}
+            disabled={job.razon_social !== 'COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA'}
             sx={{
               position: 'relative',
               cursor: job.razon_social === 'COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO LEON CAJA'
