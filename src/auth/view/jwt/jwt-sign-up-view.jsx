@@ -208,19 +208,19 @@ export function JwtSignUpView() {
     const result = jwtDecode(res.credential);
     console.log("RESULT: " + JSON.stringify(result));
 
-    setUserData(result);
-    setOpen(true); // Abrir el modal para ingresar la cédula
+    // setUserData(result);
+    // setOpen(true); // Abrir el modal para ingresar la cédula
 
-    // try {
-    //   await googleSuccess(result);
-    //   await checkUserSession?.();
-    //
-    //   router.refresh();
-    //
-    // } catch (error) {
-    //   console.error(error);
-    //   setErrorMsg(typeof error === 'string' ? error : error.message);
-    // }
+    try {
+      await googleSuccess(result);
+      await checkUserSession?.();
+
+      router.refresh();
+
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(typeof error === 'string' ? error : error.message);
+    }
   };
 
   const handleSubmitEnviar = async () => {

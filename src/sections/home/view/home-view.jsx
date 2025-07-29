@@ -22,7 +22,8 @@ import Dialog from "@mui/material/Dialog";
 import {DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import axios, {endpoints} from "../../../utils/axios";
-
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import {ChatView} from "../../chat/view";
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +41,9 @@ export function HomeView() {
 
   // Estado para controlar la visibilidad de HomeHero
   const [show, setShow] = useState(true);
+
+  //Chat
+  const [showChat, setShowChat] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
@@ -241,6 +245,37 @@ export function HomeView() {
         <ContactMailIcon sx={{ mr: 1 }} />
         EMPRESA - CONTACTO
       </Fab>
+
+      {/* Solo mostrar el FAB si el chat está cerrado */}
+      {!showChat && (
+      <Fab
+        onClick={() => setShowChat(true)}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 2000,
+          width: 64,
+          height: 64,
+          minHeight: 'auto',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #1e88e5, #42a5f5)',
+          color: '#fff',
+          boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            background: 'linear-gradient(135deg, #1565c0, #1e88e5)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            transform: 'scale(1.05)',
+          },
+        }}
+      >
+        <PsychologyAltIcon fontSize="large" />
+      </Fab>
+      )}
+
+      {/* Mostrar ChatView cuando se active */}
+      {showChat && <ChatView onClose={() => setShowChat(false)} />}
 
       {/* Modal del formulario */}
       <Dialog open={open} onClose={() => setOpen(false)}>
